@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 08:45:29 by alellouc          #+#    #+#             */
-/*   Updated: 2021/06/07 09:52:56 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/11 22:08:51 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int		get_next_line(int fd, char **line);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
-void	*ft_calloc(size_t count, size_t size);
+void	*ft_calloc_gnl(size_t count, size_t size);
 char	*ft_search(const char *s, int c);
 void	*ft_ccpy(void *dst, const void *src, int c, size_t n);
 char	*ft_concat(char const *s1, char const *s2);
