@@ -6,7 +6,7 @@
 #    By: alellouc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 08:35:31 by alellouc          #+#    #+#              #
-#    Updated: 2021/08/11 19:17:40 by alellouc         ###   ########.fr        #
+#    Updated: 2021/08/11 21:19:03 by alellouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC=$(addsuffix .c,\
 	get_next_line_utils\
 	)
 OBJ=$(SRC:.c=.o)
-NAME=gnl.a
+NAME=libgnl.a
 
 .PHONY: clean fclean re all
 
@@ -38,19 +38,14 @@ $(NAME): $(SRC)
 	@$(ECHO) "$(B_CYAN)"
 	$(AR) $@ $(OBJ)
 	@$(ECHO) "$(FANCY_RESET)"
-	$(MAKE) clean
+	@$(MAKE) clean
 
 clean:
 	@$(ECHO) "$(B_RED)"
 	$(RM) $(OBJ)
 	@$(ECHO) "$(FANCY_RESET)"
 
-cleanbonus: 
-	@$(ECHO) "$(B_RED)"
-	$(RM) $(BONUS_OBJ)
-	@$(ECHO) "$(FANCY_RESET)"
-
-fclean: clean cleanbonus
+fclean: clean
 	@$(ECHO) "$(B_RED)"
 	$(RM) $(NAME)
 	@$(ECHO) "$(FANCY_RESET)"

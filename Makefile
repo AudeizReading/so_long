@@ -11,42 +11,51 @@ RM=-rm -rf
 MAKE=make
 CFLAGS=-Wall -Werror -Wextra
 CHEADERS= -I ./includes
-LDFLAGS= -L ./lib/libft -lft
+LDFLAGS= -L ./lib/libft -lft -L ./lib/gnl -lgnl
 ALL_FLAGS= $(CHEADERS) $(CFLAGS)
 NAME=so_long
 LIBFT_PATH=./lib/libft
+GNL_PATH=./lib/gnl
 SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 main \
 	 ))\
 	 $(addprefix srcs/ft_, $(addsuffix .c, \
-	 main \
+	 \
 	 ))
 OBJ=$(SRCS:.c=.o)
 
-.PHONY: all clean fclean re test debug
+.PHONY: all clean fclean re test debug libft gnl
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(MAKE) libft
+	@$(MAKE) libft
+	@$(MAKE) gnl
 	@$(ECHO) "$(GRE)"
 	$(CC) $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	$(MAKE) libftclean
+	@$(MAKE) clean
+	@$(MAKE) libftclean
+	@$(MAKE) gnlclean
 
 libft:
 	@$(ECHO) "$(YEL)"
 	$(MAKE) -C $(LIBFT_PATH) all
 	@$(ECHO) "$(NO_COL)"
 
+gnl:
+	@$(ECHO) "$(MAG)"
+	$(MAKE) -C $(GNL_PATH) all
+	@$(ECHO) "$(NO_COL)"
+
 test: $(NAME)
 	./$(NAME)
-	$(MAKE) fclean
+	@$(MAKE) fclean
 	
 debug: $(OBJ)
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	valgrind ./$@
-	$(MAKE) clean
+	@$(MAKE) clean
 	$(RM) $@ debug.dSYM
 
 %.o: %.c
@@ -59,12 +68,17 @@ clean:
 	$(RM) $(OBJ)
 	@$(ECHO) "$(NO_COL)"
 
-libftclean: clean
+libftclean: 
 	@$(ECHO) "$(RED)"
 	$(RM) $(LIBFT_PATH)/libft.a
 	@$(ECHO) "$(NO_COL)"
 
-fclean: libftclean
+gnlclean:
+	@$(ECHO) "$(RED)"
+	$(RM) $(GNL_PATH)/libgnl.a
+	@$(ECHO) "$(NO_COL)"
+
+fclean: clean libftclean gnlclean
 	@$(ECHO) "$(RED)"
 	$(RM) $(NAME)
 	@$(ECHO) "$(NO_COL)"
