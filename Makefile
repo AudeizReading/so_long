@@ -53,10 +53,18 @@ test: $(NAME)
 	@$(MAKE) fclean
 	
 debug: $(OBJ)
+	@$(MAKE) libft
+	@$(MAKE) gnl
+	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
+	@$(ECHO) "$(NO_COL)"
 	valgrind ./$@
 	@$(MAKE) clean
+	@$(MAKE) libftclean
+	@$(MAKE) gnlclean
+	@$(ECHO) "$(RED)"
 	$(RM) $@ debug.dSYM
+	@$(ECHO) "$(NO_COL)"
 
 %.o: %.c
 	@$(ECHO) "$(GRE)"

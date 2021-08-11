@@ -1,6 +1,11 @@
-#include <fcntl.h>
-#include <unistd.h>
 #include "../includes/so_long.h"
+
+void	ft_puterror(void)
+{
+	ft_putendl_fd("Error", 2);
+	ft_putendl_fd(strerror(errno), 2);
+	exit(EXIT_FAILURE);
+}
 
 int		main(void)
 {
@@ -10,9 +15,12 @@ int		main(void)
 
 	gnl = 1;
 	line = NULL;
-	fd = open("main.c", O_RDONLY);
+	fd = open("srcs/main.c", O_RDONLY);
+	//fd = open("main.c", O_RDONLY);
 	if (fd == -1)
-		ft_putstr_fd("Error\n", 1);
+	{
+		ft_puterror();
+	}
 	while (gnl > 0)
 	{
 		gnl = get_next_line(fd, &line);
@@ -20,8 +28,10 @@ int		main(void)
 		free(line);
 	}
 	if (gnl == -1)
-		ft_putendl_fd("Error\ngnl a eu un souci\n", 1);
+	{
+		errno = 5;
+		ft_puterror();
+	}
 	close(fd);
-	ft_putstr_fd("Ca fonctionne\n", 1);
 	return (0);
 }
