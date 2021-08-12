@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 08:54:45 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/11 22:09:39 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/12 14:18:35 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ char	*ft_concat(char const *s1, char const *s2)
 	size_t				len_s1;
 	size_t				len_s2;
 
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
+	len_s1 = ft_strlen_gnl(s1);
+	len_s2 = ft_strlen_gnl(s2);
 	dst = ft_calloc_gnl(sizeof(*dst), (len_s1 + len_s2 + 1));
 	if (dst == NULL)
 		return (NULL);
@@ -89,8 +89,8 @@ int	get_next_line(int fd, char **line)
 
 	if (read(fd, buf, 0) < 0 || !line || BUFFER_SIZE < 1)
 		return (-1);
-	newline = ft_strdup("");
-	ret = ft_strlen(buf) + 1;
+	newline = ft_strdup_gnl("");
+	ret = ft_strlen_gnl(buf) + 1;
 	while (!ft_search(buf, '\n') && ret > 0)
 	{
 		newline = ft_concat(newline, buf);
@@ -101,7 +101,7 @@ int	get_next_line(int fd, char **line)
 	}
 	if (ft_search(buf, '\n'))
 		newline = ft_parse_buf(ret, buf, &newline);
-	*line = ft_strdup(newline);
+	*line = ft_strdup_gnl(newline);
 	if (ft_check_mem(*line, &newline))
 		return (-1);
 	free(newline);

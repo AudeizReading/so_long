@@ -6,13 +6,13 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 16:07:11 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/11 22:09:09 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/12 14:18:47 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_gnl(const char *s)
 {
 	size_t				len;
 
@@ -41,12 +41,12 @@ void	*ft_calloc_gnl(size_t count, size_t size)
 	return ((void *)buffer);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup_gnl(const char *s1)
 {
 	size_t				len_s1;
 	char				*dest;
 
-	len_s1 = ft_strlen(s1);
+	len_s1 = ft_strlen_gnl(s1);
 	dest = ft_calloc_gnl(sizeof(*dest), (len_s1 + 1));
 	if (!dest)
 	{

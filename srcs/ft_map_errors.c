@@ -21,6 +21,6 @@ void	ft_parse_map_error(int errnum)
 		if (tab_err[i].num == errnum)
 			ft_puterr(tab_err[i].message, tab_err[i].must_exit);
 		else
-			ft_puterr(strerror(errno), e_true);
+			ft_puterr(strerror(errnum), e_true);
 	}
 }

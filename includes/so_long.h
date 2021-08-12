@@ -18,5 +18,5 @@ typedef struct	s_error
 void	ft_puterror(void);
 void	ft_puterr(char *err, t_bool must_exit);
 void	ft_parse_map_error(int errnum);
-int		main(void);
+int		main(int argc, char **argv);
 #endif

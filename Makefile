@@ -50,7 +50,7 @@ gnl:
 	@$(ECHO) "$(NO_COL)"
 
 test: $(NAME)
-	./$(NAME)
+	./$(NAME) srcs/main.c
 	@$(MAKE) fclean
 	
 debug: $(OBJ)
@@ -59,7 +59,7 @@ debug: $(OBJ)
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	valgrind ./$@
+	valgrind ./$@ srcs/main.c
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
