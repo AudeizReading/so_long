@@ -1,12 +1,5 @@
 #include "../includes/so_long.h"
 
-/*typedef struct	s_error
-{
-	int		num;
-	char	*message;
-	t_bool	must_exit;
-}				t_error;
-
 void	ft_parse_map_error(int errnum)
 {
 	int		i;
@@ -30,31 +23,4 @@ void	ft_parse_map_error(int errnum)
 		else
 			ft_puterr(strerror(errno), e_true);
 	}
-}*/
-
-int		main(void)
-{
-	int		fd;
-	int		gnl;
-	char	*line;
-
-	gnl = 1;
-	line = NULL;
-	fd = open("srcs/main.c", O_RDONLY);
-	//fd = open("main.c", O_RDONLY);
-	if (fd == -1)
-		ft_parse_map_error(errno);
-	while (gnl > 0)
-	{
-		gnl = get_next_line(fd, &line);
-		ft_putendl_fd(line, 1);
-		free(line);
-	}
-	if (gnl == -1)
-	{
-	//	ft_parse_map_error(1024);
-		ft_parse_map_error(errno);
-	}
-	close(fd);
-	return (0);
 }

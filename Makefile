@@ -17,10 +17,11 @@ NAME=so_long
 LIBFT_PATH=./lib/libft
 GNL_PATH=./lib/gnl
 SRCS=$(addprefix srcs/, $(addsuffix .c, \
-	 main \
+	 main\
 	 ))\
 	 $(addprefix srcs/ft_, $(addsuffix .c, \
-	 \
+	 basic_error\
+	 map_errors\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
