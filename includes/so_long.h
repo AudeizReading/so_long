@@ -18,5 +18,6 @@ typedef struct	s_error
 void	ft_puterror(void);
 void	ft_puterr(char *err, t_bool must_exit);
 void	ft_parse_map_error(int errnum);
+t_bool	ft_is_map_file(char *filename, char *ext);
 int		main(int argc, char **argv);
 #endif

@@ -22,6 +22,7 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 $(addprefix srcs/ft_, $(addsuffix .c, \
 	 basic_error\
 	 map_errors\
+	 check_map\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
@@ -50,7 +51,7 @@ gnl:
 	@$(ECHO) "$(NO_COL)"
 
 test: $(NAME)
-	./$(NAME) srcs/main.c
+	./$(NAME) maps/13x5_valid_map.ber
 	@$(MAKE) fclean
 	
 debug: $(OBJ)
@@ -59,7 +60,7 @@ debug: $(OBJ)
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	valgrind ./$@ srcs/main.c
+	valgrind ./$@ maps/13x5_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
