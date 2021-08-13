@@ -16,50 +16,6 @@ typedef struct	s_map
 //	t_list	*line;
 }				t_map;
 
-t_list	*add_link(t_list *list, void *content)
-{
-	t_list	*tmp;
-
-	tmp = malloc(sizeof(t_list));
-	if (tmp)
-	{
-		tmp->content = ft_strdup(content);
-		tmp->next = list;
-	}
-	return (tmp);
-}
-
-t_list	*ft_new_mapline(void *content)
-{
-	t_list	*new_map;
-
-	new_map = (t_list *)malloc(sizeof(t_list));
-	if (!new_map)
-		return (NULL);
-	new_map->content = ft_strdup(content);
-	new_map->next = NULL;
-	return (new_map);
-}
-
-void	print_list(t_list *list)
-{
-	while (list)
-	{
-		ft_putendl_fd(list->content, 1);
-		list = list->next;
-	}
-}
-
-void	ft_clear_map(t_list *list)
-{
-	while (list)
-	{
-		free(list->content);
-		list = list->next;
-	}
-	free(list);
-}
-
 int		main(int argc, char **argv)
 {
 	int		fd;
@@ -91,17 +47,12 @@ int		main(int argc, char **argv)
 			if (gnl)
 				ft_lstadd_back(&map_line, tmp);/**/
 			free(line);
-		//	free(tmp->content);
-		//	free(tmp);
-			//ft_clear_map(tmp);
 		}
-		ft_putendl_fd("------MAP------------------------", 1);
-		print_list(map_line);
-		ft_putendl_fd("---------------------------------", 1);
 		if (gnl == -1)
 			ft_parse_map_error(errno);
-	//	ft_clear_map(map_line);
-	//	free(map_line);
+		ft_putendl_fd("------MAP------------------------", 1);
+		ft_print_list(map_line);
+		ft_putendl_fd("---------------------------------", 1);
 		ft_putnbr_fd(ft_lstsize(map_line), 1);
 		ft_putendl_fd(" maillons", 1);
 		ft_lstclear(&tmp, free);

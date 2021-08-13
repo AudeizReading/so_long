@@ -6,7 +6,7 @@
 #    By: alellouc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 08:35:31 by alellouc          #+#    #+#              #
-#    Updated: 2021/08/11 21:20:02 by alellouc         ###   ########.fr        #
+#    Updated: 2021/08/13 22:16:33 by alellouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ BONUS_SRC=$(addprefix ft_, $(addsuffix .c,\
 		  lstclear\
 		  lstiter\
 		  lstmap\
+		  print_list\
 		  ))
 OBJ=$(SRC:.c=.o)
 BONUS_OBJ=$(BONUS_SRC:.c=.o)

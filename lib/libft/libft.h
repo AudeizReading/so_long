@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 13:41:48 by alellouc          #+#    #+#             */
-/*   Updated: 2021/07/09 09:26:32 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/13 22:15:48 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,5 @@ int		ft_int_putstr_fd(char *str, int fd);
 t_bool	ft_check_invalid_base(char *base, int *base_2_convert);
 int		ft_putnbr_base(int nbr, char *base, t_bool restart);
 int		ft_luint_putnbr_base(unsigned long int nbr, char *base, t_bool restart);
+void	ft_print_list(t_list *list);
 #endif
