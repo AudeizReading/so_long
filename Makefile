@@ -60,7 +60,7 @@ debug: $(OBJ)
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	valgrind ./$@ maps/13x5_valid_map.ber
+	valgrind --leak-check=full ./$@ maps/13x5_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
