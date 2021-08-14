@@ -73,7 +73,7 @@ void	ft_point_clear(t_point **point, void (*del)(void *))
 
 	while (*point)
 	{
-		tmp = *point->next;
+		tmp = (*point)->next;
 		(*del)(*point);
 		(*point) = tmp;
 	}

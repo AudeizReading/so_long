@@ -87,7 +87,7 @@ debug-full: $(OBJ)
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
 	@$(ECHO) "$(RED)"
-	$(RM) $@ debug.dSYM
+	$(RM) $@ debug-full.dSYM
 	@$(ECHO) "$(NO_COL)"
 
 %.o: %.c
