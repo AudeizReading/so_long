@@ -4,6 +4,7 @@ typedef struct	s_point
 {
 	int				x;
 	int				y;
+	int				pos;
 	struct s_point	*next;
 }				t_point;
 
@@ -17,7 +18,7 @@ typedef struct	s_map
 	t_line	*first_line;
 }				t_map;
 
-t_point	*ft_init_point(int x, int y)
+t_point	*ft_init_point(int x, int y, int pos)
 {
 	t_point	*point;
 
@@ -26,6 +27,7 @@ t_point	*ft_init_point(int x, int y)
 		return (NULL);
 	point->x = x;
 	point->y = y;
+	point->pos = pos;
 	point->next = NULL;
 	return (point);
 }
@@ -50,6 +52,31 @@ t_point	*ft_last_point(t_point *point)
 	while (point->next)
 		point = point->next;
 	return (point);
+}
+
+void	ft_point_addback(t_point **point, t_point *last_point)
+{
+	t_point	*last;
+
+	if (!*point)
+	{
+		*point = last_point;
+		return ;
+	}
+	last = ft_last_point(*point);
+	last->next = last_point;
+}
+
+void	ft_point_clear(t_point **point, void (*del)(void *))
+{
+	t_point	*tmp;
+
+	while (*point)
+	{
+		tmp = *point->next;
+		(*del)(*point);
+		(*point) = tmp;
+	}
 }
 
 void	print_info_map(t_map *map)
