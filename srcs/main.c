@@ -135,24 +135,17 @@ int		main(int argc, char **argv)
 			if (gnl)
 			{
 				m_tmp = ft_init_line(line, y++);
-				//y++;
 				ft_map_addback(&m_line, m_tmp);
 			}
 			free(line);
 		}
 		if (gnl == -1)
 			ft_parse_map_error(errno);
-	/*	ft_putendl_fd("------MAP------------------------", 1);
-		ft_print_list(map_line);
-		ft_putendl_fd("---------------------------------", 1);
-		ft_putnbr_fd(ft_lstsize(map_line), 1);
-		ft_putendl_fd(" maillons", 1);*/
 		ft_putendl_fd("------MY_MAP---------------------", 1);
 		ft_print_map(m_line);
 		ft_putendl_fd("---------------------------------", 1);
 		ft_putnbr_fd(ft_map_size(m_line), 1);
 		ft_putendl_fd(" maillons", 1);
-//		ft_lstclear(&map_line, free);
 		ft_map_clear(&m_line, free);
 		close(fd);
 	}
