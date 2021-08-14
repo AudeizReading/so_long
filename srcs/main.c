@@ -7,120 +7,71 @@ typedef struct	s_point
 	struct s_point	*next;
 }				t_point;
 
-typedef struct	s_line
-{
-	char			*content;
-	int				y;
-	size_t			len;
-	struct	s_line	*next;
-}				t_line;
-
 typedef struct	s_map
 {
 	size_t	cols;
 	size_t	lines;
-//	t_point	start;
-//	t_point	collect;
-//	t_point	end;
-//	t_list	*line;
+//	t_point	*start;
+//	t_point	*collect;
+//	t_point	*end;
+	t_line	*first_line;
 }				t_map;
 
-t_line	*ft_init_line(char *content, int pos)
+t_point	*ft_init_point(int x, int y)
 {
-	t_line	*new_line;
+	t_point	*point;
 
-	new_line = (t_line *)malloc(sizeof(*new_line));
-	if (!new_line)
+	point = (t_point *)malloc(sizeof(*point));
+	if (!point)
 		return (NULL);
-	new_line->content = ft_strdup(content);
-	new_line->y = pos;
-	new_line->len = ft_strlen(new_line->content);
-	new_line->next = NULL;
-	return (new_line);
+	point->x = x;
+	point->y = y;
+	point->next = NULL;
+	return (point);
 }
 
-int			ft_map_size(t_line *map)
+int		ft_point_list_size(t_point *point)
 {
-	int			size;
+	int		size;
 
 	size = 0;
-	while (map)
+	while (point)
 	{
 		size++;
-		map = map->next;
+		point = point->next;
 	}
 	return (size);
 }
 
-t_line	*ft_last_line(t_line *map)
+t_point	*ft_last_point(t_point *point)
 {
-	if (!map)
+	if (!point)
 		return (NULL);
-	while (map->next)
-		map = map->next;
-	return (map);
+	while (point->next)
+		point = point->next;
+	return (point);
 }
 
-void		ft_map_addback(t_line **map, t_line *line)
+void	print_info_map(t_map *map)
 {
-	t_line	*last_line;
-
-	if (!*map)
-	{
-		(*map) = line;
-		return ;
-	}
-	last_line = ft_last_line(*map);
-	last_line->next = line;
-}
-
-void		ft_map_delone(t_line *line, void (*del)(void *))
-{
-	(*del)(line->content);
-	free(line);
-	line = NULL;
-}
-
-void		ft_map_clear(t_line **map, void (*del)(void *))
-{
-	t_line	*tmp;
-
-	while (*map)
-	{
-		tmp = (*map)->next;
-		ft_map_delone(*map, del);
-		(*map) = tmp;
-	}
-}
-
-void		ft_print_map(t_line *map)
-{
-	while (map)
-	{
-		ft_putendl_fd(map->content, 1);
-		ft_putnbr_fd(map->y, 1);
-		ft_putstr_fd(" pos y\n", 1);
-		ft_putnbr_fd(map->len, 1);
-		ft_putstr_fd(" length line\n", 1);
-		map = map->next;
-	}
+	ft_putendl_fd("------------MAP------------------", 1);
+	ft_print_map(map->first_line);
+	ft_putnbr_fd(map->lines, 1);
+	ft_putendl_fd(" maillons", 1);
+	ft_putendl_fd("Dimensions map :", 1);
+	ft_putnbr_fd(map->cols, 1);
+	ft_putstr_fd(" x ", 1);
+	ft_putnbr_fd(map->lines, 1);
+	ft_putstr_fd("\n", 1);
+	ft_putendl_fd("---------------------------------", 1);
 }
 
 int		main(int argc, char **argv)
 {
 	int		fd;
-	int		gnl;
-	char	*line;
 	t_map	*map;
-	t_line	*m_line;
-	t_line	*m_tmp;
-	int		y;
 
-	gnl = 1;
-	y = 0;
-	line = NULL;
-	m_line = NULL;
-	map  = &(t_map){0, 0, /*{0, 0}, {0, 0}*/};
+	map  = &(t_map){0, 0, /*{0, 0}, {0, 0}*/NULL};
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
@@ -128,25 +79,11 @@ int		main(int argc, char **argv)
 			ft_parse_map_error(errno);
 		if (!ft_is_map_file(argv[1], ".ber"))
 			ft_parse_map_error(79);
-		while (gnl > 0)
-		{
-			gnl = get_next_line(fd, &line);
-		//	ft_putendl_fd(line, 1);
-			if (gnl)
-			{
-				m_tmp = ft_init_line(line, y++);
-				ft_map_addback(&m_line, m_tmp);
-			}
-			free(line);
-		}
-		if (gnl == -1)
-			ft_parse_map_error(errno);
-		ft_putendl_fd("------MY_MAP---------------------", 1);
-		ft_print_map(m_line);
-		ft_putendl_fd("---------------------------------", 1);
-		ft_putnbr_fd(ft_map_size(m_line), 1);
-		ft_putendl_fd(" maillons", 1);
-		ft_map_clear(&m_line, free);
+		map->first_line = ft_get_map(fd);
+		map->lines = ft_map_size(map->first_line);
+		map->cols = map->first_line->len;
+		print_info_map(map);
+		ft_map_clear(&map->first_line, free);
 		close(fd);
 	}
 	else
