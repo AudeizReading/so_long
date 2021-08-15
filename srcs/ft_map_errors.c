@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 19:28:42 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/14 19:28:46 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/15 07:05:35 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ void	ft_parse_map_error(int errnum)
 {
 	int		i;
 	static t_error	tab_err[] = {
-		{1024, "Error encountered while reading map's lines", e_true},
-		{1025, "Not a .ber map", e_true},
-		{1026, "Map is not rectangular", e_true},
-		{1027, "Map is not entirely closed by walls", e_true},
-		{1028, "Map contains invalid characters", e_true},
-		{1029, "Map does not have any exit", e_true},
-		{1030, "Map does not have any collectible", e_true},
-		{1031, "Map does not have any starting position", e_true},
+		{1024, "Problem encountered while setting map's line", e_true},
+		{1025, "No map", e_true},
+		{1026, "Not a .ber map", e_true},
+		{1027, "Map is not rectangular", e_true},
+		{1028, "Map is not entirely closed by walls", e_true},
+		{1029, "Map contains invalid characters", e_true},
+		{1030, "Map does not have any exit", e_true},
+		{1031, "Map does not have any collectible", e_true},
+		{1032, "Map does not have any starting position", e_true},
 		{-1, NULL, e_false}
 	};
 

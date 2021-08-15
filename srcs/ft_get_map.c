@@ -6,16 +6,37 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 19:26:42 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/14 19:26:46 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/15 07:47:21 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+void	ft_check_line(t_line *tmp, t_line **map)
+{
+	if (!tmp)
+	{
+		if (*map)
+			ft_map_clear(map, free);
+		ft_parse_map_error(1024);
+	}
+}
+
+void	ft_set_map(int gnl, char *line, int *y, t_line **map)
+{
+	t_line	*tmp;
+
+	if (gnl)
+	{
+		tmp = ft_init_line(line, (*y)++);
+		ft_check_line(tmp, map);
+		ft_map_addback(map, tmp);
+	}
+}
+
 t_line	*ft_get_map(int fd)
 {
 	t_line	*map;
-	t_line	*tmp;
 	int		gnl;
 	int		y;
 	char	*line;
@@ -27,11 +48,7 @@ t_line	*ft_get_map(int fd)
 	while (gnl > 0)
 	{
 		gnl = get_next_line(fd, &line);
-		if (gnl)
-		{
-			tmp = ft_init_line(line, y++);
-			ft_map_addback(&map, tmp);
-		}
+		ft_set_map(gnl, line, &y, &map);
 		free(line);
 	}
 	if (gnl == -1)

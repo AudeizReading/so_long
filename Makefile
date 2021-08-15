@@ -31,6 +31,12 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 map_delone\
 	 map_clear\
 	 print_map\
+	 init_point\
+	 point_list_size\
+	 last_point\
+	 point_addback\
+	 point_clear\
+	 print_point_list\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
