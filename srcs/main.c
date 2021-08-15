@@ -38,6 +38,8 @@ int		main(int argc, char **argv)
 		if (!ft_is_map_file(argv[1], ".ber"))
 			ft_parse_map_error(79);
 		map->first_line = ft_get_map(fd);
+		if (!map->first_line)
+			ft_parse_error(1025);
 		// Throw error if no map->first_line as "no map"
 		map->lines = ft_map_size(map->first_line);
 		map->cols = map->first_line->len;
