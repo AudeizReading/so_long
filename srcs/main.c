@@ -46,14 +46,29 @@ t_bool	ft_check_valid_characters(t_line *map)
 t_bool	ft_check_wall(t_line *map)
 {
 	char	*p_content;
+	int		size_max;
+	int		map_len;
+	int		cnt;
+
+	size_max = ft_map_size(map) - 1;
+	map_len = (int)map->len - 1;
 	while (map)
 	{
+		cnt = 0;
 		p_content = map->content;
-		while (*p_content)
+		while (p_content[cnt])
 		{
-			ft_putnbr_fd(map->y, 1);
-			ft_putstr_fd("\n", 1);
-			p_content++;
+			if (!map->y || map->y == size_max /*|| !cnt || cnt == map_len*/)
+			{
+				if (!ft_strchr("1", p_content[cnt]))
+					return (e_false);
+			}
+			if (!cnt || cnt == map_len)
+			{
+				if (!ft_strchr("1", p_content[cnt]))
+					return (e_false);
+			}
+			cnt++;
 		}
 		map = map->next;
 	}
@@ -145,7 +160,7 @@ int		main(int argc, char **argv)
 		ft_print_point_list(map->end);
 		ft_point_clear(&map->end, free);
 		map->wall = ft_has_object(map->first_line, '1', 0);
-		if (!map->wall)
+		if (!map->wall/* || ft_check_wall(map->first_line)*/)
 			ft_parse_map_error(1028);
 	//	ft_print_point_list(map->wall);
 	/*	int abs = 0; 
@@ -167,7 +182,9 @@ int		main(int argc, char **argv)
 			map->wall = map->wall->next;
 		}*/
 		ft_point_clear(&map->wall, free);
-		ft_check_wall(map->first_line);
+	//	ft_check_wall(map->first_line);
+		if (ft_check_wall(map->first_line))
+			ft_putendl_fd("Ya un pb avec la fonction", 1);
 		ft_map_clear(&map->first_line, free);
 		close(fd);
 	}
