@@ -7,6 +7,7 @@ typedef struct	s_map
 	t_point	*start;
 	t_point	*collect;
 	t_point	*end;
+	t_point	*wall;
 	t_line	*first_line;
 }				t_map;
 
@@ -90,7 +91,7 @@ int		main(int argc, char **argv)
 	int		fd;
 	t_map	*map;
 
-	map  = &(t_map){0, 0, NULL, NULL, NULL, NULL};
+	map  = &(t_map){0, 0, NULL, NULL, NULL, NULL, NULL};
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
@@ -126,6 +127,28 @@ int		main(int argc, char **argv)
 		ft_putendl_fd("Liste des points de sortie", 1);
 		ft_print_point_list(map->end);
 		ft_point_clear(&map->end, free);
+		map->wall = ft_has_object(map->first_line, '1', 0);
+		if (!map->wall)
+			ft_parse_map_error(1028);
+	//	ft_print_point_list(map->wall);
+		while (map->wall)
+		{
+		/*	ft_putstr_fd("map->first_line->y ", 1);
+			ft_putnbr_fd(map->first_line->y, 1);
+			ft_putchar_fd('\n', 1);*/
+			if (map->wall->y == 0 || map->wall->y == ft_map_size(map->first_line) - 1)
+			{
+				ft_putendl_fd("Liste des points de murs", 1);
+				ft_putstr_fd("y ", 1);
+				ft_putnbr_fd(map->wall->y, 1);
+				ft_putstr_fd("x ", 1);
+				ft_putnbr_fd(map->wall->x, 1);
+				ft_putchar_fd('\n', 1);
+			//	ft_print_point_list(map->wall);
+			}
+			map->wall = map->wall->next;
+		}
+		ft_point_clear(&map->wall, free);
 		ft_map_clear(&map->first_line, free);
 		close(fd);
 	}
