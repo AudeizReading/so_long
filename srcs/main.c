@@ -43,6 +43,23 @@ t_bool	ft_check_valid_characters(t_line *map)
 	return (e_true);
 }
 
+t_bool	ft_check_wall(t_line *map)
+{
+	char	*p_content;
+	while (map)
+	{
+		p_content = map->content;
+		while (*p_content)
+		{
+			ft_putnbr_fd(map->y, 1);
+			ft_putstr_fd("\n", 1);
+			p_content++;
+		}
+		map = map->next;
+	}
+	return (e_true);
+}
+
 t_point	*ft_has_object(t_line *line, char c, int i)
 {
 	char	*p_content;
@@ -131,24 +148,26 @@ int		main(int argc, char **argv)
 		if (!map->wall)
 			ft_parse_map_error(1028);
 	//	ft_print_point_list(map->wall);
+	/*	int abs = 0; 
 		while (map->wall)
 		{
-		/*	ft_putstr_fd("map->first_line->y ", 1);
-			ft_putnbr_fd(map->first_line->y, 1);
-			ft_putchar_fd('\n', 1);*/
 			if (map->wall->y == 0 || map->wall->y == ft_map_size(map->first_line) - 1)
 			{
-				ft_putendl_fd("Liste des points de murs", 1);
-				ft_putstr_fd("y ", 1);
-				ft_putnbr_fd(map->wall->y, 1);
-				ft_putstr_fd("x ", 1);
-				ft_putnbr_fd(map->wall->x, 1);
-				ft_putchar_fd('\n', 1);
-			//	ft_print_point_list(map->wall);
+				if (abs == map->wall->x)
+				{
+					ft_putendl_fd("Liste des points de murs", 1);
+					ft_putstr_fd("y ", 1);
+					ft_putnbr_fd(map->wall->y, 1);
+					ft_putstr_fd("x ", 1);
+					ft_putnbr_fd(map->wall->x, 1);
+					ft_putchar_fd('\n', 1);
+				}
 			}
+			abs++;
 			map->wall = map->wall->next;
-		}
+		}*/
 		ft_point_clear(&map->wall, free);
+		ft_check_wall(map->first_line);
 		ft_map_clear(&map->first_line, free);
 		close(fd);
 	}
