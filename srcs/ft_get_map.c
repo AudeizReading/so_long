@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 19:26:42 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/15 07:47:21 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/18 21:12:57 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_line	*ft_get_map(int fd)
 	while (gnl > 0)
 	{
 		gnl = get_next_line(fd, &line);
+		if (!line)
+			return (NULL);
 		ft_set_map(gnl, line, &y, &map);
 		free(line);
 	}

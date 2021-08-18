@@ -31,6 +31,8 @@ t_bool	ft_check_valid_characters(t_line *map)
 
 	while (map)
 	{
+		if (!ft_strlen(map->content))
+			return (e_false);
 		p_content = map->content;
 		while (*p_content)
 		{
@@ -58,12 +60,7 @@ t_bool	ft_check_wall(t_line *map)
 		p_content = map->content;
 		while (p_content[cnt])
 		{
-			if (!map->y || map->y == size_max /*|| !cnt || cnt == map_len*/)
-			{
-				if (!ft_strchr("1", p_content[cnt]))
-					return (e_false);
-			}
-			if (!cnt || cnt == map_len)
+			if (!map->y || map->y == size_max || !cnt || cnt == map_len)
 			{
 				if (!ft_strchr("1", p_content[cnt]))
 					return (e_false);
@@ -126,66 +123,57 @@ int		main(int argc, char **argv)
 	map  = &(t_map){0, 0, NULL, NULL, NULL, NULL, NULL};
 	if (argc == 2)
 	{
+		// Ouverture du fichier
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 			ft_parse_map_error(errno);
+		// Verification que le nom de fichier se termine en .ber
 		if (!ft_is_map_file(argv[1], ".ber"))
 			ft_parse_map_error(1026);
+		// Recuperation de la map
 		map->first_line = ft_get_map(fd);
 		if (!map->first_line)
 			ft_parse_map_error(1025);
+		// Parametrage du nombre de lignes et de colonnes de la map
 		map->lines = ft_map_size(map->first_line);
 		map->cols = map->first_line->len;
+		// debugage
 		print_info_map(map);
+		// Verif presence des chars 0 1 C E P
 		if(!ft_check_valid_characters(map->first_line))
 			ft_parse_map_error(1029);
+		// Verif map rectangulaire
 		if (!ft_is_rectangular_map(map->first_line))
 			ft_parse_map_error(1027);
+		// Recup de la (ou des) position de depart
 		map->start = ft_has_object(map->first_line, 'P', 0);
 		if (!map->start)
 			ft_parse_map_error(1032);
 		ft_putendl_fd("Liste des points de depart", 1);
 		ft_print_point_list(map->start);
 		ft_point_clear(&map->start, free);
+		// Recup des positions des collectibles
 		map->collect = ft_has_object(map->first_line, 'C', 0);
 		if (!map->collect)
 			ft_parse_map_error(1031);
 		ft_putendl_fd("Liste des points de collectibles", 1);
 		ft_print_point_list(map->collect);
 		ft_point_clear(&map->collect, free);
+		// Recup de la (ou des) position de sortie
 		map->end = ft_has_object(map->first_line, 'E', 0);
 		if (!map->end)
 			ft_parse_map_error(1030);
 		ft_putendl_fd("Liste des points de sortie", 1);
 		ft_print_point_list(map->end);
 		ft_point_clear(&map->end, free);
+		// Recup des positions des murs
 		map->wall = ft_has_object(map->first_line, '1', 0);
-		if (!map->wall/* || ft_check_wall(map->first_line)*/)
+		if (!map->wall || !ft_check_wall(map->first_line))
 			ft_parse_map_error(1028);
-	//	ft_print_point_list(map->wall);
-	/*	int abs = 0; 
-		while (map->wall)
-		{
-			if (map->wall->y == 0 || map->wall->y == ft_map_size(map->first_line) - 1)
-			{
-				if (abs == map->wall->x)
-				{
-					ft_putendl_fd("Liste des points de murs", 1);
-					ft_putstr_fd("y ", 1);
-					ft_putnbr_fd(map->wall->y, 1);
-					ft_putstr_fd("x ", 1);
-					ft_putnbr_fd(map->wall->x, 1);
-					ft_putchar_fd('\n', 1);
-				}
-			}
-			abs++;
-			map->wall = map->wall->next;
-		}*/
 		ft_point_clear(&map->wall, free);
-	//	ft_check_wall(map->first_line);
-		if (ft_check_wall(map->first_line))
-			ft_putendl_fd("Ya un pb avec la fonction", 1);
+		// Liberation de la map
 		ft_map_clear(&map->first_line, free);
+		// Fermeture du file descriptor
 		close(fd);
 	}
 	else

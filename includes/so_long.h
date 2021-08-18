@@ -1,5 +1,6 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
+# include <sys/types.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
