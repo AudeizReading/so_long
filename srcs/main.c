@@ -11,6 +11,24 @@ typedef struct	s_map
 	t_line	*first_line;
 }				t_map;
 
+t_map	*ft_init_map(void);
+t_map	*ft_init_map(void)
+{
+	t_map	*map;
+
+	map = (t_map *)malloc(sizeof(*map));
+	if (!map)
+		return (NULL);
+	map->cols = 0;
+	map->lines = 0;
+	map->start = NULL;
+	map->collect = NULL;
+	map->end = NULL;
+	map->wall = NULL;
+	map->first_line = NULL;
+	return (map);
+}
+
 void	print_info_map(t_map *map)
 {
 	ft_putendl_fd("------------MAP------------------", 1);
@@ -120,7 +138,8 @@ int		main(int argc, char **argv)
 	int		fd;
 	t_map	*map;
 
-	map  = &(t_map){0, 0, NULL, NULL, NULL, NULL, NULL};
+//	map  = &(t_map){0, 0, NULL, NULL, NULL, NULL, NULL};
+	map = ft_init_map();
 	if (argc == 2)
 	{
 		// Ouverture du fichier
@@ -151,28 +170,30 @@ int		main(int argc, char **argv)
 			ft_parse_map_error(1032);
 		ft_putendl_fd("Liste des points de depart", 1);
 		ft_print_point_list(map->start);
-		ft_point_clear(&map->start, free);
 		// Recup des positions des collectibles
 		map->collect = ft_has_object(map->first_line, 'C', 0);
 		if (!map->collect)
 			ft_parse_map_error(1031);
 		ft_putendl_fd("Liste des points de collectibles", 1);
 		ft_print_point_list(map->collect);
-		ft_point_clear(&map->collect, free);
 		// Recup de la (ou des) position de sortie
 		map->end = ft_has_object(map->first_line, 'E', 0);
 		if (!map->end)
 			ft_parse_map_error(1030);
 		ft_putendl_fd("Liste des points de sortie", 1);
 		ft_print_point_list(map->end);
-		ft_point_clear(&map->end, free);
 		// Recup des positions des murs
 		map->wall = ft_has_object(map->first_line, '1', 0);
 		if (!map->wall || !ft_check_wall(map->first_line))
 			ft_parse_map_error(1028);
+		// Liberation des points
+		ft_point_clear(&map->start, free);
+		ft_point_clear(&map->collect, free);
+		ft_point_clear(&map->end, free);
 		ft_point_clear(&map->wall, free);
 		// Liberation de la map
 		ft_map_clear(&map->first_line, free);
+		free(map);
 		// Fermeture du file descriptor
 		close(fd);
 	}
