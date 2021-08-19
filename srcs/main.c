@@ -12,6 +12,14 @@ void	print_info_map(t_map *map)
 	ft_putnbr_fd(map->lines, 1);
 	ft_putstr_fd("\n", 1);
 	ft_putendl_fd("---------------------------------", 1);
+	ft_putendl_fd("Liste des points de depart", 1);
+	ft_print_point_list(map->start);
+	ft_putendl_fd("Liste des points collectables", 1);
+	ft_print_point_list(map->collect);
+	ft_putendl_fd("Liste des points de sortie", 1);
+	ft_print_point_list(map->end);
+	ft_putendl_fd("Liste des points de murs", 1);
+	ft_print_point_list(map->wall);
 }
 
 int		main(int argc, char **argv)
@@ -37,8 +45,6 @@ int		main(int argc, char **argv)
 		// Parametrage du nombre de lignes et de colonnes de la map
 		map->lines = ft_map_size(map->first_line);
 		map->cols = map->first_line->len;
-		// debugage
-		print_info_map(map);
 		// Verif presence des chars 0 1 C E P
 		if(!ft_check_valid_characters(map->first_line))
 			ft_parse_map_error(1029);
@@ -49,24 +55,20 @@ int		main(int argc, char **argv)
 		map->start = ft_has_object(map->first_line, 'P', 0);
 		if (!map->start)
 			ft_parse_map_error(1032);
-		ft_putendl_fd("Liste des points de depart", 1);
-		ft_print_point_list(map->start);
 		// Recup des positions des collectibles
 		map->collect = ft_has_object(map->first_line, 'C', 0);
 		if (!map->collect)
 			ft_parse_map_error(1031);
-		ft_putendl_fd("Liste des points de collectibles", 1);
-		ft_print_point_list(map->collect);
 		// Recup de la (ou des) position de sortie
 		map->end = ft_has_object(map->first_line, 'E', 0);
 		if (!map->end)
 			ft_parse_map_error(1030);
-		ft_putendl_fd("Liste des points de sortie", 1);
-		ft_print_point_list(map->end);
 		// Recup des positions des murs
 		map->wall = ft_has_object(map->first_line, '1', 0);
 		if (!map->wall || !ft_check_wall(map->first_line))
 			ft_parse_map_error(1028);
+		// debugage
+		print_info_map(map);
 		// Liberation des points
 		ft_point_clear(&map->start, free);
 		ft_point_clear(&map->collect, free);

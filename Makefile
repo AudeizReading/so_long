@@ -71,6 +71,16 @@ gnl:
 
 test: $(NAME)
 	./$(NAME) maps/13x5_valid_map.ber
+#	./$(NAME) maps/13x5_invalid_char.ber
+#	./$(NAME) maps/13x5_invalid_wall.ber
+#	./$(NAME) maps/13x5_multi_collectibles.ber
+#	./$(NAME) maps/13x5_no_starting_pos.ber
+#	./$(NAME) maps/13x5_not_rectangular_map`.ber
+#	./$(NAME) maps/13x6_invalid_blank_line.ber
+#	./$(NAME) maps/80x25_valid_map.ber
+#	./$(NAME) maps/foireux.ber
+#	./$(NAME) maps/directory.ber
+#	./$(NAME) maps/directory.ber/13x5_valid_map.ber
 	@$(MAKE) fclean
 	
 debug: $(OBJ)
