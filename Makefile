@@ -37,6 +37,11 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 point_addback\
 	 point_clear\
 	 print_point_list\
+	 init_map\
+	 check_valid_characters\
+	 check_wall\
+	 has_object\
+	 is_rectangular_map\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
@@ -88,7 +93,7 @@ debug-full: $(OBJ)
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	valgrind --leak-check=full ./$@ maps/13x5_valid_map.ber
+	valgrind --leak-check=full --show-leak-kinds=all ./$@ maps/13x5_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean

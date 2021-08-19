@@ -32,6 +32,17 @@ typedef struct	s_point
 	struct s_point	*next;
 }				t_point;
 
+typedef struct	s_map
+{
+	size_t	cols;
+	size_t	lines;
+	t_point	*start;
+	t_point	*collect;
+	t_point	*end;
+	t_point	*wall;
+	t_line	*first_line;
+}				t_map;
+
 void	ft_puterror(void);
 void	ft_puterr(char *err, t_bool must_exit);
 void	ft_parse_map_error(int errnum);
@@ -52,6 +63,11 @@ int		ft_point_list_size(t_point *point);
 void	ft_point_addback(t_point **point, t_point *last_point);
 void	ft_point_clear(t_point **point, void (*del)(void *));
 void	ft_print_point_list(t_point *point);
-//void	print_info_map(t_map *map);
+t_map	*ft_init_map(void);
+void	print_info_map(t_map *map);
+t_bool	ft_check_valid_characters(t_line *map);
+t_bool	ft_check_wall(t_line *map);
+t_point	*ft_has_object(t_line *line, char c, int i);
+t_bool	ft_is_rectangular_map(t_line *map);
 int		main(int argc, char **argv);
 #endif
