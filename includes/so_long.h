@@ -8,6 +8,7 @@
 # include <stdio.h>
 # include "../lib/libft/libft.h"
 # include "../lib/gnl/get_next_line.h"
+# include "../lib/minilibx_mms_20200219/mlx.h"
 
 typedef struct	s_error
 {

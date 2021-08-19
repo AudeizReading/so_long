@@ -11,11 +11,13 @@ RM=-rm -rf
 MAKE=make
 CFLAGS=-Wall -Werror -Wextra
 CHEADERS= -I ./includes
-LDFLAGS= -L ./lib/libft -lft -L ./lib/gnl -lgnl
 ALL_FLAGS= $(CHEADERS) $(CFLAGS)
 NAME=so_long
 LIBFT_PATH=./lib/libft
 GNL_PATH=./lib/gnl
+MLX_PATH=./lib/minilibx_mms_20200219
+LDFLAGS= -L $(LIBFT_PATH) -lft -L $(GNL_PATH) -lgnl -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
+#LDFLAGS= -L $(LIBFT_PATH) -lft -L $(GNL_PATH) -lgnl -L . -lmlx
 SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 main\
 	 ))\
@@ -55,6 +57,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(MAKE) libft
 	@$(MAKE) gnl
+	@$(MAKE) mlx 
+	cp $(MLX_PATH)/libmlx.dylib .
 	@$(ECHO) "$(GRE)"
 	$(CC) $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
@@ -72,6 +76,11 @@ gnl:
 	$(MAKE) -C $(GNL_PATH) all
 	@$(ECHO) "$(NO_COL)"
 
+mlx:
+	@$(ECHO) "$(BLU)"
+	$(MAKE) -C $(MLX_PATH) all
+	@$(ECHO) "$(NO_COL)"
+
 test: $(NAME)
 	./$(NAME) maps/13x5_valid_map.ber
 #	./$(NAME) maps/13x5_invalid_char.ber
@@ -85,10 +94,13 @@ test: $(NAME)
 #	./$(NAME) maps/directory.ber
 #	./$(NAME) maps/directory.ber/13x5_valid_map.ber
 	@$(MAKE) fclean
+	@$(MAKE) mlxclean
 	
 debug: $(OBJ)
 	@$(MAKE) libft
 	@$(MAKE) gnl
+	@$(MAKE) mlx
+	cp $(MLX_PATH)/libmlx.dylib .
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
@@ -96,13 +108,17 @@ debug: $(OBJ)
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
+	@$(MAKE) mlxclean
 	@$(ECHO) "$(RED)"
 	$(RM) $@ debug.dSYM
+	$(RM) $@ libmlx.dylib.dSYM
 	@$(ECHO) "$(NO_COL)"
 
 debug-full: $(OBJ)
 	@$(MAKE) libft
 	@$(MAKE) gnl
+	@$(MAKE) mlx
+	cp $(MLX_PATH)/libmlx.dylib .
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
@@ -110,8 +126,10 @@ debug-full: $(OBJ)
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
+	@$(MAKE) mlxclean
 	@$(ECHO) "$(RED)"
 	$(RM) $@ debug-full.dSYM
+	$(RM) $@ libmlx.dylib.dSYM
 	@$(ECHO) "$(NO_COL)"
 
 %.o: %.c
@@ -134,7 +152,12 @@ gnlclean:
 	$(RM) $(GNL_PATH)/libgnl.a
 	@$(ECHO) "$(NO_COL)"
 
-fclean: clean libftclean gnlclean
+mlxclean:
+	@$(ECHO) "$(RED)"
+	$(RM) libmlx.dylib
+	@$(ECHO) "$(NO_COL)"
+
+fclean: clean libftclean gnlclean 
 	@$(ECHO) "$(RED)"
 	$(RM) $(NAME)
 	@$(ECHO) "$(NO_COL)"
