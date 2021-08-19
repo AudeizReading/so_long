@@ -42,6 +42,9 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 check_wall\
 	 has_object\
 	 is_rectangular_map\
+	 clean_map\
+	 get_objects_pos\
+	 parse_map\
 	 ))
 OBJ=$(SRCS:.c=.o)
 

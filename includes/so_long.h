@@ -69,5 +69,8 @@ t_bool	ft_check_valid_characters(t_line *map);
 t_bool	ft_check_wall(t_line *map);
 t_point	*ft_has_object(t_line *line, char c, int i);
 t_bool	ft_is_rectangular_map(t_line *map);
+void	ft_get_objects_pos(t_map *map);
+void	ft_clean_map(t_map *map);
+t_map	*ft_parse_map(int fd, char **argv);
 int		main(int argc, char **argv);
 #endif

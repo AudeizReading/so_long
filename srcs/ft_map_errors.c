@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 19:28:42 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/15 17:15:54 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/19 14:27:00 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_parse_map_error(int errnum)
 {
-	int		i;
+	int				i;
 	static t_error	tab_err[] = {
 		{1024, "Problem encountered while setting map's line", e_true},
 		{1025, "No map available", e_true},
