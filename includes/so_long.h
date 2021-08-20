@@ -73,5 +73,10 @@ t_bool	ft_is_rectangular_map(t_line *map);
 void	ft_get_objects_pos(t_map *map);
 void	ft_clean_map(t_map *map);
 t_map	*ft_parse_map(int fd, char **argv);
+int		ft_get_trgb(int t, int r, int g, int b);
+int		ft_get_t(int trgb);
+int		ft_get_r(int trgb);
+int		ft_get_g(int trgb);
+int		ft_get_b(int trgb);
 int		main(int argc, char **argv);
 #endif
