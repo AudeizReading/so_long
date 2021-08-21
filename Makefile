@@ -51,7 +51,7 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 ))
 OBJ=$(SRCS:.c=.o)
 
-.PHONY: all clean fclean re test debug libft gnl
+.PHONY: all clean fclean re test debug debug-full libft gnl mlx libftclean gnlclean mlxclean
 
 all: $(NAME)
 
@@ -155,7 +155,7 @@ gnlclean:
 
 mlxclean:
 	@$(ECHO) "$(RED)"
-	$(RM) libmlx.dylib
+	$(RM) libmlx.dylib $(MLX_PATH)/libmlx.dylib
 	@$(ECHO) "$(NO_COL)"
 
 fclean: clean libftclean gnlclean 
