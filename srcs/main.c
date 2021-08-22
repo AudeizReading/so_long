@@ -13,6 +13,9 @@ typedef struct	s_img
 	int		bits_per_pix;
 	int		line_len;
 	int		endian;
+//	t_data	*data;
+	void	*mlx;
+	void	*win;
 }				t_img;
 
 void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
@@ -25,46 +28,35 @@ void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned *)dst = color;
 }
 
-int		key_hook(int keycode, t_data *data)
+int		ft_close(t_img *img)
 {
-	ft_putendl_fd("Hello from key_hook", 1);
-	ft_putstr_fd("keycode; ", 1);
-	ft_putnbr_fd(keycode, 1);
-	ft_putchar_fd('\n', 1);
-	if (keycode == 53)
-	{
-		mlx_destroy_window(data->mlx, data->win);
-		exit(EXIT_SUCCESS);
-	//	ft_clean_map(map);
-	//	close(fd);
-	}
+	//mlx_destroy_image(img->data->mlx, img->def);
+	//mlx_destroy_window(img->data->mlx, img->data->win);
+	mlx_destroy_image(img->mlx, img->def);
+	mlx_destroy_window(img->mlx, img->win);
+	exit(EXIT_SUCCESS);
 	return (0);
 }
 
-int		mouse_hook(int button, int x, int y, t_data *data)
+int		key_hook(int keycode, t_img *img)
 {
-	(void)data;
-	ft_putendl_fd("Hello from mouse_hook", 1);
-	ft_putstr_fd("button; ", 1);
-	ft_putnbr_fd(button, 1);
-	ft_putchar_fd('\n', 1);
-	ft_putstr_fd("x; ", 1);
-	ft_putnbr_fd(x, 1);
-	ft_putchar_fd('\n', 1);
-	ft_putstr_fd("y; ", 1);
-	ft_putnbr_fd(y, 1);
-	ft_putchar_fd('\n', 1);
+	if (keycode == 53)
+		ft_close(img);
 	return (0);
 }
+
 int	main(int argc, char **argv)
 {
 	int		fd;
 	t_map	*map;
-//	void	*mlx;
-//	void	*win;
 	t_img	*img;
-	t_data	*data;
+	int	x;
+	int	y;
+	int	width;
+	int	height;
 
+	width = 640;
+	height = 480;
 	if (argc == 2)
 	{
 		// Ouverture du fichier
@@ -76,51 +68,44 @@ int	main(int argc, char **argv)
 		print_info_map(map);
 
 		// mlx
-		data = &(t_data){NULL, NULL};
-		//mlx = mlx_init();
-		data->mlx = mlx_init();
-		//if (!mlx)
-		if (!data->mlx)
+		img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL};
+	//	img->data = &(t_data){NULL, NULL};
+		//img->data->mlx = mlx_init();
+		//if (!img->data->mlx)
+		img->mlx = mlx_init();
+		if (!img->mlx)
 			exit(EXIT_FAILURE);
-	//	win = mlx_new_window(mlx, 600, 400, "So_long, and thanks for all the fishes");
-		//win = mlx_new_window(mlx, 1366, 768, "So_long, and thanks for all the fishes");
-		//data->win = mlx_new_window(data->mlx, 1366, 768, "So_long, and thanks for all the fishes");
-		data->win = mlx_new_window(data->mlx, 640, 480, "So_long, and thanks for all the fishes");
-		//if (!win)
-		if (!data->win)
+		//img->data->win = mlx_new_window(img->data->mlx, width, height, "So_long, and thanks for all the fishes");
+		//if (!img->data->win)
+		img->win = mlx_new_window(img->mlx, width, height, "So_long, and thanks for all the fishes");
+		if (!img->win)
 			exit(EXIT_FAILURE);
-		int	x;
-		int	y;
 		int color = 0x993366;
 
-		img = &(t_img){NULL, NULL, 0, 0, 0};
-//		img->def = mlx_new_image(mlx, 600, 400);
-	//	img->def = mlx_new_image(mlx, 1366, 768);
-		//img->def = mlx_new_image(data->mlx, 1366, 768);
-		img->def = mlx_new_image(data->mlx, 640, 480);
+		//img->def = mlx_new_image(img->data->mlx, width, height);
+		img->def = mlx_new_image(img->mlx, width, height);
 		if (!img->def)
 			exit(EXIT_FAILURE);
 		img->addr = mlx_get_data_addr(img->def, &img->bits_per_pix, &img->line_len, &img->endian);
 		if (!img->addr)
 			exit(EXIT_FAILURE);
-		ft_putendl_fd("Nombre de bits par pixel:", 1);
-		ft_putnbr_fd(img->bits_per_pix, 1);
-		ft_putchar_fd('\n', 1);
-		ft_putendl_fd("Valeur de line_len (img):", 1);
-		ft_putnbr_fd(img->line_len, 1);
-		ft_putchar_fd('\n', 1);
+
+		// debug valeurs struct ing
+	//	ft_putendl_fd("Nombre de bits par pixel:", 1);
+	//	ft_putnbr_fd(img->bits_per_pix, 1);
+	//	ft_putchar_fd('\n', 1);
+	//	ft_putendl_fd("Valeur de line_len (img):", 1);
+	//	ft_putnbr_fd(img->line_len, 1);
+	//	ft_putchar_fd('\n', 1);
+		// fin debug
+
 		y = 0;
-	//	while (y < 400)
-	//	while (y < 768)
-		while (y < 480)
+		while (y < height)
 		{
 			x = 0;
 		//	color -= 640;
-		//	while (x < 600)
-		//	while (x < 1366)
-			while (x < 640)
+			while (x < width)
 			{
-				//mlx_pixel_put(mlx, win, x++, y, ft_get_trgb(1, 128, 0, 128));
 			/*	if (x && !(x % 32))
 					ft_mlx_pixel_put(img, x++, y, INT_MAX);
 				else*/ if (x && !(x % (640 / map->cols)))
@@ -134,16 +119,16 @@ int	main(int argc, char **argv)
 			}
 		//	color++;
 			y++;
-	//else
-	//	ft_mlx_pixel_put(img, x++, y, color/*++*/);
 		}
-		//mlx_put_image_to_window(mlx, win, img->def, 0, 0);
-		mlx_put_image_to_window(data->mlx, data->win, img->def, 0, 0);
+		//mlx_put_image_to_window(img->data->mlx, img->data->win, img->def, 0, 0);
+		mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 
-		mlx_key_hook(data->win, key_hook, data);
-		mlx_mouse_hook(data->win, mouse_hook, data);
-		mlx_loop(data->mlx); // fin mlx
-		//mlx_loop(mlx); // fin mlx
+		//mlx_key_hook(img->data->win, key_hook, img);
+		//mlx_hook(img->data->win, 17, 1L << 2, ft_close, img);
+		//mlx_loop(img->data->mlx); // fin mlx
+		mlx_key_hook(img->win, key_hook, img);
+		mlx_hook(img->win, 17, 1L << 2, ft_close, img);
+		mlx_loop(img->mlx); // fin mlx
 
 		// Nettoyage de la map en entier
 		ft_clean_map(map);
