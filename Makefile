@@ -158,9 +158,17 @@ mlxclean:
 	$(RM) libmlx.dylib $(MLX_PATH)/libmlx.dylib
 	@$(ECHO) "$(NO_COL)"
 
-fclean: clean libftclean gnlclean 
+fclean: clean libftclean gnlclean mlxclean
 	@$(ECHO) "$(RED)"
 	$(RM) $(NAME)
+	@$(ECHO) "$(NO_COL)"
+
+fclean-debug: fclean
+	@$(ECHO) "$(RED)"
+	$(RM) so_long.dSYM
+	$(RM) debug debug.dSYM
+	$(RM) debug-full debug-full.dSYM
+	$(RM) $@ libmlx.dylib.dSYM
 	@$(ECHO) "$(NO_COL)"
 
 re: fclean all
