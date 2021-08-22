@@ -72,6 +72,23 @@ int		key_hook(int keycode, t_img *img)
 	return (0);
 }
 
+void	ft_fill_screen(t_img *img, int color)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			ft_mlx_pixel_put(img, x++, y, color);
+		}
+		y++;
+	}
+	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+}
 
 int	main(int argc, char **argv)
 {
@@ -101,33 +118,39 @@ int	main(int argc, char **argv)
 		ft_get_img_win(img, title);
 		ft_get_img_def(img);
 		ft_get_img_addr(img);
+
+	//	t_point	*start;
+
+//		start = ft_init_point(0, 0, 0);
+		ft_fill_screen(img, color);
 		y = 0;
-		while (y < img->height)
-		{
+	//	while (y < img->height)
+	//	{
 			x = 0;
 		//	color -= 640;
-			while (x < img->width)
-			{
+	//		while (x < img->width)
+	//		{
 			/*	if (x && !(x % 32))
 					ft_mlx_pixel_put(img, x++, y, INT_MAX);
-				else*/ if (x && !(x % (640 / map->cols)))
-					ft_mlx_pixel_put(img, x++, y, 0x00FF00);
+				else if (x && !(x % (640 / map->cols))) */
+	//				ft_mlx_pixel_put(img, x++, y, 0x00FF00);
 			/*	else if (x && y && !(y % 32))
 					ft_mlx_pixel_put(img, x++, y, INT_MAX);*/
-				else if (x && y && !(y % (480 / map->lines)))
-					ft_mlx_pixel_put(img, x++, y, 0x00FF00);
-				else
-					ft_mlx_pixel_put(img, x++, y, color/*++*/);
-			}
+	//			else if (x && y && !(y % (480 / map->lines)))
+	//				ft_mlx_pixel_put(img, x++, y, 0x00FF00);
+			//	else
+				//	ft_mlx_pixel_put(img, x++, y, color/*++*/);
+	//		}
 		//	color++;
-			y++;
-		}
-		mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+	//		y++;
+	//	}
+	//	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 
 		mlx_key_hook(img->win, key_hook, img);
 		mlx_hook(img->win, 17, 1L << 2, ft_close, img);
 		mlx_loop(img->mlx);
 		free(title);
+	//	ft_point_clear(&start, free);
 		// fin mlx
 
 		// Nettoyage de la map en entier
