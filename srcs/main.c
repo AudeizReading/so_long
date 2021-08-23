@@ -90,7 +90,7 @@ void	ft_fill_screen(t_img *img, int color)
 	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }
 
-void	ft_draw_grid(t_img *img, int color, t_map *map)
+void	ft_draw_grid_map(t_img *img, int color, t_map *map)
 {
 	int	x;
 	int	y;
@@ -106,19 +106,53 @@ void	ft_draw_grid(t_img *img, int color, t_map *map)
 			else if (x && y && !(y % (img->height / map->lines)))
 				ft_mlx_pixel_put(img, x++, y, color);
 			else
-			//	ft_mlx_pixel_put(img, x++, y, 0);
 				x++;
 		}
 		y++;
 	}
-	ft_putstr_fd("verif nb colonnes et lines maps : ", 1);
-	ft_putnbr_fd(map->cols, 1);
-	ft_putstr_fd(" ", 1);
-	ft_putnbr_fd(map->lines, 1);
-	ft_putstr_fd(" color ", 1);
-	ft_putnbr_fd(color, 1);
-	ft_putstr_fd("\n", 1);
 	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+}
+
+void	ft_draw_grid_bpp(t_img *img, int color)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			if (x && !(x % img->bpp)) 
+				ft_mlx_pixel_put(img, x++, y, color);
+			else if (x && y && !(y % img->bpp))
+				ft_mlx_pixel_put(img, x++, y, color);
+			else
+				x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+}
+
+void	ft_draw_square(t_img *img, t_point *start, int color)
+{
+	int	x_offset;
+	int	y_offset;
+
+	x_offset = start->x + img->width;
+	y_offset = start->y + img->height;
+	while (start->y < y_offset)
+	{
+		start->x = x_offset - img->width;
+		while (start->x < x_offset)
+			ft_mlx_pixel_put(img, start->x++, start->y, color);
+		start->y++;
+	}
+	start->x = x_offset - img->width;
+	start->y = y_offset - img->height;
+	mlx_put_image_to_window(img->mlx, img->win, img->def, start->x, start->y);
 }
 
 int	main(int argc, char **argv)
@@ -126,8 +160,7 @@ int	main(int argc, char **argv)
 	int		fd;
 	t_map	*map;
 	t_img	*img;
-	int	x;
-	int	y;
+	t_img	*img_sq;
 	char	*title;
 
 	title = ft_strdup("So_long, and thanks for all the fishes");
@@ -149,39 +182,27 @@ int	main(int argc, char **argv)
 		ft_get_img_win(img, title);
 		ft_get_img_def(img);
 		ft_get_img_addr(img);
+		img_sq = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, 64, 64};
+		ft_get_img_def(img_sq);
+		ft_get_img_addr(img_sq);
 
-	//	t_point	*start;
-
-//		start = ft_init_point(0, 0, 0);
+		// front-end
 		ft_fill_screen(img, color);
-		ft_draw_grid(img, 0x00FF00, map);
-		y = 0;
-	//	while (y < img->height)
-	//	{
-			x = 0;
-		//	color -= 640;
-		//	while (x < img->width)
-		//	{
-		//		if (x && !(x % 32))
-		//			ft_mlx_pixel_put(img, x++, y, INT_MAX);
-				/*else if (x && !(x % (640 / map->cols))) 
-					ft_mlx_pixel_put(img, x++, y, 0x00FF00);*/
-		//		else if (x && y && !(y % 32))
-		//			ft_mlx_pixel_put(img, x++, y, INT_MAX);
-			/*	else if (x && y && !(y % (480 / map->lines)))
-					ft_mlx_pixel_put(img, x++, y, 0x00FF00);*/
-		//		else	while (x < img->width)
-		//	}
-		//	color++;
-		//	y++;
-		//}
-		//mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+		ft_draw_grid_map(img, 0x00FF00, map);
+		ft_draw_grid_bpp(img, 0x000000);
+		//ft_fill_screen(img_sq, 0x00BBBB);
+		//mlx_put_image_to_window(img_sq->mlx, img_sq->win, img_sq->def, 64, 64);
+		t_point	*start = NULL;
 
+		start->x = 64;
+		start->y = 64;
+		ft_draw_square(img_sq, start, 0x00BBBB);
+
+		// events
 		mlx_key_hook(img->win, key_hook, img);
 		mlx_hook(img->win, 17, 1L << 2, ft_close, img);
 		mlx_loop(img->mlx);
 		free(title);
-	//	ft_point_clear(&start, free);
 		// fin mlx
 
 		// Nettoyage de la map en entier
