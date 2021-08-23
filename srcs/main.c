@@ -90,6 +90,37 @@ void	ft_fill_screen(t_img *img, int color)
 	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }
 
+void	ft_draw_grid(t_img *img, int color, t_map *map)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			if (x && !(x % (img->width / map->cols))) 
+				ft_mlx_pixel_put(img, x++, y, color);
+			else if (x && y && !(y % (img->height / map->lines)))
+				ft_mlx_pixel_put(img, x++, y, color);
+			else
+			//	ft_mlx_pixel_put(img, x++, y, 0);
+				x++;
+		}
+		y++;
+	}
+	ft_putstr_fd("verif nb colonnes et lines maps : ", 1);
+	ft_putnbr_fd(map->cols, 1);
+	ft_putstr_fd(" ", 1);
+	ft_putnbr_fd(map->lines, 1);
+	ft_putstr_fd(" color ", 1);
+	ft_putnbr_fd(color, 1);
+	ft_putstr_fd("\n", 1);
+	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+}
+
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -123,28 +154,28 @@ int	main(int argc, char **argv)
 
 //		start = ft_init_point(0, 0, 0);
 		ft_fill_screen(img, color);
+		ft_draw_grid(img, 0x00FF00, map);
 		y = 0;
 	//	while (y < img->height)
 	//	{
 			x = 0;
 		//	color -= 640;
-	//		while (x < img->width)
-	//		{
-			/*	if (x && !(x % 32))
-					ft_mlx_pixel_put(img, x++, y, INT_MAX);
-				else if (x && !(x % (640 / map->cols))) */
-	//				ft_mlx_pixel_put(img, x++, y, 0x00FF00);
-			/*	else if (x && y && !(y % 32))
-					ft_mlx_pixel_put(img, x++, y, INT_MAX);*/
-	//			else if (x && y && !(y % (480 / map->lines)))
-	//				ft_mlx_pixel_put(img, x++, y, 0x00FF00);
-			//	else
-				//	ft_mlx_pixel_put(img, x++, y, color/*++*/);
-	//		}
+		//	while (x < img->width)
+		//	{
+		//		if (x && !(x % 32))
+		//			ft_mlx_pixel_put(img, x++, y, INT_MAX);
+				/*else if (x && !(x % (640 / map->cols))) 
+					ft_mlx_pixel_put(img, x++, y, 0x00FF00);*/
+		//		else if (x && y && !(y % 32))
+		//			ft_mlx_pixel_put(img, x++, y, INT_MAX);
+			/*	else if (x && y && !(y % (480 / map->lines)))
+					ft_mlx_pixel_put(img, x++, y, 0x00FF00);*/
+		//		else	while (x < img->width)
+		//	}
 		//	color++;
-	//		y++;
-	//	}
-	//	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+		//	y++;
+		//}
+		//mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 
 		mlx_key_hook(img->win, key_hook, img);
 		mlx_hook(img->win, 17, 1L << 2, ft_close, img);
