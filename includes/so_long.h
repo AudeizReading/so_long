@@ -95,5 +95,12 @@ void	ft_get_img_mlx(t_img *img);
 void	ft_get_img_win(t_img *img, char *title);
 void	ft_get_img_def(t_img *img);
 void	ft_get_img_addr(t_img *img);
+void	ft_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	ft_fill_screen(t_img *img, int color);
+void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map);
+void	ft_draw_screen_grid_bpp(t_img *img, int color);
+void	ft_draw_polyg(t_img *img, t_point *start, int size, int color);
+int		ft_hook_close_mlx(t_img *img);
+int		ft_hook_key_esc(int keycode, t_img *img);
 int		main(int argc, char **argv);
 #endif
