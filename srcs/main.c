@@ -19,10 +19,13 @@ typedef struct	s_data
 	int		height;
 }				t_img;*/
 
+// Enlever le param start qui ne sert plus rien
+// remplacer img par player ?
 void	ft_draw_polyg(t_img *img, t_point *start, int size, int color)
 {
 	int	x;
 	int y;
+	(void)start;
 
 	y = 0;
 	//while (y < img->height)
@@ -34,56 +37,89 @@ void	ft_draw_polyg(t_img *img, t_point *start, int size, int color)
 			ft_mlx_pixel_put(img, x++, y, color);
 		y++;
 	}
-	mlx_put_image_to_window(img->mlx, img->win, img->def, start->x, start->y);
+	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 }
 
+// Attention a modif img->bpp * 2 et 64
 int		ft_hook_key_s(int keycode, t_img *img)
 {
-	t_point	*start = NULL;
-
-	if (keycode == 1)
+	if (keycode == 1 && img->coord->y < img->height - 64)
 	{
-		start = ft_init_point(64, 64, 0);
-		ft_draw_polyg(img, start, 64, 0x993366);
-		//start->y += img->height;
-		start->y += img->bpp;
-		ft_draw_polyg(img, start, 64, 0x00AAAA);
-		printf("start->y %d, start->x %d\n", start->y, start->x);
+	//	ft_draw_polyg(img, img->coord, 64, 0x993366);
+		img->coord->y += img->bpp * 2;
+//		img->coord->pos++;
+	//	ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+	//	img->coord->y += img->bpp * 2;
+		printf("During hook s: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
+	}
+	return (0);
+}
+
+// Attention a modif img->bpp * 2 et 64
+int		ft_hook_key_w(int keycode, t_img *img)
+{
+	if (keycode == 13 && img->coord->y > 64)
+	{
+	//	ft_draw_polyg(img, img->coord, 64, 0x993366);
+		img->coord->y -= img->bpp * 2;
+	//	img->coord->pos++;
+	//	ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+	//	img->coord->y -= img->bpp * 2;
+		printf("During hook w: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
+	}
+	return (0);
+}
+
+int		ft_hook_key_a(int keycode, t_img *img)
+{
+	if (keycode == 0 && img->coord->x > 64)
+	{
+		img->coord->x -= img->bpp * 2;
+		printf("During hook a: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
+	}
+	return (0);
+}
+
+int		ft_hook_key_d(int keycode, t_img *img)
+{
+	if (keycode == 2 && img->coord->x < img->width - 64)
+	{
+		img->coord->x += img->bpp * 2;
+		printf("During hook d: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
 	}
 	return (0);
 }
 
 int		key_hook(int keycode, t_img *img)
 {
-	if (keycode == 53)
-		ft_hook_close_mlx(img);
+	ft_hook_key_esc(keycode, img);
 	if (keycode == 0) // a
 		;
-	if (keycode == 1) // s
-		ft_hook_key_s(keycode, img);
+	ft_hook_key_a(keycode, img);
+	ft_hook_key_s(keycode, img);
+	ft_hook_key_d(keycode, img);
 	if (keycode == 2) // d
 		;
 	if (keycode == 13) // w
 		;
+	ft_hook_key_w(keycode, img);
 	return (0);
 }
 
 int	ft_display_screen(t_img *img)
 {
 	int color;
-	t_img	*img_sq;
-	t_point	*start = NULL;
+//	t_img	*img_sq;
+//	t_point	*start = NULL;
 
 	color = 0x993366;
 	ft_fill_screen(img, color);
-	img_sq = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, 64, 64};
-	ft_get_img_def(img_sq);
-	ft_get_img_addr(img_sq);
-	start = ft_init_point(64, 64, 0);
-	ft_draw_polyg(img_sq, start, 64, 0x00BBBB);
-	mlx_key_hook(img->win, key_hook, img);
-	mlx_destroy_image(img_sq->mlx, img_sq->def);
-	free(start);
+//	free(img->coord);
+//	ft_draw_polyg(img, &(t_point){64,64,0, NULL}, 64, color);
+	img->coord = ft_init_point(64, 64, 0);
+//	ft_draw_polyg(img, img->coord, 64, 0x00BBBB);
+//	mlx_destroy_image(img_sq->mlx, img_sq->def);
+//	free(start);
 	return (1);
 }
 
@@ -108,13 +144,16 @@ int	main(int argc, char **argv)
 
 		// mlx
 	//	int color = 0x993366;
-//		img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL, 640, 480};
-		img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL, map->cols * 64, map->lines * 64};
+		img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL, map->cols * 64,
+			map->lines * 64, NULL};
 
 		ft_get_img_mlx(img);
 		ft_get_img_win(img, title);
 		ft_get_img_def(img);
 		ft_get_img_addr(img);
+		img->coord = ft_init_point(0, 0, 0);
+	//	img->coord = ft_init_point(64, 64, 0);
+		printf("Before hook: img->coord->y %d, img->coord->x %d\n", img->coord->y, img->coord->x);
 		// Nouvelle image representant un carre que je vais essayer de deplacer sur la map
 //		img_sq = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, 64, 64};
 //		ft_get_img_def(img_sq);
@@ -124,7 +163,6 @@ int	main(int argc, char **argv)
 //		ft_fill_screen(img, color);
 //		ft_draw_screen_grid_map(img, 0x00FF00, map);
 //		ft_draw_screen_grid_bpp(img, 0x000000);
-		mlx_loop_hook(img->mlx, ft_display_screen, img);
 //		t_point	*start = NULL;
 
 //		start = ft_init_point(64, 64, 0);
@@ -133,6 +171,9 @@ int	main(int argc, char **argv)
 
 		// events
 		//mlx_key_hook(img->win, key_hook, img_sq);
+		ft_display_screen(img);
+		printf("after display screen: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
+		ft_draw_polyg(img, &(t_point){64,64,0, NULL}, 64, 0x00AAAA);
 		mlx_key_hook(img->win, key_hook, img);
 		// gestion touche esc pressee
 	//	mlx_hook(img->win, 2, 1L << 0, ft_hook_key_esc, img);
@@ -140,7 +181,8 @@ int	main(int argc, char **argv)
 //		mlx_hook(img->win, 2, 1L << 0, ft_hook_key_s, img);
 		// gestion click croix rouge
 		mlx_hook(img->win, 17, 1L << 2, ft_hook_close_mlx, img);
-	//	mlx_loop_hook(img->mlx, key_hook, img);
+	//	mlx_loop_hook(img->mlx, ft_display_screen, img);
+		printf("After hook: img->coord->y %d, img->coord->x %d\n", img->coord->y, img->coord->x);
 		mlx_loop(img->mlx);
 		free(title);
 //		free(start);

@@ -55,6 +55,7 @@ typedef struct	s_img
 	void	*win;
 	int		width;
 	int		height;
+	t_point	*coord;
 }				t_img;
 
 void	ft_puterror(void);
