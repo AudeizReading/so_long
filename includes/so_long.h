@@ -44,6 +44,19 @@ typedef struct	s_map
 	t_line	*first_line;
 }				t_map;
 
+typedef struct	s_img
+{
+	void	*def;
+	void	*addr;
+	int		bpp;
+	int		len;
+	int		end;
+	void	*mlx;
+	void	*win;
+	int		width;
+	int		height;
+}				t_img;
+
 void	ft_puterror(void);
 void	ft_puterr(char *err, t_bool must_exit);
 void	ft_parse_map_error(int errnum);
@@ -78,5 +91,9 @@ int		ft_get_t(int trgb);
 int		ft_get_r(int trgb);
 int		ft_get_g(int trgb);
 int		ft_get_b(int trgb);
+void	ft_get_img_mlx(t_img *img);
+void	ft_get_img_win(t_img *img, char *title);
+void	ft_get_img_def(t_img *img);
+void	ft_get_img_addr(t_img *img);
 int		main(int argc, char **argv);
 #endif

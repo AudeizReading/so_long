@@ -48,6 +48,7 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 get_objects_pos\
 	 parse_map\
 	 get_colors\
+	 init_mlx\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
