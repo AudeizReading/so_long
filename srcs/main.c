@@ -23,16 +23,22 @@ typedef struct	s_data
 // remplacer img par player ?
 void	ft_draw_polyg(t_img *img, t_point *start, int size, int color)
 {
-	int	x;
+	int	x = 0;
 	int y;
 	(void)start;
 
-	y = 0;
-	while (y < size)
+	y = start->y;
+//	printf("x %d, start->x %d, size %d, img->width %d\n", x, start->x, size, img->width);
+//	printf("y %d, start->y %d, size %d, img->height %d\n", y, start->y, size, img->height);
+	while (y < size + start->y)
 	{
-		x = 0;
-		while (x < size)
+		x = start->x;
+		while (x < start->x + size)
+		{
+	//		printf("x %d, start->x %d, size %d\n", x, start->x, size);
 			ft_mlx_pixel_put(img, x++, y, color);
+		}
+	//	printf("y %d, start->y %d, size %d\n", y, start->y, size);
 		y++;
 	}
 }
@@ -111,24 +117,29 @@ int	ft_display_screen(t_img *img)
 
 	color = 0x993366;
 	ft_fill_screen(img, color);
-	ft_draw_polyg(img, img->coord, 64, 0x00BBBB);
+	//ft_draw_polyg(img, img->coord, 64, 0x00BBBB);
 	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 	return (1);
 }
 void	ft_draw_wall(t_img *img, t_map *map)
 {
-	t_img	*wall;
+	//t_img	*wall;
 
-	wall = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, map->cols * 64, map->lines * 64, NULL};
-	ft_get_img_def(wall);
-	ft_get_img_addr(wall);
+//	wall = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, map->cols * 64, map->lines * 64, NULL};
+//	ft_get_img_def(wall);
+//	ft_get_img_addr(wall);
+	ft_fill_screen(img, 0x993366);
 	while (map->wall)
 	{
-		ft_draw_polyg(img, img->coord, 64, 0x555555);
-		mlx_put_image_to_window(img->mlx, img->win, img->def, map->wall->x * 64, map->wall->y * 64);
+		map->wall->x *= 64;
+		map->wall->y *= 64;
+		ft_draw_polyg(img, map->wall, 64, 0x555555);
+		printf("map->wall->x %d, map->wall->y %d\n", map->wall->x, map->wall->y);
+	//	mlx_put_image_to_window(img->mlx, img->win, img->def, map->wall->x * 64, map->wall->y * 64);
 		map->wall = map->wall->next;
 	}
-	mlx_destroy_image(wall->mlx, wall->win);
+		mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
+//	mlx_destroy_image(wall->mlx, wall->win);
 }
 
 int	main(int argc, char **argv)
@@ -160,24 +171,11 @@ int	main(int argc, char **argv)
 //		ft_display_screen(img);
 	//	ft_fill_screen(img, 0x993366);
 	//	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
-	/*	while (map->wall)
-		{
-			ft_draw_polyg(img, img->coord, 64, 0x555555);
-			mlx_put_image_to_window(img->mlx, img->win, img->def, map->wall->x * 64, map->wall->y * 64);
-			map->wall = map->wall->next;
-		}*/
 		ft_draw_wall(img, map);
-
-/*		while (map->collect)
-		{
-			ft_draw_polyg(img, img->coord, 64, 0x008800);
-			mlx_put_image_to_window(img->mlx, img->win, img->def, map->collect->x * 64, map->collect->y * 64);
-			map->collect = map->collect->next;
-		}*/
-		//	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x * 64, img->coord->y * 64);
 		// events
 		printf("after display screen: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
 	//	ft_draw_polyg(img, &(t_point){64,64,0, NULL}, 64, 0x00AAAA);
+	//	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 	//	mlx_key_hook(img->win, key_hook, img);
 		// gestion click croix rouge
 		mlx_hook(img->win, 17, 1L << 2, ft_hook_close_mlx, img);
