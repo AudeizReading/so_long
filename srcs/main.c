@@ -36,6 +36,7 @@ void	ft_draw_polyg(t_img *img, t_point *start, int size, int color)
 		while (x < start->x + size)
 		{
 	//		printf("x %d, start->x %d, size %d\n", x, start->x, size);
+	// Keep in mind that coordonates are important! Don't mess with it !
 			ft_mlx_pixel_put(img, x++, y, color);
 		}
 	//	printf("y %d, start->y %d, size %d\n", y, start->y, size);
@@ -67,12 +68,14 @@ int		ft_hook_key_w(int keycode, t_img *img)
 		img->coord->y -= img->bpp * 2;
 		img->coord->pos++;
 		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook w: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
 	}
 	return (0);
 }
 
+// Attention a modif img->bpp * 2 et 64
 int		ft_hook_key_a(int keycode, t_img *img)
 {
 	if (keycode == 0 && img->coord->x > 64)
@@ -81,12 +84,14 @@ int		ft_hook_key_a(int keycode, t_img *img)
 		img->coord->x -= img->bpp * 2;
 		img->coord->pos++;
 		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook a: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
 	}
 	return (0);
 }
 
+// Attention a modif img->bpp * 2 et 64
 int		ft_hook_key_d(int keycode, t_img *img)
 {
 	if (keycode == 2 && img->coord->x < img->width - 64 * 2)
@@ -95,6 +100,7 @@ int		ft_hook_key_d(int keycode, t_img *img)
 		img->coord->x += img->bpp * 2;
 		img->coord->pos++;
 		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook d: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
 	}
@@ -118,16 +124,13 @@ int	ft_display_screen(t_img *img)
 	color = 0x993366;
 	ft_fill_screen(img, color);
 	//ft_draw_polyg(img, img->coord, 64, 0x00BBBB);
+	// Keep in mind that coordonates are important! Don't mess with it !
 	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 	return (1);
 }
 void	ft_draw_wall(t_img *img, t_map *map)
 {
-	//t_img	*wall;
 
-//	wall = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, map->cols * 64, map->lines * 64, NULL};
-//	ft_get_img_def(wall);
-//	ft_get_img_addr(wall);
 	ft_fill_screen(img, 0x993366);
 	while (map->wall)
 	{
@@ -135,11 +138,34 @@ void	ft_draw_wall(t_img *img, t_map *map)
 		map->wall->y *= 64;
 		ft_draw_polyg(img, map->wall, 64, 0x555555);
 		printf("map->wall->x %d, map->wall->y %d\n", map->wall->x, map->wall->y);
-	//	mlx_put_image_to_window(img->mlx, img->win, img->def, map->wall->x * 64, map->wall->y * 64);
 		map->wall = map->wall->next;
 	}
-		mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
-//	mlx_destroy_image(wall->mlx, wall->win);
+	while (map->collect)
+	{
+		map->collect->x *= 64;
+		map->collect->y *= 64;
+		ft_draw_polyg(img, map->collect, 64, 0x00AA00);
+		printf("map->collect->x %d, map->collect->y %d\n", map->collect->x, map->collect->y);
+		map->collect = map->collect->next;
+	}
+	while (map->start)
+	{
+		map->start->x *= 64;
+		map->start->y *= 64;
+		ft_draw_polyg(img, map->start, 64, 0x000099);
+		printf("map->start->x %d, map->start->y %d\n", map->start->x, map->start->y);
+		map->start = map->start->next;
+	}
+	while (map->end)
+	{
+		map->end->x *= 64;
+		map->end->y *= 64;
+		ft_draw_polyg(img, map->end, 64, 0x660000);
+		printf("map->end->x %d, map->end->y %d\n", map->end->x, map->end->y);
+		map->end = map->end->next;
+	}
+	// Keep in mind that coordonates are important! Don't mess with it !
+	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }
 
 int	main(int argc, char **argv)
