@@ -167,6 +167,7 @@ int	main(int argc, char **argv)
 	//	img->coord = ft_init_point(64, 64, 0);
 		printf("Before hook: img->coord->y %d, img->coord->x %d\n", img->coord->y, img->coord->x);
 		// Nouvelle image representant un carre que je vais essayer de deplacer sur la map
+		// Modif pour la forme...
 //		img_sq = &(t_img){NULL, NULL, 0, 0, 0, img->mlx, img->win, 64, 64};
 //		ft_get_img_def(img_sq);
 //		ft_get_img_addr(img_sq);
