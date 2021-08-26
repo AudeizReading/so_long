@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 13:05:25 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/25 11:20:50 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/26 10:25:04 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_fill_screen(t_img *img, int color)
 		}
 		y++;
 	}
-//	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }
 
 void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map)
@@ -50,7 +49,6 @@ void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }
 
 void	ft_draw_screen_grid_bpp(t_img *img, int color)
@@ -73,5 +71,4 @@ void	ft_draw_screen_grid_bpp(t_img *img, int color)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }

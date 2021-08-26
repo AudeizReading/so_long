@@ -21,25 +21,17 @@ typedef struct	s_data
 
 // Enlever le param start qui ne sert plus rien
 // remplacer img par player ?
-void	ft_draw_polyg(t_img *img, t_point *start, int size, int color)
+void	ft_draw_square(t_img *img, t_point *start, int size, int color)
 {
-	int	x = 0;
+	int	x;
 	int y;
-	(void)start;
 
 	y = start->y;
-//	printf("x %d, start->x %d, size %d, img->width %d\n", x, start->x, size, img->width);
-//	printf("y %d, start->y %d, size %d, img->height %d\n", y, start->y, size, img->height);
 	while (y < size + start->y)
 	{
 		x = start->x;
 		while (x < start->x + size)
-		{
-	//		printf("x %d, start->x %d, size %d\n", x, start->x, size);
-	// Keep in mind that coordonates are important! Don't mess with it !
 			ft_mlx_pixel_put(img, x++, y, color);
-		}
-	//	printf("y %d, start->y %d, size %d\n", y, start->y, size);
 		y++;
 	}
 }
@@ -49,10 +41,10 @@ int		ft_hook_key_s(int keycode, t_img *img)
 {
 	if (keycode == 1 && img->coord->y < img->height - 64 * 2)
 	{
-		ft_draw_polyg(img, img->coord, 64, 0x993366);
+		ft_draw_square(img, img->coord, 64, 0x993366);
 		img->coord->y += img->bpp * 2;
 		img->coord->pos++;
-		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+		ft_draw_square(img, img->coord, 64, 0x00AAAA);
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook s: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
 	}
@@ -64,10 +56,10 @@ int		ft_hook_key_w(int keycode, t_img *img)
 {
 	if (keycode == 13 && img->coord->y > 64)
 	{
-		ft_draw_polyg(img, img->coord, 64, 0x993366);
+		ft_draw_square(img, img->coord, 64, 0x993366);
 		img->coord->y -= img->bpp * 2;
 		img->coord->pos++;
-		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+		ft_draw_square(img, img->coord, 64, 0x00AAAA);
 	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook w: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
@@ -80,10 +72,10 @@ int		ft_hook_key_a(int keycode, t_img *img)
 {
 	if (keycode == 0 && img->coord->x > 64)
 	{
-		ft_draw_polyg(img, img->coord, 64, 0x993366);
+		ft_draw_square(img, img->coord, 64, 0x993366);
 		img->coord->x -= img->bpp * 2;
 		img->coord->pos++;
-		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+		ft_draw_square(img, img->coord, 64, 0x00AAAA);
 	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook a: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
@@ -96,10 +88,10 @@ int		ft_hook_key_d(int keycode, t_img *img)
 {
 	if (keycode == 2 && img->coord->x < img->width - 64 * 2)
 	{
-		ft_draw_polyg(img, img->coord, 64, 0x993366);
+		ft_draw_square(img, img->coord, 64, 0x993366);
 		img->coord->x += img->bpp * 2;
 		img->coord->pos++;
-		ft_draw_polyg(img, img->coord, 64, 0x00AAAA);
+		ft_draw_square(img, img->coord, 64, 0x00AAAA);
 	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		printf("During hook d: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
@@ -123,7 +115,7 @@ int	ft_display_screen(t_img *img)
 
 	color = 0x993366;
 	ft_fill_screen(img, color);
-	//ft_draw_polyg(img, img->coord, 64, 0x00BBBB);
+	//ft_draw_square(img, img->coord, 64, 0x00BBBB);
 	// Keep in mind that coordonates are important! Don't mess with it !
 	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 	return (1);
@@ -136,7 +128,7 @@ void	ft_draw_wall(t_img *img, t_map *map)
 	{
 		map->wall->x *= 64;
 		map->wall->y *= 64;
-		ft_draw_polyg(img, map->wall, 64, 0x555555);
+		ft_draw_square(img, map->wall, 64, 0x555555);
 		printf("map->wall->x %d, map->wall->y %d\n", map->wall->x, map->wall->y);
 		map->wall = map->wall->next;
 	}
@@ -144,7 +136,7 @@ void	ft_draw_wall(t_img *img, t_map *map)
 	{
 		map->collect->x *= 64;
 		map->collect->y *= 64;
-		ft_draw_polyg(img, map->collect, 64, 0x00AA00);
+		ft_draw_square(img, map->collect, 64, 0x00AA00);
 		printf("map->collect->x %d, map->collect->y %d\n", map->collect->x, map->collect->y);
 		map->collect = map->collect->next;
 	}
@@ -152,7 +144,7 @@ void	ft_draw_wall(t_img *img, t_map *map)
 	{
 		map->start->x *= 64;
 		map->start->y *= 64;
-		ft_draw_polyg(img, map->start, 64, 0x000099);
+		ft_draw_square(img, map->start, 64, 0x000099);
 		printf("map->start->x %d, map->start->y %d\n", map->start->x, map->start->y);
 		map->start = map->start->next;
 	}
@@ -160,7 +152,7 @@ void	ft_draw_wall(t_img *img, t_map *map)
 	{
 		map->end->x *= 64;
 		map->end->y *= 64;
-		ft_draw_polyg(img, map->end, 64, 0x660000);
+		ft_draw_square(img, map->end, 64, 0x660000);
 		printf("map->end->x %d, map->end->y %d\n", map->end->x, map->end->y);
 		map->end = map->end->next;
 	}
@@ -187,22 +179,18 @@ int	main(int argc, char **argv)
 		print_info_map(map);
 
 		// mlx
-		img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL, map->cols * 64, map->lines * 64, NULL};
+		//img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL, map->cols * 64, map->lines * 64, NULL};
+		img = &(t_img){NULL, NULL, 0, 0, 0, NULL, NULL, 1366, 720, NULL};
 		ft_get_img_mlx(img);
 		ft_get_img_win(img, title);
 		ft_get_img_def(img);
 		ft_get_img_addr(img);
-		img->coord = ft_init_point(0, 0, 0);
+		//img->coord = ft_init_point(0, 0, 0);
+		img->coord = ft_init_point(-128, -128, 0);
 		printf("Before hook: img->coord->y %d, img->coord->x %d\n", img->coord->y, img->coord->x);
-//		ft_display_screen(img);
-	//	ft_fill_screen(img, 0x993366);
-	//	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
 		ft_draw_wall(img, map);
 		// events
 		printf("after display screen: img->coord->y %d, img->coord->x %d img->coord->pos %d\n", img->coord->y, img->coord->x, img->coord->pos);
-	//	ft_draw_polyg(img, &(t_point){64,64,0, NULL}, 64, 0x00AAAA);
-	//	mlx_put_image_to_window(img->mlx, img->win, img->def, img->coord->x, img->coord->y);
-	//	mlx_key_hook(img->win, key_hook, img);
 		// gestion click croix rouge
 		mlx_hook(img->win, 17, 1L << 2, ft_hook_close_mlx, img);
 		// gestion des touches
