@@ -51,17 +51,36 @@ typedef struct	s_img
 	int		bpp;
 	int		len;
 	int		end;
-	void	*mlx;
-	void	*win;
-	int		width;
-	int		height;
-	t_point	*coord;
+//	void	*mlx;
+//	void	*win;
+//	int		width;
+//	int		height;
+//	t_point	*coord;
 }				t_img;
 
+typedef struct	s_screen
+{
+	void			*mlx;
+	void			*win;
+	unsigned int	width;
+	unsigned int	height;
+}				t_screen;
+
+typedef struct	s_player
+{
+	t_point		*pole_pos;
+	t_screen	*screen;
+	t_img		*img;
+	t_map		*map;
+}				t_player;
+
+/* Errors handling */
 void	ft_puterror(void);
 void	ft_puterr(char *err, t_bool must_exit);
 void	ft_parse_map_error(int errnum);
 t_bool	ft_is_map_file(char *filename, char *ext);
+
+/* Line of map handling */
 t_line	*ft_init_line(char *content, int pos);
 int		ft_map_size(t_line *map);
 t_line	*ft_last_line(t_line *map);
@@ -72,12 +91,16 @@ void	ft_print_map(t_line *map);
 void	ft_check_line(t_line *tmp, t_line **map);
 void	ft_set_map(int gnl, char *line, int *y, t_line **map);
 t_line	*ft_get_map(int fd);
+
+/* Coordinates handling */
 t_point	*ft_init_point(int x, int y, int pos);
 t_point	*ft_last_point(t_point *point);
 int		ft_point_list_size(t_point *point);
 void	ft_point_addback(t_point **point, t_point *last_point);
 void	ft_point_clear(t_point **point, void (*del)(void *));
 void	ft_print_point_list(t_point *point);
+
+/* Map .ber handling */
 t_map	*ft_init_map(void);
 void	print_info_map(t_map *map);
 t_bool	ft_check_valid_characters(t_line *map);
@@ -87,21 +110,33 @@ t_bool	ft_is_rectangular_map(t_line *map);
 void	ft_get_objects_pos(t_map *map);
 void	ft_clean_map(t_map *map);
 t_map	*ft_parse_map(int fd, char **argv);
+
+/* Colors handling */
 int		ft_get_trgb(int t, int r, int g, int b);
 int		ft_get_t(int trgb);
 int		ft_get_r(int trgb);
 int		ft_get_g(int trgb);
 int		ft_get_b(int trgb);
+
+/* Screen handling */
 void	ft_get_img_mlx(t_img *img);
 void	ft_get_img_win(t_img *img, char *title);
+
+/* Image handling */
 void	ft_get_img_def(t_img *img);
 void	ft_get_img_addr(t_img *img);
 void	ft_mlx_pixel_put(t_img *img, int x, int y, int color);
+
+/* Drawing handling */
 void	ft_fill_screen(t_img *img, int color);
 void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map);
 void	ft_draw_screen_grid_bpp(t_img *img, int color);
 void	ft_draw_polyg(t_img *img, t_point *start, int size, int color);
+
+/* Events handling */
 int		ft_hook_close_mlx(t_img *img);
 int		ft_hook_key_esc(int keycode, t_img *img);
+
+/* Starting prog */
 int		main(int argc, char **argv);
 #endif
