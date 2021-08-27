@@ -62,6 +62,7 @@ typedef struct	s_screen
 {
 	void			*mlx;
 	void			*win;
+	char			*title;
 	unsigned int	width;
 	unsigned int	height;
 }				t_screen;
@@ -119,11 +120,14 @@ int		ft_get_g(int trgb);
 int		ft_get_b(int trgb);
 
 /* Screen handling */
-void	ft_get_img_mlx(t_img *img);
+//void	ft_get_img_mlx(t_img *img);
+void	ft_get_img_mlx(t_screen *screen);
+//void	ft_get_img_win(t_img *img, char *title);
 void	ft_get_img_win(t_img *img, char *title);
 
 /* Image handling */
-void	ft_get_img_def(t_img *img);
+//void	ft_get_img_def(t_img *img);
+void	ft_get_img_def(t_player *player);
 void	ft_get_img_addr(t_img *img);
 void	ft_mlx_pixel_put(t_img *img, int x, int y, int color);
 
