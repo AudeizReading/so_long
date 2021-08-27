@@ -1,24 +1,5 @@
 #include "../includes/so_long.h"
 
-typedef struct	s_data
-{
-	void	*mlx;
-	void	*win;
-}				t_data;
-
-/*typedef struct	s_img
-{
-	void	*def;
-	void	*addr;
-	int		bpp;
-	int		len;
-	int		end;
-	void	*mlx;
-	void	*win;
-	int		width;
-	int		height;
-}				t_img;*/
-
 // Enlever le param start qui ne sert plus rien
 // remplacer img par player ?
 void	ft_draw_square(t_img *img, t_point *start, int size, int color)
@@ -160,12 +141,48 @@ void	ft_draw_wall(t_img *img, t_map *map)
 	mlx_put_image_to_window(img->mlx, img->win, img->def, 0, 0);
 }
 
+int	ft_open_map(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		ft_parse_map_error(errno);
+	return (fd);
+}
+
+t_screen	*ft_init_screen(char *title, size_t width, size_t height)
+{
+	t_screen	*screen;
+
+	ft_get_img_mlx(screen);
+	ft_get_img_win(screen)
+}
+
+t_player	*ft_init_player(char *file)
+{
+	t_player	*player;
+
+	player = malloc(sizeof(*player));
+	player->fd = ft_open_map(file);;
+	player->map = ft_parse_map(player->fd, file);
+	// Attention ici checker que 1 seule pos de depart
+	//player->pole_pos = player->map->start;
+	player->pole_pos = ft_init_point(player->map->start->x, player->map->start->y, 0);
+	// A creer fn init screen
+	player->screen = ;
+	// A creer fn init img 
+	player->img = ;
+	return (player);
+}
+
 int	main(int argc, char **argv)
 {
-	int		fd;
-	t_map	*map;
-	t_img	*img;
-	char	*title;
+	int			fd;
+	t_player	player;
+//	t_map	*map;
+//	t_img	*img;
+//	char	*title;
 
 	title = ft_strdup("So_long, and thanks for all the fishes");
 	if (argc == 2)

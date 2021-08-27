@@ -12,9 +12,9 @@
 
 typedef struct	s_error
 {
-	int		num;
-	char	*message;
-	t_bool	must_exit;
+	int				num;
+	char			*message;
+	t_bool			must_exit;
 }				t_error;
 
 typedef struct	s_line
@@ -35,26 +35,26 @@ typedef struct	s_point
 
 typedef struct	s_map
 {
-	size_t	cols;
-	size_t	lines;
-	t_point	*start;
-	t_point	*collect;
-	t_point	*end;
-	t_point	*wall;
-	t_line	*first_line;
+	size_t			cols;
+	size_t			lines;
+	t_point			*start;
+	t_point			*collect;
+	t_point			*end;
+	t_point			*wall;
+	t_line			*first_line;
 }				t_map;
 
 typedef struct	s_img
 {
-	void	*def;
-	void	*addr;
-	int		bpp;
-	int		len;
-	int		end;
+	void			*def;
+	void			*addr;
+	int				bpp;
+	int				len;
+	int				end;
 //	void	*mlx;
 //	void	*win;
-//	int		width;
-//	int		height;
+	unsigned int	width;
+	unsigned int	height;
 //	t_point	*coord;
 }				t_img;
 
@@ -73,6 +73,7 @@ typedef struct	s_player
 	t_screen	*screen;
 	t_img		*img;
 	t_map		*map;
+	int			fd;
 }				t_player;
 
 /* Errors handling */
@@ -123,7 +124,7 @@ int		ft_get_b(int trgb);
 //void	ft_get_img_mlx(t_img *img);
 void	ft_get_img_mlx(t_screen *screen);
 //void	ft_get_img_win(t_img *img, char *title);
-void	ft_get_img_win(t_img *img, char *title);
+void	ft_get_img_win(t_screen *screen);
 
 /* Image handling */
 //void	ft_get_img_def(t_img *img);
