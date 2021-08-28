@@ -30,6 +30,7 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	size_t	pos = player->pole_pos->pos;
 	if (keycode == 1 && player->pole_pos->y < (int)player->img->height - coef * 2)
 	{
+		printf("starting hook s: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 		// C'est censé recouvrir le précédent carré - voir si nécessaire
 		ft_draw_square(player->img, player->pole_pos, coef, 0x993366);
 		// c'est ici qu'il faut faire player->pole_pos = player->pole_pos->next et init le point tmp
@@ -39,7 +40,8 @@ int		ft_hook_key_s(int keycode, t_player *player)
 		player->pole_pos->pos = pos;
 		ft_draw_square(player->img, player->pole_pos, coef, 0x00AAAA);
 		mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, player->pole_pos->x, player->pole_pos->y);
-		printf("During hook s: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
+		//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		printf("end hook s: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
 	return (0);
 }
@@ -61,17 +63,19 @@ int		ft_hook_key_w(int keycode, t_player *player)
 	size_t	pos = player->pole_pos->pos;
 	if (keycode == 13 && player->pole_pos->y > coef)
 	{
+		printf("starting hook w: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 		// C'est censé recouvrir le précédent carré - voir si nécessaire
 		ft_draw_square(player->img, player->pole_pos, coef, 0x993366);
 		// c'est ici qu'il faut faire player->pole_pos = player->pole_pos->next et init le point tmp
 		// Il faudra aussi checker si la nouvelle case est libre d'acces
-		player->pole_pos->y -= coef * 2;
+		player->pole_pos->y -= coef;
 		pos++;
 		player->pole_pos->pos = pos;
 		ft_draw_square(player->img, player->pole_pos, coef, 0x00AAAA);
 	// Keep in mind that coordonates are important! Don't mess with it !
 		mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, player->pole_pos->x, player->pole_pos->y);
-		printf("During hook w: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
+	//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		printf("end hook w: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
 	return (0);
 }
@@ -98,7 +102,7 @@ int		ft_hook_key_a(int keycode, t_player *player)
 		ft_draw_square(player->img, player->pole_pos, coef, 0x993366);
 		// c'est ici qu'il faut faire player->pole_pos = player->pole_pos->next et init le point tmp
 		// Il faudra aussi checker si la nouvelle case est libre d'acces
-		player->pole_pos->x -= coef * 2;
+		player->pole_pos->x -= coef;
 		pos++;
 		player->pole_pos->pos = pos;
 		ft_draw_square(player->img, player->pole_pos, coef, 0x00AAAA);
@@ -131,7 +135,7 @@ int		ft_hook_key_d(int keycode, t_player *player)
 		ft_draw_square(player->img, player->pole_pos, coef, 0x993366);
 		// c'est ici qu'il faut faire player->pole_pos = player->pole_pos->next et init le point tmp
 		// Il faudra aussi checker si la nouvelle case est libre d'acces
-		player->pole_pos->x += coef * 2;
+		player->pole_pos->x += coef;
 		pos++;
 		player->pole_pos->pos = pos;
 		ft_draw_square(player->img, player->pole_pos, coef, 0x00AAAA);
@@ -148,7 +152,7 @@ int		key_hook(int keycode, t_player *player)
 //	ft_hook_key_a(keycode, player);
 	ft_hook_key_s(keycode, player);
 //	ft_hook_key_d(keycode, player);
-//	ft_hook_key_w(keycode, player);
+	ft_hook_key_w(keycode, player);
 	return (0);
 }
 
@@ -257,13 +261,15 @@ void	ft_clean_img(t_player *player)
 t_player	*ft_init_player(char **file, size_t scr_width, size_t scr_height, char *title)
 {
 	t_player	*player;
+	int			coef;
 
+	coef = 64;
 	player = malloc(sizeof(*player));
 	player->fd = ft_open_map(file[1]);
 	printf("%s, %d\n", file[1], player->fd);
 	player->map = ft_parse_map(player->fd, file);
 	// Attention ici checker que 1 seule pos de depart
-	player->pole_pos = ft_init_point(player->map->start->x, player->map->start->y, 0);
+	player->pole_pos = ft_init_point(player->map->start->x * coef, player->map->start->y * coef, 0);
 	player->screen = ft_init_screen(title, scr_width, scr_height);
 	// A creer fn init img 
 	player->img = ft_init_img(player, 64);
