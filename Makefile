@@ -172,7 +172,7 @@ fclean-debug: fclean
 	$(RM) so_long.dSYM
 	$(RM) debug debug.dSYM
 	$(RM) debug-full debug-full.dSYM
-	$(RM) $@ libmlx.dylib.dSYM
+	$(RM) $@ libmlx.dylib $(MLX_PATH)/libmlx.dylib libmlx.dylib.dSYM
 	@$(ECHO) "$(NO_COL)"
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 13:05:25 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/27 10:30:02 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/28 18:16:53 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_fill_screen(t_img *img, int color)
 {
-	int	x;
-	int	y;
+	unsigned int	x;
+	unsigned int	y;
 
 	y = 0;
 	while (y < img->height)
@@ -31,8 +31,8 @@ void	ft_fill_screen(t_img *img, int color)
 
 void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map)
 {
-	int	x;
-	int	y;
+	unsigned int	x;
+	unsigned int	y;
 
 	y = 0;
 	while (y < img->height)
@@ -53,8 +53,8 @@ void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map)
 
 void	ft_draw_screen_grid_bpp(t_img *img, int color)
 {
-	int	x;
-	int	y;
+	unsigned int	x;
+	unsigned int	y;
 
 	y = 0;
 	while (y < img->height)

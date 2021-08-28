@@ -44,6 +44,15 @@ typedef struct	s_map
 	t_line			*first_line;
 }				t_map;
 
+typedef struct	s_screen
+{
+	void			*mlx;
+	void			*win;
+	char			*title;
+	unsigned int	width;
+	unsigned int	height;
+}				t_screen;
+
 typedef struct	s_img
 {
 	void			*def;
@@ -57,15 +66,6 @@ typedef struct	s_img
 	unsigned int	height;
 //	t_point	*coord;
 }				t_img;
-
-typedef struct	s_screen
-{
-	void			*mlx;
-	void			*win;
-	char			*title;
-	unsigned int	width;
-	unsigned int	height;
-}				t_screen;
 
 typedef struct	s_player
 {
@@ -132,15 +132,21 @@ void	ft_get_img_def(t_player *player);
 void	ft_get_img_addr(t_img *img);
 void	ft_mlx_pixel_put(t_img *img, int x, int y, int color);
 
+/* Player handling */
+void	ft_clean_player(t_player *player);
+
 /* Drawing handling */
 void	ft_fill_screen(t_img *img, int color);
 void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map);
 void	ft_draw_screen_grid_bpp(t_img *img, int color);
-void	ft_draw_polyg(t_img *img, t_point *start, int size, int color);
+void	ft_draw_square(t_img *img, t_point *start, int size, int color);
+//void	ft_draw_polyg(t_img *img, t_point *start, int size, int color);
 
 /* Events handling */
-int		ft_hook_close_mlx(t_img *img);
-int		ft_hook_key_esc(int keycode, t_img *img);
+//int		ft_hook_close_mlx(t_img *img);
+//int		ft_hook_key_esc(int keycode, t_img *img);
+int		ft_hook_close_mlx(t_player *player);
+int		ft_hook_key_esc(int keycode, t_player *player);
 
 /* Starting prog */
 int		main(int argc, char **argv);

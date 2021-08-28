@@ -6,27 +6,21 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:39:05 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/27 10:57:28 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/28 23:20:32 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-//void	ft_get_img_mlx(t_img *img)
 void	ft_get_img_mlx(t_screen *screen)
 {
-//	img->mlx = mlx_init();
 	screen->mlx = mlx_init();
-//	if (!img->mlx)
-	if (screen->mlx)
+	if (!screen->mlx)
 		exit(EXIT_FAILURE);
 }
 
-//void	ft_get_img_win(t_img *img, char *title)
 void	ft_get_img_win(t_screen *screen)
 {
-	//img->win = mlx_new_window(img->mlx, img->width, img->height, title);
-	//if (!img->win)
 	void			*mlx;
 	unsigned int	width;
 	unsigned int	height;
@@ -37,14 +31,12 @@ void	ft_get_img_win(t_screen *screen)
 	height = screen->height;
 	title = screen->title;
 	screen->win = mlx_new_window(mlx, width, height, title);
-	if (!win)
+	if (!screen->win)
 		exit(EXIT_FAILURE);
 }
 
 void	ft_get_img_def(t_player *player)
 {
-	//img->def = mlx_new_image(img->mlx, img->width, img->height);
-	//if (!img->def)
 	void			*mlx;
 	unsigned int	width;
 	unsigned int	height;
