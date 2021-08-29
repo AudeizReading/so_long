@@ -60,6 +60,7 @@ int		ft_hook_key_s(int keycode, t_player *player)
 			ft_draw_square(player->img, player->pole_pos, coef, cyan);
 			//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, player->pole_pos->x, player->pole_pos->y);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("end hook s: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
@@ -99,6 +100,7 @@ int		ft_hook_key_w(int keycode, t_player *player)
 			ft_draw_square(player->img, player->pole_pos, coef, cyan);
 			// Keep in mind that coordonates are important! Don't mess with it !
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("end hook w: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
@@ -136,7 +138,8 @@ int		ft_hook_key_a(int keycode, t_player *player)
 			player->pole_pos = player->pole_pos->next;
 			ft_draw_square(player->img, player->pole_pos, coef, cyan);
 			// Keep in mind that coordonates are important! Don't mess with it !
-			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		i//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("During hook a: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
@@ -175,6 +178,7 @@ int		ft_hook_key_d(int keycode, t_player *player)
 			ft_draw_square(player->img, player->pole_pos, coef, cyan);
 			// Keep in mind that coordonates are important! Don't mess with it !
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("During hook d: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
@@ -214,6 +218,7 @@ int	ft_draw_map(t_player *player)
 	ft_draw_object(player->img, player->map->end, coef, red);
 	// Keep in mind that coordonates are important! Don't mess with it !
 	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 //	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def,384, 288);
 	return (0);
 }
