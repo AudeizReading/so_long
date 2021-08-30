@@ -35,7 +35,6 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	coef = 64;
 	pos = player->pole_pos->pos;
 	next_y = player->pole_pos->y + coef;
-	// L'idee c'est d'aller detecter la couleur de la potentielle case suivante pour verifier qu'il ne s'agit pas d'un obstacle avant de malloc quoique ce soit ou de dessiner a ces potentielles coordonnees tout en effacant celle actuelle, profitons du fait que x ne varie pas, seulement y
 	if (keycode == 1 && player->pole_pos->y < (int)player->img->height - coef * 2)
 	{
 		// Determiner l'action a mener si case verte ou rouge
@@ -48,20 +47,16 @@ int		ft_hook_key_s(int keycode, t_player *player)
 				printf("hook s: le prochain mouvement amene sur la sortie\n");
 		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
 				printf("hook s: le prochain mouvement amene sur un collectible\n");
-		// Recouvre le précédent carré
-	//	if (!ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, turquoise) && !ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, grey) && !ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
 			ft_draw_square(player->img, player->pole_pos, coef, ocre);
-			//	printf ("ocre détecté\n");
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y + coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
-			// Il faudra aussi checker si la nouvelle case est libre d'acces
 			player->pole_pos = player->pole_pos->next;
 			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
-			//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, player->pole_pos->x, player->pole_pos->y);
-			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
-		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
+			mlx_clear_window(player->screen->mlx, player->screen->win);
+			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
+			printf ("Move to down. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
 		printf("end hook s: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
@@ -100,7 +95,9 @@ int		ft_hook_key_w(int keycode, t_player *player)
 			player->pole_pos = player->pole_pos->next;
 			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			// Keep in mind that coordonates are important! Don't mess with it !
-			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+			mlx_clear_window(player->screen->mlx, player->screen->win);
+			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("end hook w: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
@@ -139,7 +136,9 @@ int		ft_hook_key_a(int keycode, t_player *player)
 			player->pole_pos = player->pole_pos->next;
 			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			// Keep in mind that coordonates are important! Don't mess with it !
-			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+			//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+			mlx_clear_window(player->screen->mlx, player->screen->win);
+			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("During hook a: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
@@ -178,7 +177,9 @@ int		ft_hook_key_d(int keycode, t_player *player)
 			player->pole_pos = player->pole_pos->next;
 			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			// Keep in mind that coordonates are important! Don't mess with it !
-			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+			//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+			mlx_clear_window(player->screen->mlx, player->screen->win);
+			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("During hook d: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
@@ -216,10 +217,7 @@ int	ft_draw_map(t_player *player)
 	ft_draw_object(player->img, player->map->collect, coef, yellow);
 	ft_draw_object(player->img, player->map->start, coef, turquoise);
 	ft_draw_object(player->img, player->map->end, coef, pink);
-	// Keep in mind that coordonates are important! Don't mess with it !
-	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
-//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
-//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def,384, 288);
+	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 	return (0);
 }
 
@@ -310,7 +308,6 @@ int	main(int argc, char **argv)
 		ft_draw_map(player);
 		mlx_hook(player->screen->win, 17, 1L << 2, ft_hook_close_mlx, player);
 		mlx_hook(player->screen->win, 2, 1L << 0, key_hook, player);
-		//mlx_loop_hook(player->screen->mlx, ft_draw_map, player);
 		mlx_loop(player->screen->mlx);
 		ft_clean_player(player);
 	}
