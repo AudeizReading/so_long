@@ -27,156 +27,130 @@ t_bool	ft_is_pixel_color(t_player *player, int x, int y, int color)
 
 int		ft_hook_key_s(int keycode, t_player *player)
 {
-	int	coef;
 	size_t	pos;
 	t_point	*tmp;
 	int	next_y;
 
-	coef = 64;
 	pos = player->pole_pos->pos;
-	next_y = player->pole_pos->y + coef;
-	if (keycode == 1 && player->pole_pos->y < (int)player->img->height - coef * 2)
+	next_y = player->pole_pos->y + player->coef;
+	if (keycode == 1 && player->pole_pos->y < (int)player->img->height - player->coef * 2)
 	{
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
-				printf("hook s: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, turquoise))
-				printf("hook s: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
-				printf("hook s: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
-				printf("hook s: le prochain mouvement amene sur un collectible\n");
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, ocre);
-			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y + coef, pos + 1);
+			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y + player->coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
+			ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
 			mlx_clear_window(player->screen->mlx, player->screen->win);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to down. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
-				ft_clean_player(player);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
-				;
 		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+		{
+			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+			ft_clean_player(player);
+		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			player->nb_collect++;
 	}
 	return (0);
 }
 
 int		ft_hook_key_w(int keycode, t_player *player)
 {
-	int	coef;
 	size_t	pos;
 	t_point	*tmp;
 	int	next_y;
 
-	coef = 64;
 	pos = player->pole_pos->pos;
-	next_y = player->pole_pos->y - coef;
-	if (keycode == 13 && player->pole_pos->y > coef)
+	next_y = player->pole_pos->y - player->coef;
+	if (keycode == 13 && player->pole_pos->y > player->coef)
 	{
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
-				printf("hook w: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, turquoise))
-				printf("hook w: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
-				printf("hook w: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
-				printf("hook w: le prochain mouvement amene sur un collectible\n");
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, ocre);
-			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y - coef, pos + 1);
+			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y - player->coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
+			ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
 			mlx_clear_window(player->screen->mlx, player->screen->win);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to up. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
-				ft_clean_player(player);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
-				;
 		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+		{
+			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+			ft_clean_player(player);
+		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			player->nb_collect++;
 	}
 	return (0);
 }
 
 int		ft_hook_key_a(int keycode, t_player *player)
 {
-	int	coef;
 	size_t	pos;
 	t_point	*tmp;
 	int	next_x;
 
-	coef = 64;
 	pos = player->pole_pos->pos;
-	next_x = player->pole_pos->x - coef;
-	if (keycode == 0 && player->pole_pos->x > coef)
+	next_x = player->pole_pos->x - player->coef;
+	if (keycode == 0 && player->pole_pos->x > player->coef)
 	{
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
-				printf("hook a: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, turquoise))
-				printf("hook a: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
-				printf("hook a: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
-				printf("hook a: le prochain mouvement amene sur un collectible\n");
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, ocre);
-			tmp = ft_init_point(player->pole_pos->x - coef, player->pole_pos->y, pos + 1);
+			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
+				printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+			tmp = ft_init_point(player->pole_pos->x - player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
+			ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
+			printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 			mlx_clear_window(player->screen->mlx, player->screen->win);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
-			printf ("Move to right. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
-				ft_clean_player(player);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
-				;
 		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+		{
+			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+			ft_clean_player(player);
+		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			player->nb_collect++;
 	}
 	return (0);
 }
 
 int		ft_hook_key_d(int keycode, t_player *player)
 {
-	int	coef;
 	size_t	pos;
 	t_point	*tmp;
 	int	next_x;
 
-	coef = 64;
 	pos = player->pole_pos->pos;
-	next_x = player->pole_pos->x + coef;
-	if (keycode == 2 && player->pole_pos->x < (int)player->img->width - coef * 2)
+	next_x = player->pole_pos->x + player->coef;
+	if (keycode == 2 && player->pole_pos->x < (int)player->img->width - player->coef * 2)
 	{
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
-				printf("hook d: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, turquoise))
-				printf("hook d: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
-				printf("hook d: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
-				printf("hook d: le prochain mouvement amene sur un collectible\n");
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, ocre);
-			tmp = ft_init_point(player->pole_pos->x + coef, player->pole_pos->y, pos + 1);
+			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+			tmp = ft_init_point(player->pole_pos->x + player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
+			ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
 			mlx_clear_window(player->screen->mlx, player->screen->win);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
-			printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
-				ft_clean_player(player);
-			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
-				;
+			printf ("Move to right. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+		{
+			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+			ft_clean_player(player);
+		}
+		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			player->nb_collect++;
 	}
 	return (0);
 }
@@ -204,13 +178,12 @@ void	ft_draw_object(t_img *img, t_point *object, size_t coef, int color)
 
 int	ft_draw_map(t_player *player)
 {
-	size_t	coef = 64;
 	mlx_clear_window(player->screen->mlx, player->screen->win);
 	ft_fill_screen(player->img, ocre);
-	ft_draw_object(player->img, player->map->wall, coef, grey);
-	ft_draw_object(player->img, player->map->collect, coef, yellow);
-	ft_draw_object(player->img, player->map->start, coef, turquoise);
-	ft_draw_object(player->img, player->map->end, coef, pink);
+	ft_draw_object(player->img, player->map->wall, player->coef, grey);
+	ft_draw_object(player->img, player->map->collect, player->coef, yellow);
+	ft_draw_object(player->img, player->map->start, player->coef, turquoise);
+	ft_draw_object(player->img, player->map->end, player->coef, pink);
 	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 	return (0);
 }
@@ -268,16 +241,15 @@ void	ft_clean_img(t_player *player)
 t_player	*ft_init_player(char **file, size_t scr_width, size_t scr_height, char *title)
 {
 	t_player	*player;
-	int			coef;
 
-	coef = 64;
 	player = malloc(sizeof(*player));
 	player->fd = ft_open_map(file[1]);
+	player->coef = 64;
+	player->nb_collect = 0;
 	player->map = ft_parse_map(player->fd, file);
-	// Attention ici checker que 1 seule pos de depart
-	player->pole_pos = ft_init_point(player->map->start->x * coef, player->map->start->y * coef, 0);
+	player->pole_pos = ft_init_point(player->map->start->x * player->coef, player->map->start->y * player->coef, 0);
 	player->screen = ft_init_screen(title, scr_width, scr_height);
-	player->img = ft_init_img(player, 64);
+	player->img = ft_init_img(player, player->coef);
 	ft_get_img_def(player);
 	ft_get_img_addr(player->img);
 	return (player);
@@ -303,6 +275,7 @@ int	main(int argc, char **argv)
 		mlx_hook(player->screen->win, 17, 1L << 2, ft_hook_close_mlx, player);
 		mlx_hook(player->screen->win, 2, 1L << 0, key_hook, player);
 		mlx_loop(player->screen->mlx);
+		mlx_loop_hook(player->screen->mlx, ft_draw_map, player);
 		ft_clean_player(player);
 	}
 	else

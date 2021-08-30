@@ -80,6 +80,8 @@ typedef struct	s_player
 	t_img		*img;
 	t_map		*map;
 	int			fd;
+	int			coef;
+	int			nb_collect;
 }				t_player;
 
 /* Errors handling */
