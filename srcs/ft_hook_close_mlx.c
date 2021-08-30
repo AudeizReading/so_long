@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 14:18:27 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/28 18:19:26 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/08/30 12:05:16 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int		ft_hook_close_mlx(t_player *player)
 {
-//	mlx_destroy_image(player->screen->mlx, player->img->def);
-//	mlx_destroy_window(player->screen->mlx, player->screen->win);
 	ft_clean_player(player);
 	exit(EXIT_SUCCESS);
 	return (0);
