@@ -12,12 +12,20 @@
 
 enum			e_color
 {
-	grey = 0x555555,
-	blue = 0x000099,
+	grey = 0x454545,
+	blue = 0x0000AB,
 	purple = 0x993366,
-	green = 0x00AA00,
-	red = 0x660000,
-	cyan = 0x00AAAA
+	//pink = 0xCF22CF,
+	pink = 0xDD99DD,
+	green = 0x00AB00,
+	red = 0xAB0000,
+	cyan = 0x00AAA9,
+	//llow = 0xE6D647,
+	yellow = 0xE6D677,
+	ocre = 0x998D22,
+	turquoise = 0x35D6E5,
+	fuschia = 0xFF00FF,
+	teal = 0x2B9099
 };
 
 typedef struct	s_error

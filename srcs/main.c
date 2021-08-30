@@ -38,26 +38,27 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	// L'idee c'est d'aller detecter la couleur de la potentielle case suivante pour verifier qu'il ne s'agit pas d'un obstacle avant de malloc quoique ce soit ou de dessiner a ces potentielles coordonnees tout en effacant celle actuelle, profitons du fait que x ne varie pas, seulement y
 	if (keycode == 1 && player->pole_pos->y < (int)player->img->height - coef * 2)
 	{
+		// Determiner l'action a mener si case verte ou rouge
 		printf("starting hook s: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 				printf("hook s: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, blue))
+		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, turquoise))
 				printf("hook s: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, red))
+		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
 				printf("hook s: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, green))
+		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
 				printf("hook s: le prochain mouvement amene sur un collectible\n");
 		// Recouvre le précédent carré
-	//	if (!ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, blue) && !ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, grey) && !ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, red))
+	//	if (!ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, turquoise) && !ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, grey) && !ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, purple);
-			//	printf ("purple détecté\n");
+			ft_draw_square(player->img, player->pole_pos, coef, ocre);
+			//	printf ("ocre détecté\n");
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y + coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			// Il faudra aussi checker si la nouvelle case est libre d'acces
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, cyan);
+			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, player->pole_pos->x, player->pole_pos->y);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
 		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
@@ -82,22 +83,22 @@ int		ft_hook_key_w(int keycode, t_player *player)
 		printf("starting hook w: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 				printf("hook w: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, blue))
+		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, turquoise))
 				printf("hook w: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, red))
+		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, pink))
 				printf("hook w: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, green))
+		if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
 				printf("hook w: le prochain mouvement amene sur un collectible\n");
 		// Recouvre le précédent carré
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, purple);
-			//		printf ("purple détecté\n");
+			ft_draw_square(player->img, player->pole_pos, coef, ocre);
+			//		printf ("ocre détecté\n");
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y - coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			// Il faudra aussi checker si la nouvelle case est libre d'acces
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, cyan);
+			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			// Keep in mind that coordonates are important! Don't mess with it !
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
 		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
@@ -122,24 +123,24 @@ int		ft_hook_key_a(int keycode, t_player *player)
 		// Recouvre le précédent carré
 		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 				printf("hook a: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, blue))
+		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, turquoise))
 				printf("hook a: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, red))
+		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
 				printf("hook a: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, green))
+		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
 				printf("hook a: le prochain mouvement amene sur un collectible\n");
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, purple);
-			//		printf ("purple détecté\n");
+			ft_draw_square(player->img, player->pole_pos, coef, ocre);
+			//		printf ("ocre détecté\n");
 			tmp = ft_init_point(player->pole_pos->x - coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			// Il faudra aussi checker si la nouvelle case est libre d'acces
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, cyan);
+			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			// Keep in mind that coordonates are important! Don't mess with it !
-		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
-		i//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
+			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
+		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
 		}
 		printf("During hook a: player->pole_pos->y %d, player->pole_pos->x %d player->pole_pos->pos %d\n", player->pole_pos->y, player->pole_pos->x, player->pole_pos->pos);
 	}
@@ -161,21 +162,21 @@ int		ft_hook_key_d(int keycode, t_player *player)
 		// Recouvre le précédent carré
 		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 				printf("hook d: le prochain mouvement amene sur un mur\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, blue))
+		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, turquoise))
 				printf("hook d: le prochain mouvement amene sur le point de depart\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, red))
+		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
 				printf("hook d: le prochain mouvement amene sur la sortie\n");
-		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, green))
+		if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
 				printf("hook d: le prochain mouvement amene sur un collectible\n");
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
-			ft_draw_square(player->img, player->pole_pos, coef, purple);
-			//	printf ("purple détecté\n");
+			ft_draw_square(player->img, player->pole_pos, coef, ocre);
+			//	printf ("ocre détecté\n");
 			tmp = ft_init_point(player->pole_pos->x + coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
 			// Il faudra aussi checker si la nouvelle case est libre d'acces
 			player->pole_pos = player->pole_pos->next;
-			ft_draw_square(player->img, player->pole_pos, coef, cyan);
+			ft_draw_square(player->img, player->pole_pos, coef, turquoise);
 			// Keep in mind that coordonates are important! Don't mess with it !
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
 		//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
@@ -210,12 +211,11 @@ int	ft_draw_map(t_player *player)
 {
 	size_t	coef = 64;
 	mlx_clear_window(player->screen->mlx, player->screen->win);
-	//ft_fill_screen(player->img, purple);
-	ft_fill_screen(player->img, purple);
+	ft_fill_screen(player->img, ocre);
 	ft_draw_object(player->img, player->map->wall, coef, grey);
-	ft_draw_object(player->img, player->map->collect, coef, green);
-	ft_draw_object(player->img, player->map->start, coef, blue);
-	ft_draw_object(player->img, player->map->end, coef, red);
+	ft_draw_object(player->img, player->map->collect, coef, yellow);
+	ft_draw_object(player->img, player->map->start, coef, turquoise);
+	ft_draw_object(player->img, player->map->end, coef, pink);
 	// Keep in mind that coordonates are important! Don't mess with it !
 	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, 0, 0);
 //	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, -100, -100);
