@@ -37,6 +37,8 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
+			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+				player->nb_collect++;
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y + player->coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -46,13 +48,13 @@ int		ft_hook_key_s(int keycode, t_player *player)
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to down. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
 		{
 			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
 			ft_clean_player(player);
 		}
 		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;
+			player->nb_collect++;*/
 	}
 	return (0);
 }
@@ -69,6 +71,8 @@ int		ft_hook_key_w(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
+			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+				player->nb_collect++;
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y - player->coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -78,13 +82,13 @@ int		ft_hook_key_w(int keycode, t_player *player)
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to up. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
 		{
 			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
 			ft_clean_player(player);
 		}
 		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;
+			player->nb_collect++;*/
 	}
 	return (0);
 }
@@ -102,7 +106,20 @@ int		ft_hook_key_a(int keycode, t_player *player)
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
 			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
+			{
+				ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+				tmp = ft_init_point(player->pole_pos->x - player->coef, player->pole_pos->y, pos + 1);
+				ft_point_addback(&player->pole_pos, tmp);
+				player->pole_pos = player->pole_pos->next;
+				ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
+				printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
+				mlx_clear_window(player->screen->mlx, player->screen->win);
+				mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 				printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+			//	ft_clean_player(player);
+			}
+			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+				player->nb_collect++;
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x - player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -112,13 +129,13 @@ int		ft_hook_key_a(int keycode, t_player *player)
 			mlx_clear_window(player->screen->mlx, player->screen->win);
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
 		{
 			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
 			ft_clean_player(player);
 		}
 		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;
+			player->nb_collect++;*/
 	}
 	return (0);
 }
@@ -135,6 +152,8 @@ int		ft_hook_key_d(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
+			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+				player->nb_collect++;
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x + player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -144,13 +163,13 @@ int		ft_hook_key_d(int keycode, t_player *player)
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to right. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
+	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
 		{
 			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
 			ft_clean_player(player);
 		}
 		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;
+			player->nb_collect++;*/
 	}
 	return (0);
 }
