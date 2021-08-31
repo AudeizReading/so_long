@@ -37,8 +37,11 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
-			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
+			{
+				printf("Detection case yellow\n");
 				player->nb_collect++;
+			}
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y + player->coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -71,8 +74,11 @@ int		ft_hook_key_w(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, player->pole_pos->x, next_y, grey))
 		{
-			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			if (ft_is_pixel_color(player, player->pole_pos->x, next_y, yellow))
+			{
+				printf("Detection case yellow\n");
 				player->nb_collect++;
+			}
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x, player->pole_pos->y - player->coef, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -116,10 +122,13 @@ int		ft_hook_key_a(int keycode, t_player *player)
 				mlx_clear_window(player->screen->mlx, player->screen->win);
 				mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 				printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
-			//	ft_clean_player(player);
+				ft_hook_close_mlx(player);
 			}
-			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
+			{
+				printf("Detection case yellow\n");
 				player->nb_collect++;
+			}
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x - player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
@@ -152,8 +161,11 @@ int		ft_hook_key_d(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
-			if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
+			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
+			{
+				printf("Detection case yellow\n");
 				player->nb_collect++;
+			}
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
 			tmp = ft_init_point(player->pole_pos->x + player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
