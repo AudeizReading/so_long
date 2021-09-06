@@ -51,13 +51,6 @@ int		ft_hook_key_s(int keycode, t_player *player)
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to down. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
-	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
-		{
-			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
-			ft_clean_player(player);
-		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;*/
 	}
 	return (0);
 }
@@ -88,13 +81,6 @@ int		ft_hook_key_w(int keycode, t_player *player)
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to up. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
-	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
-		{
-			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
-			ft_clean_player(player);
-		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;*/
 	}
 	return (0);
 }
@@ -109,42 +95,51 @@ int		ft_hook_key_a(int keycode, t_player *player)
 	next_x = player->pole_pos->x - player->coef;
 	if (keycode == 0 && player->pole_pos->x > player->coef)
 	{
+		// Si la prochaine case n'est pas grise - si la case n'est pas un mur
 		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
 		{
+			// Si la prochaine case est rose - si la case est la sortie
 			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
 			{
+				// On remplace la couleur de la case rose, par la couleur représentant un espace vide - ici ocre
 				ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+				// On récupère la position du joueur pour en garder une trace dans une liste chaînée
 				tmp = ft_init_point(player->pole_pos->x - player->coef, player->pole_pos->y, pos + 1);
 				ft_point_addback(&player->pole_pos, tmp);
+				// On met à jour la position du player
 				player->pole_pos = player->pole_pos->next;
+				// On dessine la nouvelle position du joueur en turquoise et on l'affiche en console (consignes de l'exercice)
 				ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
 				printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
+				// On nettoie la fenêtre, sinon les dessins vont se superposer et ce n'est pas ce que l'on cherche
 				mlx_clear_window(player->screen->mlx, player->screen->win);
+				// On pousse les nouveaux dessins faits sur l'image sur la fenêtre
 				mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
-				printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
+				printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %d déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), player->pole_pos->pos);
+				// On close la fenêtre proprement car on est sur la case de sortie le jeu est fini
 				ft_hook_close_mlx(player);
 			}
+			// Si la case est jaune - si la case est une item collectible
 			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
 			{
 				printf("Detection case yellow\n");
 				player->nb_collect++;
 			}
+			// On remplace la couleur de la case rose, par la couleur représentant un espace vide - ici ocre
 			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+			// On récupère la position du joueur pour en garder une trace dans une liste chaînée
 			tmp = ft_init_point(player->pole_pos->x - player->coef, player->pole_pos->y, pos + 1);
 			ft_point_addback(&player->pole_pos, tmp);
+			// On met à jour la position du player
 			player->pole_pos = player->pole_pos->next;
+			// On dessine la nouvelle position du joueur en turquoise et on l'affiche en console (consignes de l'exercice)
 			ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
 			printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
+			// On nettoie la fenêtre, sinon les dessins vont se superposer et ce n'est pas ce que l'on cherche
 			mlx_clear_window(player->screen->mlx, player->screen->win);
+				// On pousse les nouveaux dessins faits sur l'image sur la fenêtre
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 		}
-	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
-		{
-			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
-			ft_clean_player(player);
-		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;*/
 	}
 	return (0);
 }
@@ -175,13 +170,6 @@ int		ft_hook_key_d(int keycode, t_player *player)
 			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
 			printf ("Move to right. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 		}
-	/*	if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, pink))
-		{
-			printf("Le jeu est fini.\n Vous avez récolté %d / %d items\n", player->nb_collect, ft_point_list_size(player->map->collect));
-			ft_clean_player(player);
-		}
-		if (ft_is_pixel_color(player, player->pole_pos->x, player->pole_pos->y, yellow))
-			player->nb_collect++;*/
 	}
 	return (0);
 }

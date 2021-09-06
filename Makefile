@@ -87,7 +87,8 @@ mlx:
 	@$(ECHO) "$(NO_COL)"
 
 test: $(NAME)
-	./$(NAME) maps/13x5_valid_map.ber
+	./$(NAME) maps/34x6_valid_map.ber
+#	./$(NAME) maps/13x5_valid_map.ber
 #	./$(NAME) maps/13x5_invalid_char.ber
 #	./$(NAME) maps/13x5_invalid_wall.ber
 #	./$(NAME) maps/13x5_multi_collectibles.ber
