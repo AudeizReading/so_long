@@ -85,88 +85,59 @@ int		ft_hook_key_w(int keycode, t_player *player)
 	return (0);
 }
 
+void	ft_center_image(t_player *player, int next_x, int next_y)
+{
+	int	center_x;
+	int	center_y;
+	void	*mlx;
+	void	*win;
+	void	*img;
+
+	center_x = (player->screen->width / 2) - next_x;
+	center_y = (player->screen->height / 2) - next_y;
+	mlx = player->screen->mlx;
+	win = player->screen->win;
+	img = player->img->def;
+	mlx_put_image_to_window(mlx, win, img, center_x, center_y);
+}
+
 void	ft_change_player_pos(t_player *player, int next_x, int next_y)
 {
 	t_point	*tmp;
-	int	center_x;
-	int	center_y;
 	size_t	pos;
 
 	pos = player->pole_pos->pos;
-	center_x = (player->screen->width / 2) - next_x;
-	center_y = (player->screen->height / 2) - player->pole_pos->y;
 	ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
-	tmp = ft_init_point(next_x, player->pole_pos->y, pos + 1);
+	tmp = ft_init_point(next_x, next_y, pos + 1);
 	ft_point_addback(&player->pole_pos, tmp);
 	player->pole_pos = player->pole_pos->next;
 	ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
-	printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
+	// Have to delete printf and change the message
+	printf("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
 	mlx_clear_window(player->screen->mlx, player->screen->win);
-	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, center_x, center_y);
+	ft_center_image(player, next_x, next_y);
 }
 
 int		ft_hook_key_a(int keycode, t_player *player)
 {
-	size_t	pos;
-	t_point	*tmp;
 	int	next_x;
-	int	center_x;
-	int	center_y;
+	int	next_y;
 
-	pos = player->pole_pos->pos;
 	next_x = player->pole_pos->x - player->coef;
-	center_x = (player->screen->width / 2) - next_x;
-	center_y = (player->screen->height / 2) - player->pole_pos->y;
+	next_y = player->pole_pos->y;
 	if (keycode == 0 && player->pole_pos->x > player->coef)
 	{
-		// Si la prochaine case n'est pas grise - si la case n'est pas un mur
-		if (!ft_is_pixel_color(player, next_x, player->pole_pos->y, grey))
+		if (!ft_is_pixel_color(player, next_x, next_y, grey))
 		{
-			// Si la prochaine case est rose - si la case est la sortie
-			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, pink))
+			if (ft_is_pixel_color(player, next_x, next_y, pink))
 			{
-				// On remplace la couleur de la case rose, par la couleur représentant un espace vide - ici ocre
-				ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
-				// On récupère la position du joueur pour en garder une trace dans une liste chaînée
-				tmp = ft_init_point(next_x, player->pole_pos->y, pos + 1);
-				ft_point_addback(&player->pole_pos, tmp);
-				// On met à jour la position du player
-				player->pole_pos = player->pole_pos->next;
-				// On dessine la nouvelle position du joueur en turquoise et on l'affiche en console (consignes de l'exercice)
-				ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
-				printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
-				// On nettoie la fenêtre, sinon les dessins vont se superposer et ce n'est pas ce que l'on cherche
-				mlx_clear_window(player->screen->mlx, player->screen->win);
-				// On pousse les nouveaux dessins faits sur l'image sur la fenêtre
-			//	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
-				mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, center_x, center_y);
-				//printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %zu déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), pos);
+				ft_change_player_pos(player, next_x, next_y);
 				printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %d déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), player->pole_pos->pos);
-				// On close la fenêtre proprement car on est sur la case de sortie le jeu est fini
 				ft_hook_close_mlx(player);
 			}
-			// Si la case est jaune - si la case est une item collectible
-			if (ft_is_pixel_color(player, next_x, player->pole_pos->y, yellow))
-			{
-				printf("Detection case yellow\n");
+			if (ft_is_pixel_color(player, next_x, next_y, yellow))
 				player->nb_collect++;
-			}
-			// On remplace la couleur de la case rose, par la couleur représentant un espace vide - ici ocre
-			ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
-			// On récupère la position du joueur pour en garder une trace dans une liste chaînée
-			tmp = ft_init_point(next_x, player->pole_pos->y, pos + 1);
-		//	tmp = ft_init_point(next_x, player->pole_pos->y, pos++);
-			ft_point_addback(&player->pole_pos, tmp);
-			// On met à jour la position du player
-			player->pole_pos = player->pole_pos->next;
-			// On dessine la nouvelle position du joueur en turquoise et on l'affiche en console (consignes de l'exercice)
-			ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
-			printf ("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
-			// On nettoie la fenêtre, sinon les dessins vont se superposer et ce n'est pas ce que l'on cherche
-			mlx_clear_window(player->screen->mlx, player->screen->win);
-				// On pousse les nouveaux dessins faits sur l'image sur la fenêtre
-			//mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
-			mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, center_x, center_y);
+			ft_change_player_pos(player, next_x, next_y);
 		}
 	}
 	return (0);
