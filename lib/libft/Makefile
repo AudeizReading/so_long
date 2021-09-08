@@ -6,7 +6,7 @@
 #    By: alellouc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 08:35:31 by alellouc          #+#    #+#              #
-#    Updated: 2021/08/13 22:16:33 by alellouc         ###   ########.fr        #
+#    Updated: 2021/09/08 10:19:51 by alellouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRC=$(addprefix ft_, $(addsuffix .c,\
 		check_invalid_base\
 		putnbr_base\
 		luint_putnbr_base\
+		basic_print\
 	))
 BONUS_SRC=$(addprefix ft_, $(addsuffix .c,\
 		  lstnew\
