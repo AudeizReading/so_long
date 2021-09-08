@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 13:05:25 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/08 12:53:53 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:51:43 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,6 @@ void	ft_draw_screen_grid_bpp(t_img *img, int color)
 			else
 				x++;
 		}
-		y++;
-	}
-}
-
-void	ft_draw_square(t_img *img, t_point *start, int size, int color)
-{
-	int	x;
-	int y;
-
-	y = start->y;
-	while (y < size + start->y)
-	{
-		x = start->x;
-		while (x < start->x + size)
-			ft_mlx_pixel_put(img, x++, y, color);
 		y++;
 	}
 }

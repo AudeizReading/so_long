@@ -126,29 +126,6 @@ int		key_hook(int keycode, t_player *player)
 	return (0);
 }
 
-void	ft_draw_object(t_img *img, t_point *object, size_t coef, int color)
-{
-	while (object)
-	{
-		object->x *= coef;
-		object->y *= coef;
-		ft_draw_square(img, object, coef, color);
-		object = object->next;
-	}
-}
-
-int	ft_draw_map(t_player *player)
-{
-	mlx_clear_window(player->screen->mlx, player->screen->win);
-	ft_fill_screen(player->img, ocre);
-	ft_draw_object(player->img, player->map->wall, player->coef, grey);
-	ft_draw_object(player->img, player->map->collect, player->coef, yellow);
-	ft_draw_object(player->img, player->map->start, player->coef, turquoise);
-	ft_draw_object(player->img, player->map->end, player->coef, pink);
-	ft_center_image(player, player->pole_pos->x, player->pole_pos->y);
-	return (0);
-}
-
 int	ft_open_map(char *file)
 {
 	int	fd;
