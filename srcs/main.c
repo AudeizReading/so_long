@@ -25,6 +25,25 @@ t_bool	ft_is_pixel_color(t_player *player, int x, int y, int color)
 	return (e_false);
 }
 
+void	ft_print_moves_stats(int keycode, t_player *player)
+{
+	int total_moves;
+
+	total_moves = player->pole_pos->pos;
+	ft_putstr("Move to ");
+	if (!keycode)
+		ft_putstr("left");
+	else if (keycode == 1)
+		ft_putstr("down");
+	else if (keycode == 2)
+		ft_putstr("right");
+	else if (keycode == 13)
+		ft_putstr("up");
+	ft_putstr(". You have made ");
+	ft_putnbr(total_moves);
+	ft_putendl(" since the beginning of the game.");
+}
+
 void	ft_print_final_stats(t_player *player)
 {
 	int	nb_items;
@@ -34,7 +53,13 @@ void	ft_print_final_stats(t_player *player)
 	nb_items = player->nb_collect;
 	total_items = ft_point_list_size(player->map->collect);
 	total_moves = player->pole_pos->pos;
-	ft_putstr("Hello de Lu\n");
+	ft_putstr("Game is over now. You have collected ");
+	ft_putnbr(nb_items);
+	ft_putstr(" / ");
+	ft_putnbr(total_items);
+	ft_putstr(" items. You have made ");
+	ft_putnbr(total_moves);
+	ft_putendl(" moves.");
 }
 
 void	ft_center_image(t_player *player, int next_x, int next_y)
@@ -53,7 +78,7 @@ void	ft_center_image(t_player *player, int next_x, int next_y)
 	mlx_put_image_to_window(mlx, win, img, center_x, center_y);
 }
 
-void	ft_change_player_pos(t_player *player, int next_x, int next_y)
+void	ft_change_player_pos(t_player *player, int next_x, int next_y, int key)
 {
 	t_point	*tmp;
 	size_t	pos;
@@ -64,8 +89,7 @@ void	ft_change_player_pos(t_player *player, int next_x, int next_y)
 	ft_point_addback(&player->pole_pos, tmp);
 	player->pole_pos = player->pole_pos->next;
 	ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
-	// Have to delete printf and change the message
-	printf("Move to left. You have made %d move since the beginning of the game\n", player->pole_pos->pos);
+	ft_print_moves_stats(key, player);
 	mlx_clear_window(player->screen->mlx, player->screen->win);
 	ft_center_image(player, next_x, next_y);
 }
@@ -83,14 +107,13 @@ int		ft_hook_key_s(int keycode, t_player *player)
 		{
 			if (ft_is_pixel_color(player, next_x, next_y, pink))
 			{
-				ft_change_player_pos(player, next_x, next_y);
+				ft_change_player_pos(player, next_x, next_y, keycode);
 				ft_print_final_stats(player);
-				printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %d déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), player->pole_pos->pos);
 				ft_hook_close_mlx(player);
 			}
 			if (ft_is_pixel_color(player, next_x, next_y, yellow))
 				player->nb_collect++;
-			ft_change_player_pos(player, next_x, next_y);
+			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
 	return (0);
@@ -109,14 +132,13 @@ int		ft_hook_key_w(int keycode, t_player *player)
 		{
 			if (ft_is_pixel_color(player, next_x, next_y, pink))
 			{
-				ft_change_player_pos(player, next_x, next_y);
+				ft_change_player_pos(player, next_x, next_y, keycode);
 				ft_print_final_stats(player);
-				printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %d déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), player->pole_pos->pos);
 				ft_hook_close_mlx(player);
 			}
 			if (ft_is_pixel_color(player, next_x, next_y, yellow))
 				player->nb_collect++;
-			ft_change_player_pos(player, next_x, next_y);
+			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
 	return (0);
@@ -135,14 +157,13 @@ int		ft_hook_key_a(int keycode, t_player *player)
 		{
 			if (ft_is_pixel_color(player, next_x, next_y, pink))
 			{
-				ft_change_player_pos(player, next_x, next_y);
+				ft_change_player_pos(player, next_x, next_y, keycode);
 				ft_print_final_stats(player);
-				printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %d déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), player->pole_pos->pos);
 				ft_hook_close_mlx(player);
 			}
 			if (ft_is_pixel_color(player, next_x, next_y, yellow))
 				player->nb_collect++;
-			ft_change_player_pos(player, next_x, next_y);
+			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
 	return (0);
@@ -161,14 +182,13 @@ int		ft_hook_key_d(int keycode, t_player *player)
 		{
 			if (ft_is_pixel_color(player, next_x, next_y, pink))
 			{
-				ft_change_player_pos(player, next_x, next_y);
+				ft_change_player_pos(player, next_x, next_y, keycode);
 				ft_print_final_stats(player);
-				printf("Le jeu est fini.\nVous avez récolté %d / %d items.\nVous avez fait %d déplacements\n", player->nb_collect, ft_point_list_size(player->map->collect), player->pole_pos->pos);
 				ft_hook_close_mlx(player);
 			}
 			if (ft_is_pixel_color(player, next_x, next_y, yellow))
 				player->nb_collect++;
-			ft_change_player_pos(player, next_x, next_y);
+			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
 	return (0);
