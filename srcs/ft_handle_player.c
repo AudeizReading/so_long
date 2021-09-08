@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:17:34 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/08 15:40:18 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/08 22:53:06 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,27 @@ t_player	*ft_init_player(char **file, size_t w, size_t h, char *title)
 	int			start_y;
 
 	player = malloc(sizeof(*player));
-	player->fd = ft_open_map(file[1]);
-	player->map = ft_parse_map(player->fd, file);
-	player->coef = 64;
+	if (!player)
+		return (NULL);
 	player->nb_collect = 0;
+	player->fd = ft_open_map(file[1]);
+	if (!player->fd)
+		return NULL;
+	player->map = ft_parse_map(player->fd, file);
+	if (!player->map)
+		return NULL;
+	player->coef = 64;
 	start_x = player->map->start->x * player->coef;
 	start_y = player->map->start->y * player->coef;
 	player->pole_pos = ft_init_point(start_x, start_y, 0);
+	if (!player->pole_pos)
+		return (NULL);
 	player->screen = ft_init_screen(title, w, h);
+	if (!player->screen)
+		return (NULL);
 	player->img = ft_init_img(player, player->coef);
+	if (!player->img)
+		return NULL;
 	ft_get_img_def(player);
 	ft_get_img_addr(player->img);
 	return (player);

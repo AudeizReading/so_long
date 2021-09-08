@@ -141,6 +141,8 @@ t_screen	*ft_init_screen(char *title, size_t width, size_t height)
 	t_screen	*screen;
 
 	screen = malloc(sizeof(*screen));
+	if (!screen)
+		return (NULL);
 	screen->title = ft_strdup(title);
 	screen->width = width;
 	screen->height = height;
@@ -183,6 +185,8 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		player = ft_init_player(argv, 768, 576, "so_long, and thanks for all the fishes");
+		if (!player)
+			exit(EXIT_FAILURE);
 		ft_draw_map(player);
 		mlx_hook(player->screen->win, 17, 1L << 2, ft_hook_close_mlx, player);
 		mlx_hook(player->screen->win, 2, 1L << 0, key_hook, player);
