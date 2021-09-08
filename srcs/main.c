@@ -1,67 +1,5 @@
 #include "../includes/so_long.h"
 
-void	ft_draw_square(t_img *img, t_point *start, int size, int color)
-{
-	int	x;
-	int y;
-
-	y = start->y;
-	while (y < size + start->y)
-	{
-		x = start->x;
-		while (x < start->x + size)
-			ft_mlx_pixel_put(img, x++, y, color);
-		y++;
-	}
-}
-
-t_bool	ft_is_pixel_color(t_player *player, int x, int y, int color)
-{
-	int		offset;
-
-	offset = (y * player->img->len + x * (player->img->bpp / 8));
-	if (*(int *)(player->img->addr + offset) == color)
-			return (e_true);
-	return (e_false);
-}
-
-void	ft_print_moves_stats(int keycode, t_player *player)
-{
-	int total_moves;
-
-	total_moves = player->pole_pos->pos;
-	ft_putstr("Move to ");
-	if (!keycode)
-		ft_putstr("left");
-	else if (keycode == 1)
-		ft_putstr("down");
-	else if (keycode == 2)
-		ft_putstr("right");
-	else if (keycode == 13)
-		ft_putstr("up");
-	ft_putstr(". You have made ");
-	ft_putnbr(total_moves);
-	ft_putendl(" since the beginning of the game.");
-}
-
-void	ft_print_final_stats(t_player *player)
-{
-	int	nb_items;
-	int	total_items;
-	int	total_moves;
-
-	nb_items = player->nb_collect;
-	total_items = ft_point_list_size(player->map->collect);
-	total_moves = player->pole_pos->pos;
-	ft_putstr("Game is over now. You have collected ");
-	ft_putnbr(nb_items);
-	ft_putstr(" / ");
-	ft_putnbr(total_items);
-	ft_putstr(" items. You have made ");
-	ft_putnbr(total_moves);
-	ft_putendl(" moves.");
-}
-
 void	ft_center_image(t_player *player, int next_x, int next_y)
 {
 	int	center_x;
@@ -76,22 +14,6 @@ void	ft_center_image(t_player *player, int next_x, int next_y)
 	win = player->screen->win;
 	img = player->img->def;
 	mlx_put_image_to_window(mlx, win, img, center_x, center_y);
-}
-
-void	ft_change_player_pos(t_player *player, int next_x, int next_y, int key)
-{
-	t_point	*tmp;
-	size_t	pos;
-
-	pos = player->pole_pos->pos;
-	ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
-	tmp = ft_init_point(next_x, next_y, pos + 1);
-	ft_point_addback(&player->pole_pos, tmp);
-	player->pole_pos = player->pole_pos->next;
-	ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
-	ft_print_moves_stats(key, player);
-	mlx_clear_window(player->screen->mlx, player->screen->win);
-	ft_center_image(player, next_x, next_y);
 }
 
 int		ft_hook_key_s(int keycode, t_player *player)
@@ -223,7 +145,7 @@ int	ft_draw_map(t_player *player)
 	ft_draw_object(player->img, player->map->collect, player->coef, yellow);
 	ft_draw_object(player->img, player->map->start, player->coef, turquoise);
 	ft_draw_object(player->img, player->map->end, player->coef, pink);
-	mlx_put_image_to_window(player->screen->mlx, player->screen->win, player->img->def, (player->screen->width / 2) - player->pole_pos->x, (player->screen->height / 2) - player->pole_pos->y);
+	ft_center_image(player, player->pole_pos->x, player->pole_pos->y);
 	return (0);
 }
 
@@ -275,33 +197,6 @@ void	ft_clean_img(t_player *player)
 	mlx_destroy_image(player->screen->mlx, player->img->def);
 	free(player->img);
 	player->img = NULL;
-}
-
-t_player	*ft_init_player(char **file, size_t scr_width, size_t scr_height, char *title)
-{
-	t_player	*player;
-
-	player = malloc(sizeof(*player));
-	player->fd = ft_open_map(file[1]);
-	player->coef = 64;
-	player->nb_collect = 0;
-	player->map = ft_parse_map(player->fd, file);
-	player->pole_pos = ft_init_point(player->map->start->x * player->coef, player->map->start->y * player->coef, 0);
-	player->screen = ft_init_screen(title, scr_width, scr_height);
-	player->img = ft_init_img(player, player->coef);
-	ft_get_img_def(player);
-	ft_get_img_addr(player->img);
-	return (player);
-}
-
-void	ft_clean_player(t_player *player)
-{
-	ft_clean_map(player->map);
-	ft_point_clear(&player->pole_pos, free);
-	ft_clean_img(player);
-	ft_clean_screen(player->screen);
-	free(player);
-	close(player->fd);
 }
 
 int	main(int argc, char **argv)

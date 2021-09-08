@@ -120,6 +120,7 @@ t_bool	ft_is_rectangular_map(t_line *map);
 void	ft_get_objects_pos(t_map *map);
 void	ft_clean_map(t_map *map);
 t_map	*ft_parse_map(int fd, char **argv);
+int		ft_open_map(char *file);
 
 /* Colors handling */
 int		ft_get_trgb(int t, int r, int g, int b);
@@ -131,20 +132,32 @@ int		ft_get_b(int trgb);
 /* Screen handling */
 void	ft_get_img_mlx(t_screen *screen);
 void	ft_get_img_win(t_screen *screen);
+t_screen	*ft_init_screen(char *title, size_t width, size_t height);
+void	ft_clean_screen(t_screen *screen);
 
 /* Image handling */
 void	ft_get_img_def(t_player *player);
 void	ft_get_img_addr(t_img *img);
 void	ft_mlx_pixel_put(t_img *img, int x, int y, int color);
+t_bool	ft_is_pixel_color(t_player *player, int x, int y, int color);
+t_img	*ft_init_img(t_player *player, size_t coef);
+void	ft_clean_img(t_player *player);
+void	ft_center_image(t_player *player, int next_x, int next_y);
 
 /* Player handling */
+t_player	*ft_init_player(char **file, size_t w, size_t h, char *title);
 void	ft_clean_player(t_player *player);
+void	ft_change_player_pos(t_player *player, int next_x, int next_y, int key);
+void	ft_print_moves_stats(int keycode, t_player *player);
+void	ft_print_final_stats(t_player *player);
 
 /* Drawing handling */
 void	ft_fill_screen(t_img *img, int color);
 void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map);
 void	ft_draw_screen_grid_bpp(t_img *img, int color);
 void	ft_draw_square(t_img *img, t_point *start, int size, int color);
+void	ft_draw_object(t_img *img, t_point *object, size_t coef, int color);
+int		ft_draw_map(t_player *player);
 
 /* Events handling */
 int		ft_hook_close_mlx(t_player *player);

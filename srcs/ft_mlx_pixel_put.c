@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 13:03:49 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/24 13:04:10 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/08 13:00:45 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,14 @@ void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
 	offset = (y * img->len + x * (img->bpp / 8));
 	dst = img->addr + offset;
 	*(unsigned *)dst = color;
+}
+
+t_bool	ft_is_pixel_color(t_player *player, int x, int y, int color)
+{
+	int		offset;
+
+	offset = (y * player->img->len + x * (player->img->bpp / 8));
+	if (*(int *)(player->img->addr + offset) == color)
+			return (e_true);
+	return (e_false);
 }
