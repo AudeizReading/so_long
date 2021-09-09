@@ -105,6 +105,23 @@ test: $(NAME)
 	@$(MAKE) fclean
 	@$(MAKE) mlxclean
 	
+sani: $(OBJ)
+	@$(MAKE) libft
+	@$(MAKE) gnl
+	@$(MAKE) mlx
+	cp $(MLX_PATH)/libmlx.dylib .
+	@$(ECHO) "$(MAG)"
+	$(CC) -g -fsanitize=address -fno-omit-frame-pointer -static-libsan $(LDFLAGS) $^ -o $@ 
+	@$(ECHO) "$(NO_COL)"
+	./$@ maps/34x6_valid_map.ber
+	@$(MAKE) clean
+	@$(MAKE) libftclean
+	@$(MAKE) gnlclean
+	@$(MAKE) mlxclean
+	@$(ECHO) "$(RED)"
+	$(RM) $@ debug.dSYM libmlx.dylib.dSYM
+	@$(ECHO) "$(NO_COL)"
+
 debug: $(OBJ)
 	@$(MAKE) libft
 	@$(MAKE) gnl
