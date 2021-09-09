@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 19:26:42 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/18 21:12:57 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/09 15:03:21 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ t_line	*ft_get_map(int fd)
 	if (gnl == -1)
 		ft_parse_map_error(errno);
 	return (map);
+}
+
+int	ft_open_map(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		ft_parse_map_error(errno);
+	return (fd);
 }

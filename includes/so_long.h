@@ -151,6 +151,8 @@ void		ft_clean_player(t_player *player);
 void		ft_change_player_pos(t_player *player, int next_x, int next_y, int key);
 void		ft_print_moves_stats(int keycode, t_player *player);
 void		ft_print_final_stats(t_player *player);
+void		ft_handle_exit(t_player *player, int x, int y, int keycode);
+void		ft_handle_items(t_player *player, int x, int y);
 
 /* Drawing handling */
 void		ft_fill_screen(t_img *img, int color);

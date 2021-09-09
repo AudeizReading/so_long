@@ -1,19 +1,20 @@
 #include "../includes/so_long.h"
 
-void	ft_center_image(t_player *player, int next_x, int next_y)
+// Have to handle to allow to exit only when collect items are all done (so be careful to the fn print stats too
+void	ft_handle_exit(t_player *player, int x, int y, int keycode)
 {
-	int	center_x;
-	int	center_y;
-	void	*mlx;
-	void	*win;
-	void	*img;
+	if (ft_is_pixel_color(player, x, y, pink))
+	{
+		ft_change_player_pos(player, x, y, keycode);
+		ft_print_final_stats(player);
+		ft_hook_close_mlx(player);
+	}
+}
 
-	center_x = (player->screen->width / 2) - next_x;
-	center_y = (player->screen->height / 2) - next_y;
-	mlx = player->screen->mlx;
-	win = player->screen->win;
-	img = player->img->def;
-	mlx_put_image_to_window(mlx, win, img, center_x, center_y);
+void	ft_handle_items(t_player *player, int x, int y)
+{
+	if (ft_is_pixel_color(player, x, y, yellow))
+		player->nb_collect++;
 }
 
 int		ft_hook_key_s(int keycode, t_player *player)
@@ -27,14 +28,8 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, next_x, next_y, grey))
 		{
-			if (ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-				ft_print_final_stats(player);
-				ft_hook_close_mlx(player);
-			}
-			if (ft_is_pixel_color(player, next_x, next_y, yellow))
-				player->nb_collect++;
+			ft_handle_exit(player, next_x, next_y, keycode);
+			ft_handle_items(player, next_x, next_y);
 			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
@@ -52,14 +47,8 @@ int		ft_hook_key_w(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, next_x, next_y, grey))
 		{
-			if (ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-				ft_print_final_stats(player);
-				ft_hook_close_mlx(player);
-			}
-			if (ft_is_pixel_color(player, next_x, next_y, yellow))
-				player->nb_collect++;
+			ft_handle_exit(player, next_x, next_y, keycode);
+			ft_handle_items(player, next_x, next_y);
 			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
@@ -77,14 +66,8 @@ int		ft_hook_key_a(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, next_x, next_y, grey))
 		{
-			if (ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-				ft_print_final_stats(player);
-				ft_hook_close_mlx(player);
-			}
-			if (ft_is_pixel_color(player, next_x, next_y, yellow))
-				player->nb_collect++;
+			ft_handle_exit(player, next_x, next_y, keycode);
+			ft_handle_items(player, next_x, next_y);
 			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
@@ -102,14 +85,8 @@ int		ft_hook_key_d(int keycode, t_player *player)
 	{
 		if (!ft_is_pixel_color(player, next_x, next_y, grey))
 		{
-			if (ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-				ft_print_final_stats(player);
-				ft_hook_close_mlx(player);
-			}
-			if (ft_is_pixel_color(player, next_x, next_y, yellow))
-				player->nb_collect++;
+			ft_handle_exit(player, next_x, next_y, keycode);
+			ft_handle_items(player, next_x, next_y);
 			ft_change_player_pos(player, next_x, next_y, keycode);
 		}
 	}
@@ -124,58 +101,6 @@ int		key_hook(int keycode, t_player *player)
 	ft_hook_key_d(keycode, player);
 	ft_hook_key_w(keycode, player);
 	return (0);
-}
-
-int	ft_open_map(char *file)
-{
-	int	fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		ft_parse_map_error(errno);
-	return (fd);
-}
-
-t_screen	*ft_init_screen(char *title, size_t width, size_t height)
-{
-	t_screen	*screen;
-
-	screen = malloc(sizeof(*screen));
-	if (!screen)
-		return (NULL);
-	screen->title = ft_strdup(title);
-	screen->width = width;
-	screen->height = height;
-	ft_get_img_mlx(screen);
-	ft_get_img_win(screen);
-	return (screen);
-}
-
-void	ft_clean_screen(t_screen *screen)
-{
-	free(screen->title);
-	mlx_destroy_window(screen->mlx, screen->win);
-	free(screen);
-	screen = NULL;
-}
-
-t_img	*ft_init_img(t_player *player, size_t coef)
-{
-	t_img	*img;
-
-	img = malloc(sizeof(*img));
-	if (!img)
-		return (NULL);
-	img->width = player->map->cols * coef;
-	img->height = player->map->lines * coef;
-	return (img);
-}
-
-void	ft_clean_img(t_player *player)
-{
-	mlx_destroy_image(player->screen->mlx, player->img->def);
-	free(player->img);
-	player->img = NULL;
 }
 
 int	main(int argc, char **argv)
