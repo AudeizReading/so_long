@@ -54,6 +54,7 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 hook_close_mlx\
 	 handle_player\
 	 draw_objects\
+	 print_stats\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
