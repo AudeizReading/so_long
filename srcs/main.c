@@ -45,7 +45,8 @@ int		ft_hook_key_s(int keycode, t_player *player)
 			if (!ft_is_pixel_color(player, next_x, next_y, pink))
 			{
 				ft_change_player_pos(player, next_x, next_y, keycode);
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+		//		mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x - player->coef / 2, player->pole_pos->y - player->coef, 0, "P");
 			}
 		}
 	}
@@ -68,7 +69,7 @@ int		ft_hook_key_w(int keycode, t_player *player)
 			if (!ft_is_pixel_color(player, next_x, next_y, pink))
 			{
 				ft_change_player_pos(player, next_x, next_y, keycode);
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x - player->coef / 2, player->pole_pos->y + player->coef, 0, "P");
 			}
 		}
 	}
@@ -91,7 +92,8 @@ int		ft_hook_key_a(int keycode, t_player *player)
 			if (!ft_is_pixel_color(player, next_x, next_y, pink))
 			{
 				ft_change_player_pos(player, next_x, next_y, keycode);
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+		//		mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x - player->coef / 2, player->pole_pos->y - player->coef * 2,  0, "P");
 			}
 		}
 	}
@@ -114,7 +116,8 @@ int		ft_hook_key_d(int keycode, t_player *player)
 			if (!ft_is_pixel_color(player, next_x, next_y, pink))
 			{
 				ft_change_player_pos(player, next_x, next_y, keycode);
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+		//		mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x + player->coef / 2, player->pole_pos->y - player->coef * 2,  0, "P");
 			}
 		}
 	}
