@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:50:00 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/08 16:00:17 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/10 10:37:40 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int		ft_draw_map(t_player *player)
 	ft_draw_object(player->img, player->map->start, player->coef, turquoise);
 	ft_draw_object(player->img, player->map->end, player->coef, pink);
 	ft_center_image(player, player->pole_pos->x, player->pole_pos->y);
+	mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
 	return (0);
 }
