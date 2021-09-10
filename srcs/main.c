@@ -1,13 +1,25 @@
 #include "../includes/so_long.h"
 
-// Have to handle to allow to exit only when collect items are all done (so be careful to the fn print stats too
 void	ft_handle_exit(t_player *player, int x, int y, int keycode)
 {
-	if (ft_is_pixel_color(player, x, y, pink))
+	int	nb_items;
+	int	total_items;
+
+	nb_items = player->nb_collect;
+	total_items = ft_point_list_size(player->map->collect);
+	if (ft_is_pixel_color(player, x, y, pink) && nb_items == total_items)
 	{
 		ft_change_player_pos(player, x, y, keycode);
 		ft_print_final_stats(player);
 		ft_hook_close_mlx(player);
+	}
+	else if (ft_is_pixel_color(player, x, y, pink) && nb_items != total_items)
+	{
+		ft_putstr("\nYou only have collected ");
+		ft_putnbr(nb_items);
+		ft_putstr(" / ");
+		ft_putnbr(total_items);
+		ft_putendl(" items. You cannot exit until all items are collected.");
 	}
 }
 
@@ -30,7 +42,11 @@ int		ft_hook_key_s(int keycode, t_player *player)
 		{
 			ft_handle_exit(player, next_x, next_y, keycode);
 			ft_handle_items(player, next_x, next_y);
-			ft_change_player_pos(player, next_x, next_y, keycode);
+			if (!ft_is_pixel_color(player, next_x, next_y, pink))
+			{
+				ft_change_player_pos(player, next_x, next_y, keycode);
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+			}
 		}
 	}
 	return (0);
@@ -49,7 +65,11 @@ int		ft_hook_key_w(int keycode, t_player *player)
 		{
 			ft_handle_exit(player, next_x, next_y, keycode);
 			ft_handle_items(player, next_x, next_y);
-			ft_change_player_pos(player, next_x, next_y, keycode);
+			if (!ft_is_pixel_color(player, next_x, next_y, pink))
+			{
+				ft_change_player_pos(player, next_x, next_y, keycode);
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+			}
 		}
 	}
 	return (0);
@@ -68,7 +88,11 @@ int		ft_hook_key_a(int keycode, t_player *player)
 		{
 			ft_handle_exit(player, next_x, next_y, keycode);
 			ft_handle_items(player, next_x, next_y);
-			ft_change_player_pos(player, next_x, next_y, keycode);
+			if (!ft_is_pixel_color(player, next_x, next_y, pink))
+			{
+				ft_change_player_pos(player, next_x, next_y, keycode);
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+			}
 		}
 	}
 	return (0);
@@ -87,7 +111,11 @@ int		ft_hook_key_d(int keycode, t_player *player)
 		{
 			ft_handle_exit(player, next_x, next_y, keycode);
 			ft_handle_items(player, next_x, next_y);
-			ft_change_player_pos(player, next_x, next_y, keycode);
+			if (!ft_is_pixel_color(player, next_x, next_y, pink))
+			{
+				ft_change_player_pos(player, next_x, next_y, keycode);
+				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
+			}
 		}
 	}
 	return (0);

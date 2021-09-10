@@ -10,14 +10,14 @@
 # include "../lib/gnl/get_next_line.h"
 # include "../lib/minilibx_mms_20200219/mlx.h"
 
-enum			e_color
+typedef enum	e_color
 {
 	grey = 0x454545,
 	pink = 0xDD99DD,
 	yellow = 0xE6D677,
 	ocre = 0x998D22,
 	turquoise = 0x35D6E5
-};
+}				t_color;
 
 typedef struct	s_error
 {

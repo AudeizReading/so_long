@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 09:38:02 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/09 09:39:57 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/10 08:29:40 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,5 @@ void	ft_print_final_stats(t_player *player)
 	ft_putstr(" items. You have made ");
 	ft_putnbr(total_moves);
 	ft_putendl(" moves.");
-	if (nb_items < total_items)
-		ft_putendl("You have failed your mission to collecting ALL the items.");
-	else
-		ft_putendl("You win this game.");
+	ft_putendl("You win this game.");
 }

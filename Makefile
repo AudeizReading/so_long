@@ -60,7 +60,7 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 ))
 OBJ=$(SRCS:.c=.o)
 
-.PHONY: all clean fclean re test debug debug-full libft gnl mlx libftclean gnlclean mlxclean
+.PHONY: all clean fclean re test debug debug-full libft gnl mlx libftclean gnlclean mlxclean sani
 
 all: $(NAME)
 
@@ -92,7 +92,8 @@ mlx:
 	@$(ECHO) "$(NO_COL)"
 
 test: $(NAME)
-	./$(NAME) maps/34x6_valid_map.ber
+	./$(NAME) maps/15x15_valid_map.ber
+#	./$(NAME) maps/34x6_valid_map.ber
 #	./$(NAME) maps/13x5_valid_map.ber
 #	./$(NAME) maps/13x5_invalid_char.ber
 #	./$(NAME) maps/13x5_invalid_wall.ber
@@ -115,7 +116,7 @@ sani: $(OBJ)
 	@$(ECHO) "$(MAG)"
 	$(CC) -g -fsanitize=address -fno-omit-frame-pointer -static-libsan $(LDFLAGS) $^ -o $@ 
 	@$(ECHO) "$(NO_COL)"
-	./$@ maps/34x6_valid_map.ber
+	./$@ maps/15x15_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
@@ -132,7 +133,7 @@ debug: $(OBJ)
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	valgrind ./$@ maps/13x5_valid_map.ber
+	valgrind ./$@ maps/15x15_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
@@ -150,7 +151,7 @@ debug-full: $(OBJ)
 	@$(ECHO) "$(BLU)"
 	$(CC) -g $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	valgrind --leak-check=full --show-leak-kinds=all ./$@ maps/13x5_valid_map.ber
+	valgrind --leak-check=full --show-leak-kinds=all ./$@ maps/15x15_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
