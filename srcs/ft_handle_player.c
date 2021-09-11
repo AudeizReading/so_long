@@ -6,19 +6,20 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:17:34 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/09 11:07:19 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/11 20:26:23 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"             
 
-int			ft_init_player_values(t_player *player)
+int			ft_init_player_values(t_player *player, char *filename)
 {
 	int			start_x;
 	int			start_y;
 
 	player->nb_collect = 0;
 	player->coef = 64;
+	player->filename = ft_strdup(filename);
 	start_x = player->map->start->x * player->coef;
 	start_y = player->map->start->y * player->coef;
 	player->pole_pos = ft_init_point(start_x, start_y, 0);
@@ -40,7 +41,7 @@ t_player	*ft_init_player(char **file, size_t w, size_t h, char *title)
 	player->map = ft_parse_map(player->fd, file);
 	if (!player->map)
 		return NULL;
-	if (!ft_init_player_values(player))
+	if (!ft_init_player_values(player, file[1]))
 		return (NULL);
 	player->screen = ft_init_screen(title, w, h);
 	if (!player->screen)
@@ -59,6 +60,7 @@ void	ft_clean_player(t_player *player)
 	ft_point_clear(&player->pole_pos, free);
 	ft_clean_img(player);
 	ft_clean_screen(player->screen);
+	free(player->filename);
 	free(player);
 	close(player->fd);
 }

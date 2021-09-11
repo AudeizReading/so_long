@@ -1,5 +1,22 @@
 #include "../includes/so_long.h"
 
+void	ft_display_nb_moves(t_player *player, int color)
+{
+	int		x;
+	int		y;
+	char	*moves;
+	void	*mlx;
+	void	*win;
+
+	mlx = player->screen->mlx;
+	win = player->screen->win;
+	x = player->screen->width - player->coef / 2;
+	y = player->coef / 2;
+	moves = ft_itoa(player->pole_pos->pos);
+	mlx_string_put(mlx, win, x, y, color, moves);
+	free(moves);
+}
+
 void	ft_handle_exit(t_player *player, int x, int y, int keycode)
 {
 	int	nb_items;
@@ -29,111 +46,6 @@ void	ft_handle_items(t_player *player, int x, int y)
 		player->nb_collect++;
 }
 
-int		ft_hook_key_s(int keycode, t_player *player)
-{
-	int	next_x;
-	int	next_y;
-
-	next_x = player->pole_pos->x;
-	next_y = player->pole_pos->y + player->coef;
-	if (keycode == 1 && player->pole_pos->y < (int)player->img->height - player->coef * 2)
-	{
-		if (!ft_is_pixel_color(player, next_x, next_y, grey))
-		{
-			ft_handle_exit(player, next_x, next_y, keycode);
-			ft_handle_items(player, next_x, next_y);
-			if (!ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-		//		mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x - player->coef / 2, player->pole_pos->y - player->coef, 0, "P");
-			}
-		}
-	}
-	return (0);
-}
-
-int		ft_hook_key_w(int keycode, t_player *player)
-{
-	int	next_y;
-	int	next_x;
-
-	next_y = player->pole_pos->y - player->coef;
-	next_x = player->pole_pos->x;
-	if (keycode == 13 && player->pole_pos->y > player->coef)
-	{
-		if (!ft_is_pixel_color(player, next_x, next_y, grey))
-		{
-			ft_handle_exit(player, next_x, next_y, keycode);
-			ft_handle_items(player, next_x, next_y);
-			if (!ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x - player->coef / 2, player->pole_pos->y + player->coef, 0, "P");
-			}
-		}
-	}
-	return (0);
-}
-
-int		ft_hook_key_a(int keycode, t_player *player)
-{
-	int	next_x;
-	int	next_y;
-
-	next_x = player->pole_pos->x - player->coef;
-	next_y = player->pole_pos->y;
-	if (keycode == 0 && player->pole_pos->x > player->coef)
-	{
-		if (!ft_is_pixel_color(player, next_x, next_y, grey))
-		{
-			ft_handle_exit(player, next_x, next_y, keycode);
-			ft_handle_items(player, next_x, next_y);
-			if (!ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-		//		mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x - player->coef / 2, player->pole_pos->y - player->coef * 2,  0, "P");
-			}
-		}
-	}
-	return (0);
-}
-
-int		ft_hook_key_d(int keycode, t_player *player)
-{
-	int	next_x;
-	int	next_y;
-
-	next_x = player->pole_pos->x + player->coef;
-	next_y = player->pole_pos->y;
-	if (keycode == 2 && player->pole_pos->x < (int)player->img->width - player->coef * 2)
-	{
-		if (!ft_is_pixel_color(player, next_x, next_y, grey))
-		{
-			ft_handle_exit(player, next_x, next_y, keycode);
-			ft_handle_items(player, next_x, next_y);
-			if (!ft_is_pixel_color(player, next_x, next_y, pink))
-			{
-				ft_change_player_pos(player, next_x, next_y, keycode);
-		//		mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x, player->pole_pos->y, 0, "P");
-				mlx_string_put(player->screen->mlx, player->screen->win, player->pole_pos->x + player->coef / 2, player->pole_pos->y - player->coef * 2,  0, "P");
-			}
-		}
-	}
-	return (0);
-}
-
-int		key_hook(int keycode, t_player *player)
-{
-	ft_hook_key_esc(keycode, player);
-	ft_hook_key_a(keycode, player);
-	ft_hook_key_s(keycode, player);
-	ft_hook_key_d(keycode, player);
-	ft_hook_key_w(keycode, player);
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_player	*player;
@@ -144,6 +56,7 @@ int	main(int argc, char **argv)
 		if (!player)
 			exit(EXIT_FAILURE);
 		ft_draw_map(player);
+		ft_display_nb_moves(player, 0xFF0000);
 		mlx_hook(player->screen->win, 17, 1L << 2, ft_hook_close_mlx, player);
 		mlx_hook(player->screen->win, 2, 1L << 0, key_hook, player);
 		mlx_loop(player->screen->mlx);

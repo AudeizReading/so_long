@@ -13,6 +13,12 @@
 typedef enum	e_color
 {
 	grey = 0x454545,
+	white_legend = 0xCCFFFFFF,
+	grey_legend = 0x99454545,
+	pink_legend = 0x15DD99DD,
+	yellow_legend = 0x15E6D677,
+	turquoise_legend = 0x1535D6E5,
+	ocre_legend = 0x15998D22,
 	pink = 0xDD99DD,
 	yellow = 0xE6D677,
 	ocre = 0x998D22,
@@ -82,6 +88,7 @@ typedef struct	s_player
 	int			fd;
 	int			coef;
 	int			nb_collect;
+	char		*filename;
 }				t_player;
 
 /* Errors handling */
@@ -146,13 +153,14 @@ void		ft_center_image(t_player *player, int next_x, int next_y);
 
 /* Player handling */
 t_player	*ft_init_player(char **file, size_t w, size_t h, char *title);
-int			ft_init_player_values(t_player *player);
+int			ft_init_player_values(t_player *player, char *filename);
 void		ft_clean_player(t_player *player);
 void		ft_change_player_pos(t_player *player, int next_x, int next_y, int key);
 void		ft_print_moves_stats(int keycode, t_player *player);
 void		ft_print_final_stats(t_player *player);
 void		ft_handle_exit(t_player *player, int x, int y, int keycode);
 void		ft_handle_items(t_player *player, int x, int y);
+void		ft_display_nb_moves(t_player *player, int color);
 
 /* Drawing handling */
 void		ft_fill_screen(t_img *img, int color);
@@ -161,10 +169,16 @@ void		ft_draw_screen_grid_bpp(t_img *img, int color);
 void		ft_draw_square(t_img *img, t_point *start, int size, int color);
 void		ft_draw_object(t_img *img, t_point *object, size_t coef, int color);
 int			ft_draw_map(t_player *player);
+void		ft_draw_minimap(t_player *player);
 
 /* Events handling */
 int			ft_hook_close_mlx(t_player *player);
 int			ft_hook_key_esc(int keycode, t_player *player);
+int			ft_hook_key_s(int keycode, t_player *player);
+int			ft_hook_key_w(int keycode, t_player *player);
+int			ft_hook_key_a(int keycode, t_player *player);
+int			ft_hook_key_d(int keycode, t_player *player);
+int			key_hook(int keycode, t_player *player);
 
 /* Starting prog */
 int			main(int argc, char **argv);
