@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:50:00 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/12 19:55:32 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 00:31:09 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,30 @@ void	ft_draw_legend(t_player	*player)
 	int		x;
 	int		y;
 
-	img = ft_init_img(player, player->coef / 8);
+//	img = ft_init_img(player, player->coef / 8);
 	mlx = player->screen->mlx;
-	x = player->screen->width - img->width;
-	y = player->screen->height - img->height;
+	img = malloc(sizeof(*img));
+	if (!img)
+		return ;
+	img->width = player->screen->width / 6;
+	img->height = player->screen->height / 6;
 	img->def = mlx_new_image(mlx, img->width, img->height);
 	img->addr = mlx_get_data_addr(img->def, &img->bpp, &img->len, &img->end);
+	x = player->screen->width - img->width;
+	y = player->screen->height - img->height;
 	ft_fill_screen(img, 0xDDFFFFFF);
 	printf("x: %d, y: %d\n", x, y);
-	ft_draw_square(img, &(t_point){img->width / 8, img->height / 8, 0, NULL}, player->coef / 8, turquoise);
-	mlx_string_put(mlx, player->screen->win, x + player->coef, y + img->height / 4, turquoise, "Depart");
-	ft_draw_square(img, &(t_point){img->width / 8, img->height - 6 * (img->height / 8), 0, NULL}, player->coef / 8, pink);
+	printf("img->width: %d, img->height: %d\n", img->width, img->height);
+//	ft_draw_square(img, &(t_point){img->width / 6, img->height / 6, 0, NULL}, player->coef / 4, turquoise);
+	ft_draw_square(img, &(t_point){img->width / 6, img->height / 4, 0, NULL}, player->coef / 4, turquoise);
+	mlx_string_put(mlx, player->screen->win, x + img->width / 2, y + img->height
+			/ 4, turquoise, "Start");
+	//ft_draw_square(img, &(t_point){img->width / 6, img->height - 4 * (img->height / 6), 0, NULL}, player->coef / 4, pink);
+	ft_draw_square(img, &(t_point){img->width / 6, (img->height / 2), 0, NULL}, player->coef / 4, pink);
+	mlx_string_put(mlx, player->screen->win, x + img->width / 2, y + img->height / 2, pink, "Exit");
+	ft_draw_square(img, &(t_point){img->width / 6, 3 * (img->height / 4), 0, NULL}, player->coef / 4, yellow);
+	//ft_draw_square(img, &(t_point){img->width / 6, img->height - 2 * (img->height / 6), 0, NULL}, player->coef / 4, yellow);
+	mlx_string_put(mlx, player->screen->win, x + img->width / 2, y + 3 * (img->height / 4), yellow, "Item");
 	mlx_put_image_to_window(mlx, player->screen->win, img->def, x, y);
 	ft_destroy_timg(img, mlx);
 }
