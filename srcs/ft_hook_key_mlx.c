@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 23:30:56 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/11 23:31:42 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/12 19:57:35 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,5 @@ int		key_hook(int keycode, t_player *player)
 	ft_hook_key_s(keycode, player);
 	ft_hook_key_d(keycode, player);
 	ft_hook_key_w(keycode, player);
-	ft_draw_minimap(player);
-	ft_display_nb_moves(player, 0xFF0000);
 	return (0);
 }

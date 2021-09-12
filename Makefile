@@ -117,7 +117,10 @@ sani: $(OBJ)
 	@$(ECHO) "$(MAG)"
 	$(CC) -g -fsanitize=address -fno-omit-frame-pointer -static-libsan $(LDFLAGS) $^ -o $@ 
 	@$(ECHO) "$(NO_COL)"
+#	./$@ maps/80x25_valid_map.ber
+#	./$@ maps/13x5_valid_map.ber
 	./$@ maps/15x15_valid_map.ber
+#	./$@ maps/34x6_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean

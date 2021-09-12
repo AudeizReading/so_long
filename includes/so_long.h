@@ -150,6 +150,7 @@ t_bool		ft_is_pixel_color(t_player *player, int x, int y, int color);
 t_img		*ft_init_img(t_player *player, size_t coef);
 void		ft_clean_img(t_player *player);
 void		ft_center_image(t_player *player, int next_x, int next_y);
+void		ft_destroy_timg(t_img *img, void *mlx);
 
 /* Player handling */
 t_player	*ft_init_player(char **file, size_t w, size_t h, char *title);
@@ -170,6 +171,7 @@ void		ft_draw_square(t_img *img, t_point *start, int size, int color);
 void		ft_draw_object(t_img *img, t_point *object, size_t coef, int color);
 int			ft_draw_map(t_player *player);
 void		ft_draw_minimap(t_player *player);
+void		ft_draw_legend(t_player *player);
 
 /* Events handling */
 int			ft_hook_close_mlx(t_player *player);

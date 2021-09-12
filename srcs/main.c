@@ -10,9 +10,11 @@ void	ft_display_nb_moves(t_player *player, int color)
 
 	mlx = player->screen->mlx;
 	win = player->screen->win;
-	x = player->screen->width - player->coef / 2;
-	y = player->coef / 2;
 	moves = ft_itoa(player->pole_pos->pos);
+	x = player->screen->width - player->coef;
+	if (ft_strlen(moves) < 3)
+		x += player->coef / 2;
+	y = player->coef / 2;
 	mlx_string_put(mlx, win, x, y, color, moves);
 	free(moves);
 }
@@ -56,7 +58,7 @@ int	main(int argc, char **argv)
 		if (!player)
 			exit(EXIT_FAILURE);
 		ft_draw_map(player);
-		ft_display_nb_moves(player, 0xFF0000);
+		ft_display_nb_moves(player, 0xFFFFFF);
 		mlx_hook(player->screen->win, 17, 1L << 2, ft_hook_close_mlx, player);
 		mlx_hook(player->screen->win, 2, 1L << 0, key_hook, player);
 		mlx_loop(player->screen->mlx);

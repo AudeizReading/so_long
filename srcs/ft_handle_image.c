@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:19:13 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/09 11:19:32 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/12 13:47:45 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,11 @@ void	ft_clean_img(t_player *player)
 	mlx_destroy_image(player->screen->mlx, player->img->def);
 	free(player->img);
 	player->img = NULL;
+}
+
+void	ft_destroy_timg(t_img *img, void *mlx)
+{
+	mlx_destroy_image(mlx, img->def);
+	free(img);
+	img = NULL;
 }

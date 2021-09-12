@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:17:34 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/11 20:26:23 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/12 19:58:56 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,7 @@ void	ft_change_player_pos(t_player *player, int next_x, int next_y, int key)
 	ft_print_moves_stats(key, player);
 	mlx_clear_window(player->screen->mlx, player->screen->win);
 	ft_center_image(player, next_x, next_y);
+	ft_display_nb_moves(player, 0xFFFFFF);
+	ft_draw_minimap(player);
+	ft_draw_legend(player);
 }
