@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 09:38:02 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/10 08:29:40 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:18:23 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,23 @@ void	ft_print_final_stats(t_player *player)
 	ft_putnbr(total_moves);
 	ft_putendl(" moves.");
 	ft_putendl("You win this game.");
+}
+
+void	ft_display_nb_moves(t_player *player, int color)
+{
+	int		x;
+	int		y;
+	char	*moves;
+	void	*mlx;
+	void	*win;
+
+	mlx = player->screen->mlx;
+	win = player->screen->win;
+	moves = ft_itoa(player->pole_pos->pos);
+	x = player->screen->width - player->coef;
+	if (ft_strlen(moves) < 3)
+		x += player->coef / 2;
+	y = player->coef / 2;
+	mlx_string_put(mlx, win, x, y, color, moves);
+	free(moves);
 }

@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:50:00 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 15:56:03 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:15:11 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,6 @@ void	ft_draw_object(t_img *img, t_point *object, size_t coef, int color)
 		ft_draw_square(img, object, coef, color);
 		object = object->next;
 	}
-}
-
-t_img	*ft_create_img(t_player *player)
-{
-	t_img	*img;
-	void	*mlx;
-
-	mlx = player->screen->mlx;
-	img = malloc(sizeof(*img));
-	if (!img)
-		return (NULL);
-	img->width = player->screen->width / 6 + player->screen->width / 12;
-	img->height = player->screen->height / 6 + player->screen->height / 12;
-	img->def = mlx_new_image(mlx, img->width, img->height);
-	img->addr = mlx_get_data_addr(img->def, &img->bpp, &img->len, &img->end);
-	return (img);
 }
 
 //void	ft_draw_infos_legend(t_img *img,

@@ -1,6 +1,6 @@
 #include "../includes/so_long.h"
 
-void	ft_display_nb_moves(t_player *player, int color)
+/*void	ft_display_nb_moves(t_player *player, int color)
 {
 	int		x;
 	int		y;
@@ -17,7 +17,7 @@ void	ft_display_nb_moves(t_player *player, int color)
 	y = player->coef / 2;
 	mlx_string_put(mlx, win, x, y, color, moves);
 	free(moves);
-}
+}*/
 
 int	main(int argc, char **argv)
 {
