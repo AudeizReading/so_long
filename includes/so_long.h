@@ -169,9 +169,11 @@ void		ft_draw_screen_grid_map(t_img *img, int color, t_map *map);
 void		ft_draw_screen_grid_bpp(t_img *img, int color);
 void		ft_draw_square(t_img *img, t_point *start, int size, int color);
 void		ft_draw_object(t_img *img, t_point *object, size_t coef, int color);
+void		ft_draw_map_objects(t_img *img, t_map *map, int coef);
 int			ft_draw_map(t_player *player);
 void		ft_draw_minimap(t_player *player);
 void		ft_draw_legend(t_player *player);
+void		ft_scale_minimap(t_player *player, t_map *map, int *coef);
 
 /* Events handling */
 int			ft_hook_close_mlx(t_player *player);

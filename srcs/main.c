@@ -19,7 +19,7 @@ void	ft_display_nb_moves(t_player *player, int color)
 	free(moves);
 }
 
-void	ft_handle_exit(t_player *player, int x, int y, int keycode)
+/*void	ft_handle_exit(t_player *player, int x, int y, int keycode)
 {
 	int	nb_items;
 	int	total_items;
@@ -46,7 +46,7 @@ void	ft_handle_items(t_player *player, int x, int y)
 {
 	if (ft_is_pixel_color(player, x, y, yellow))
 		player->nb_collect++;
-}
+}*/
 
 int	main(int argc, char **argv)
 {
