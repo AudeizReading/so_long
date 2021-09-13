@@ -10,7 +10,7 @@
 # include "../lib/gnl/get_next_line.h"
 # include "../lib/minilibx_mms_20200219/mlx.h"
 
-typedef enum	e_color
+typedef enum e_color
 {
 	grey = 0x454545,
 	white_legend = 0xCCFFFFFF,
@@ -25,14 +25,14 @@ typedef enum	e_color
 	turquoise = 0x35D6E5
 }				t_color;
 
-typedef struct	s_error
+typedef struct s_error
 {
 	int				num;
 	char			*message;
 	t_bool			must_exit;
 }				t_error;
 
-typedef struct	s_line
+typedef struct s_line
 {
 	char			*content;
 	int				y;
@@ -40,7 +40,7 @@ typedef struct	s_line
 	struct	s_line	*next;
 }				t_line;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int				x;
 	int				y;
@@ -48,7 +48,7 @@ typedef struct	s_point
 	struct s_point	*next;
 }				t_point;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	size_t			cols;
 	size_t			lines;
@@ -59,7 +59,7 @@ typedef struct	s_map
 	t_line			*first_line;
 }				t_map;
 
-typedef struct	s_screen
+typedef struct s_screen
 {
 	void			*mlx;
 	void			*win;
@@ -68,7 +68,7 @@ typedef struct	s_screen
 	unsigned int	height;
 }				t_screen;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void			*def;
 	void			*addr;
@@ -79,7 +79,7 @@ typedef struct	s_img
 	unsigned int	height;
 }				t_img;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	t_point		*pole_pos;
 	t_screen	*screen;
