@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 09:38:02 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 16:18:23 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:31:00 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_print_moves_stats(int keycode, t_player *player)
 {
-	int total_moves;
+	int	total_moves;
 
 	total_moves = player->pole_pos->pos;
 	ft_putstr("Move to ");

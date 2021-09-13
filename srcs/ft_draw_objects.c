@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:50:00 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 16:15:11 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:34:46 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_draw_square(t_img *img, t_point *start, int size, int color)
 {
 	int	x;
-	int y;
+	int	y;
 
 	y = start->y;
 	while (y < size + start->y)
@@ -29,7 +29,6 @@ void	ft_draw_square(t_img *img, t_point *start, int size, int color)
 
 void	ft_draw_object(t_img *img, t_point *object, size_t coef, int color)
 {
-
 	while (object)
 	{
 		object->x *= coef;
@@ -49,7 +48,7 @@ void	ft_draw_legend(t_player	*player)
 	int		y;
 
 	mlx = player->screen->mlx;
-	img =  ft_create_img(player);
+	img = ft_create_img(player);
 	if (!img)
 		return ;
 	x = player->screen->width - img->width;
@@ -65,7 +64,7 @@ void	ft_draw_legend(t_player	*player)
 	ft_destroy_timg(img, mlx);
 }
 
-int		ft_draw_map(t_player *player)
+int	ft_draw_map(t_player *player)
 {
 	int		coef;
 

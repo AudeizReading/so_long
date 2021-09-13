@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:19:13 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 16:13:40 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:36:45 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_center_image(t_player *player, int next_x, int next_y)
 {
-	int	center_x;
-	int	center_y;
+	int		center_x;
+	int		center_y;
 	void	*mlx;
 	void	*win;
 	void	*img;

@@ -6,13 +6,13 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:17:34 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 14:05:17 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:26:30 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"             
 
-int			ft_init_player_values(t_player *player, char *filename)
+int	ft_init_player_values(t_player *player, char *filename)
 {
 	int			start_x;
 	int			start_y;
@@ -37,10 +37,10 @@ t_player	*ft_init_player(char **file, size_t w, size_t h, char *title)
 		return (NULL);
 	player->fd = ft_open_map(file[1]);
 	if (!player->fd)
-		return NULL;
+		return (NULL);
 	player->map = ft_parse_map(player->fd, file);
 	if (!player->map)
-		return NULL;
+		return (NULL);
 	if (!ft_init_player_values(player, file[1]))
 		return (NULL);
 	player->screen = ft_init_screen(title, w, h);
@@ -48,7 +48,7 @@ t_player	*ft_init_player(char **file, size_t w, size_t h, char *title)
 		return (NULL);
 	player->img = ft_init_img(player, player->coef);
 	if (!player->img)
-		return NULL;
+		return (NULL);
 	ft_get_img_def(player);
 	ft_get_img_addr(player->img);
 	return (player);

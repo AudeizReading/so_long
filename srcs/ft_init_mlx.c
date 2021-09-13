@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:39:05 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/28 23:20:32 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:28:03 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ void	ft_get_img_def(t_player *player)
 	unsigned int	width;
 	unsigned int	height;
 
-
 	mlx = player->screen->mlx;
 	width = player->img->width;
-	height =  player->img->height;
+	height = player->img->height;
 	player->img->def = mlx_new_image(mlx, width, height);
 	if (!player->img->def)
 		exit(EXIT_FAILURE);

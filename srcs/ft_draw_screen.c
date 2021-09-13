@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 13:05:25 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/08 15:51:43 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:35:27 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_draw_screen_grid_map(t_img *img, int color, t_map *map)
 		x = 0;
 		while (x < img->width)
 		{
-			if (x && !(x % (img->width / map->cols))) 
+			if (x && !(x % (img->width / map->cols)))
 				ft_mlx_pixel_put(img, x++, y, color);
 			else if (x && y && !(y % (img->height / map->lines)))
 				ft_mlx_pixel_put(img, x++, y, color);
@@ -62,7 +62,7 @@ void	ft_draw_screen_grid_bpp(t_img *img, int color)
 		x = 0;
 		while (x < img->width)
 		{
-			if (x && !(x % img->bpp)) 
+			if (x && !(x % img->bpp))
 				ft_mlx_pixel_put(img, x++, y, color);
 			else if (x && y && !(y % img->bpp))
 				ft_mlx_pixel_put(img, x++, y, color);

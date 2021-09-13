@@ -6,13 +6,13 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 23:30:56 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/12 19:57:35 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:29:46 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int		ft_hook_key_s(int keycode, t_player *player)
+int	ft_hook_key_s(int keycode, t_player *player)
 {
 	int	next_x;
 	int	next_y;
@@ -36,7 +36,7 @@ int		ft_hook_key_s(int keycode, t_player *player)
 	return (0);
 }
 
-int		ft_hook_key_w(int keycode, t_player *player)
+int	ft_hook_key_w(int keycode, t_player *player)
 {
 	int	next_y;
 	int	next_x;
@@ -58,7 +58,7 @@ int		ft_hook_key_w(int keycode, t_player *player)
 	return (0);
 }
 
-int		ft_hook_key_a(int keycode, t_player *player)
+int	ft_hook_key_a(int keycode, t_player *player)
 {
 	int	next_x;
 	int	next_y;
@@ -80,7 +80,7 @@ int		ft_hook_key_a(int keycode, t_player *player)
 	return (0);
 }
 
-int		ft_hook_key_d(int keycode, t_player *player)
+int	ft_hook_key_d(int keycode, t_player *player)
 {
 	int	next_x;
 	int	next_y;
@@ -104,7 +104,7 @@ int		ft_hook_key_d(int keycode, t_player *player)
 	return (0);
 }
 
-int		key_hook(int keycode, t_player *player)
+int	key_hook(int keycode, t_player *player)
 {
 	ft_hook_key_esc(keycode, player);
 	ft_hook_key_a(keycode, player);

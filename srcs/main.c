@@ -1,23 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/13 16:33:07 by alellouc          #+#    #+#             */
+/*   Updated: 2021/09/13 16:33:17 by alellouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
-
-/*void	ft_display_nb_moves(t_player *player, int color)
-{
-	int		x;
-	int		y;
-	char	*moves;
-	void	*mlx;
-	void	*win;
-
-	mlx = player->screen->mlx;
-	win = player->screen->win;
-	moves = ft_itoa(player->pole_pos->pos);
-	x = player->screen->width - player->coef;
-	if (ft_strlen(moves) < 3)
-		x += player->coef / 2;
-	y = player->coef / 2;
-	mlx_string_put(mlx, win, x, y, color, moves);
-	free(moves);
-}*/
 
 int	main(int argc, char **argv)
 {
