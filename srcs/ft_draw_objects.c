@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:50:00 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 14:27:20 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:56:03 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,53 +37,6 @@ void	ft_draw_object(t_img *img, t_point *object, size_t coef, int color)
 		ft_draw_square(img, object, coef, color);
 		object = object->next;
 	}
-}
-
-void	ft_draw_map_objects(t_img *img, t_map *map, int coef)
-{
-	ft_draw_object(img, map->wall, coef, grey_legend);
-	ft_draw_object(img, map->collect, coef, yellow_legend);
-	ft_draw_object(img, map->start, coef, turquoise_legend);
-	ft_draw_object(img, map->end, coef, pink);
-}
-
-void	ft_scale_minimap(t_player *player, t_map *map, int *coef)
-{
-	unsigned int	scr_w;
-	unsigned int	scr_h;
-
-	scr_w = player->screen->width;
-	scr_h = player->screen->height;
-	while (map->cols * (*coef) > scr_w || map->lines * (*coef) > scr_h)
-		*coef /= 2;
-}
-
-void	ft_draw_minimap(t_player *player)
-{
-	t_img	*img;
-	t_map	*map;
-	int		fd;
-	void	*mlx;
-	int		coef;
-
-	mlx = player->screen->mlx;
-	coef = player->coef / 8;
-	fd = open(player->filename, O_RDONLY);
-	map = ft_init_map();
-	map->first_line = ft_get_map(fd);
-	map->lines = ft_map_size(map->first_line);
-	map->cols = map->first_line->len;
-	ft_get_objects_pos(map);
-	ft_scale_minimap(player, map, &coef);
-	img = ft_init_img(player, coef);
-	img->def = mlx_new_image(player->screen->mlx, img->width, img->height);
-	img->addr = mlx_get_data_addr(img->def, &img->bpp, &img->len, &img->end);
-	ft_fill_screen(img, 0xDDFFFFFF);
-	ft_draw_map_objects(img, map, coef);
-	mlx_put_image_to_window(mlx, player->screen->win, img->def, 0, 0);
-	ft_destroy_timg(img, mlx);
-	ft_clean_map(map);
-	close(fd);
 }
 
 t_img	*ft_create_img(t_player *player)
@@ -139,6 +92,7 @@ int		ft_draw_map(t_player *player)
 	ft_draw_object(player->img, player->map->start, coef, turquoise);
 	ft_draw_object(player->img, player->map->end, coef, pink);
 	ft_center_image(player, player->pole_pos->x, player->pole_pos->y);
+	ft_display_nb_moves(player, 0xFFFFFF);
 	ft_draw_minimap(player);
 	ft_draw_legend(player);
 	return (0);

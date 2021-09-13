@@ -59,6 +59,7 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 handle_screen\
 	 hook_key_mlx\
 	 handle_game\
+	 handle_minimap\
 	 ))
 OBJ=$(SRCS:.c=.o)
 
