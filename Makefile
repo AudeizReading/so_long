@@ -125,6 +125,8 @@ test: $(NAME)
 #	./$(NAME) maps/13x5_valid_map.bera
 #	./$(NAME) maps/13x6_invalid_blank_line.ber
 	./$(NAME) maps/15x15_valid_map.ber
+#	./$(NAME) maps/15x15_invalid_starting_pos.ber
+#	./$(NAME) maps/15x15_invalid_exit_pos.ber
 #	./$(NAME) maps/34x6_valid_map.ber
 #	./$(NAME) maps/80x25_valid_map.ber
 #	./$(NAME) maps/80x25_valid_map.invalid.ext

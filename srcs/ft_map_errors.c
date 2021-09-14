@@ -6,7 +6,7 @@
 /*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 19:28:42 by alellouc          #+#    #+#             */
-/*   Updated: 2021/08/19 14:27:00 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/14 15:32:01 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	ft_parse_map_error(int errnum)
 		{1030, "Map does not have any exit", e_true},
 		{1031, "Map does not have any collectible", e_true},
 		{1032, "Map does not have any starting position", e_true},
+		{1033, "Map has got more than one starting position", e_true},
+		{1034, "Map has got more than one exit", e_true},
 		{-1, NULL, e_false}
 	};
 
