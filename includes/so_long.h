@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alellouc <alellouc@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/14 12:01:50 by alellouc          #+#    #+#             */
+/*   Updated: 2021/09/14 12:02:24 by alellouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include <sys/types.h>
@@ -37,7 +49,7 @@ typedef struct s_line
 	char			*content;
 	int				y;
 	size_t			len;
-	struct	s_line	*next;
+	struct s_line	*next;
 }				t_line;
 
 typedef struct s_point
