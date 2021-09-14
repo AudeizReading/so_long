@@ -6,7 +6,7 @@
 /*   By: alellouc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:17:34 by alellouc          #+#    #+#             */
-/*   Updated: 2021/09/13 16:26:30 by alellouc         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:55:10 by alellouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,21 @@ void	ft_clean_player(t_player *player)
 	close(player->fd);
 }
 
-void	ft_change_player_pos(t_player *player, int next_x, int next_y, int key)
+void	ft_change_player_pos(t_player *pl, int next_x, int next_y, int key)
 {
 	t_point	*tmp;
 	size_t	pos;
 
-	pos = player->pole_pos->pos;
-	ft_draw_square(player->img, player->pole_pos, player->coef, ocre);
+	pos = pl->pole_pos->pos;
+	ft_draw_square(pl->img, pl->pole_pos, pl->coef, ocre);
 	tmp = ft_init_point(next_x, next_y, pos + 1);
-	ft_point_addback(&player->pole_pos, tmp);
-	player->pole_pos = player->pole_pos->next;
-	ft_draw_square(player->img, player->pole_pos, player->coef, turquoise);
-	ft_print_moves_stats(key, player);
-	mlx_clear_window(player->screen->mlx, player->screen->win);
-	ft_center_image(player, next_x, next_y);
-	ft_display_nb_moves(player, 0xFFFFFF);
-	ft_draw_minimap(player);
-	ft_draw_legend(player);
+	ft_point_addback(&pl->pole_pos, tmp);
+	pl->pole_pos = pl->pole_pos->next;
+	ft_draw_square(pl->img, pl->pole_pos, pl->coef, turquoise);
+	ft_print_moves_stats(key, pl);
+	mlx_clear_window(pl->screen->mlx, pl->screen->win);
+	ft_center_image(pl, next_x, next_y);
+	ft_display_nb_moves(pl, 0xFFFFFF);
+	ft_draw_minimap(pl);
+	ft_draw_legend(pl);
 }

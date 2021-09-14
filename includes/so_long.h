@@ -157,7 +157,7 @@ t_img		*ft_create_img(t_player *player);
 t_player	*ft_init_player(char **file, size_t w, size_t h, char *title);
 int			ft_init_player_values(t_player *player, char *filename);
 void		ft_clean_player(t_player *player);
-void		ft_change_player_pos(t_player *player, int next_x, int next_y, int key);
+void		ft_change_player_pos(t_player *pl, int next_x, int next_y, int key);
 void		ft_print_moves_stats(int keycode, t_player *player);
 void		ft_print_final_stats(t_player *player);
 void		ft_handle_exit(t_player *player, int x, int y, int keycode);
