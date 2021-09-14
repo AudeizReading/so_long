@@ -6,7 +6,7 @@
 #    By: alellouc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 08:35:31 by alellouc          #+#    #+#              #
-#    Updated: 2021/09/08 10:19:51 by alellouc         ###   ########.fr        #
+#    Updated: 2021/09/14 14:14:36 by alellouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,15 +86,16 @@ NAME=libft.a
 
 .PHONY: clean fclean re all bonus
 
-all: bonus
+all: $(NAME)
 
-$(NAME): $(SRC)
+$(NAME): $(SRC) $(BONUS_SRC)
 	@$(ECHO) "$(B_GREEN)"
 	$(CC) $(CHEADERS) $(CFLAGS) -c $^
 	@$(ECHO) "$(B_CYAN)"
-	$(AR) $@ $(OBJ)
+	$(AR) $@ $(OBJ) $(BONUS_OBJ)
 	@$(ECHO) "$(FANCY_RESET)"
 	@$(MAKE) clean
+	@$(MAKE) cleanbonus
 
 bonus: $(NAME)
 	@$(ECHO) "$(B_GREEN)"

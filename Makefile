@@ -85,7 +85,7 @@ NAME=so_long
 # -----------------------------------------------------------------------------
 #                            RULES
 # -----------------------------------------------------------------------------
-.PHONY: all clean fclean re test debug debug-full libft gnl mlx libftclean gnlclean mlxclean sani
+.PHONY: all clean fclean re test debug debug-full libft gnl mlx libftclean gnlclean mlxclean sani 
 
 all: $(NAME)
 
@@ -97,9 +97,6 @@ $(NAME): $(OBJ)
 	@$(ECHO) "$(GRE)"
 	$(CC) $(LDFLAGS) $^ -o $@
 	@$(ECHO) "$(NO_COL)"
-	@$(MAKE) clean
-	@$(MAKE) libftclean
-	@$(MAKE) gnlclean
 
 libft:
 	@$(ECHO) "$(YEL)"
