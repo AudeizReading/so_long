@@ -118,18 +118,18 @@ sani: $(OBJ)
 	@$(MAKE) mlx
 	cp $(MLX_PATH)/libmlx.dylib .
 	@$(ECHO) "$(MAG)"
-	$(CC) -g -fsanitize=address -fno-omit-frame-pointer -static-libsan $(LDFLAGS) $^ -o $@ 
+	$(CC) -g -fsanitize=address -fno-omit-frame-pointer -static-libsan $(LDFLAGS) $^ -o $(NAME) 
 	@$(ECHO) "$(NO_COL)"
-#	./$@ maps/80x25_valid_map.ber
-#	./$@ maps/13x5_valid_map.ber
-	./$@ maps/15x15_valid_map.ber
-#	./$@ maps/34x6_valid_map.ber
+#	./$(NAME) maps/80x25_valid_map.ber
+#	./$(NAME) maps/13x5_valid_map.ber
+	./$(NAME) maps/15x15_valid_map.ber
+#	./$(NAME) maps/34x6_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
 	@$(MAKE) mlxclean
 	@$(ECHO) "$(RED)"
-	$(RM) $@ debug.dSYM libmlx.dylib.dSYM
+	$(RM) $(NAME) debug.dSYM libmlx.dylib.dSYM
 	@$(ECHO) "$(NO_COL)"
 
 debug: $(OBJ)
