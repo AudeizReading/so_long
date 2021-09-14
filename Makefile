@@ -1,3 +1,6 @@
+# -----------------------------------------------------------------------------
+#                            COLORS
+# -----------------------------------------------------------------------------
 RED=\033[1;31m
 GRE=\033[1;32m
 YEL=\033[1;33m
@@ -5,19 +8,33 @@ BLU=\033[1;34m
 MAG=\033[1;35m
 CYA=\033[1;36m
 NO_COL=\033[0m
+
+# -----------------------------------------------------------------------------
+#                            COMMANDS
+# -----------------------------------------------------------------------------
 CC=-gcc
 ECHO=-echo
 RM=-rm -rf
 MAKE=make
+
+# -----------------------------------------------------------------------------
+#                            GCC FLAGS
+# -----------------------------------------------------------------------------
 CFLAGS=-Wall -Werror -Wextra
 CHEADERS= -I ./includes
 ALL_FLAGS= $(CHEADERS) $(CFLAGS)
-NAME=so_long
+LDFLAGS= -L $(LIBFT_PATH) -lft -L $(GNL_PATH) -lgnl -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
+
+# -----------------------------------------------------------------------------
+#                            LIBS PATH
+# -----------------------------------------------------------------------------
 LIBFT_PATH=./lib/libft
 GNL_PATH=./lib/gnl
 MLX_PATH=./lib/minilibx_mms_20200219
-LDFLAGS= -L $(LIBFT_PATH) -lft -L $(GNL_PATH) -lgnl -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
-#LDFLAGS= -L $(LIBFT_PATH) -lft -L $(GNL_PATH) -lgnl -L . -lmlx
+
+# -----------------------------------------------------------------------------
+#                            FILES
+# -----------------------------------------------------------------------------
 SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 main\
 	 ))\
@@ -63,7 +80,11 @@ SRCS=$(addprefix srcs/, $(addsuffix .c, \
 	 drawing_legend\
 	 ))
 OBJ=$(SRCS:.c=.o)
+NAME=so_long
 
+# -----------------------------------------------------------------------------
+#                            RULES
+# -----------------------------------------------------------------------------
 .PHONY: all clean fclean re test debug debug-full libft gnl mlx libftclean gnlclean mlxclean sani
 
 all: $(NAME)
@@ -96,19 +117,24 @@ mlx:
 	@$(ECHO) "$(NO_COL)"
 
 test: $(NAME)
-	./$(NAME) maps/15x15_valid_map.ber
-#	./$(NAME) maps/34x6_valid_map.ber
-#	./$(NAME) maps/13x5_valid_map.ber
 #	./$(NAME) maps/13x5_invalid_char.ber
 #	./$(NAME) maps/13x5_invalid_wall.ber
 #	./$(NAME) maps/13x5_multi_collectibles.ber
+#	./$(NAME) maps/13x5_no_collectibles.ber
+#	./$(NAME) maps/13x5_no_mandatory_chars.ber
 #	./$(NAME) maps/13x5_no_starting_pos.ber
-#	./$(NAME) maps/13x5_not_rectangular_map`.ber
+#	./$(NAME) maps/13x5_not_rectangular_map.ber
+#	./$(NAME) maps/13x5_valid_map.ber
+#	./$(NAME) maps/13x5_valid_map.bera
 #	./$(NAME) maps/13x6_invalid_blank_line.ber
+	./$(NAME) maps/15x15_valid_map.ber
+#	./$(NAME) maps/34x6_valid_map.ber
 #	./$(NAME) maps/80x25_valid_map.ber
+#	./$(NAME) maps/80x25_valid_map.invalid.ext
 #	./$(NAME) maps/foireux.ber
 #	./$(NAME) maps/directory.ber
 #	./$(NAME) maps/directory.ber/13x5_valid_map.ber
+#	./$(NAME) maps/inexistant.ber
 	@$(MAKE) fclean
 	@$(MAKE) mlxclean
 	
@@ -117,13 +143,13 @@ sani: $(OBJ)
 	@$(MAKE) gnl
 	@$(MAKE) mlx
 	cp $(MLX_PATH)/libmlx.dylib .
-	@$(ECHO) "$(MAG)"
+	@$(ECHO) "$(GRE)"
 	$(CC) -g -fsanitize=address -fno-omit-frame-pointer -static-libsan $(LDFLAGS) $^ -o $(NAME) 
 	@$(ECHO) "$(NO_COL)"
-#	./$(NAME) maps/80x25_valid_map.ber
 #	./$(NAME) maps/13x5_valid_map.ber
 	./$(NAME) maps/15x15_valid_map.ber
 #	./$(NAME) maps/34x6_valid_map.ber
+#	./$(NAME) maps/80x25_valid_map.ber
 	@$(MAKE) clean
 	@$(MAKE) libftclean
 	@$(MAKE) gnlclean
