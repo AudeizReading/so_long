@@ -175,6 +175,9 @@ int			ft_draw_map(t_player *player);
 void		ft_draw_minimap(t_player *player);
 void		ft_draw_legend(t_player *player);
 void		ft_scale_minimap(t_player *player, t_map *map, int *coef);
+void		ft_draw_legend_start(t_player *pl, t_img *img, int x, int y);
+void		ft_draw_legend_exit(t_player *pl, t_img *img, int x, int y);
+void		ft_draw_legend_item(t_player *pl, t_img *img, int x, int y);
 
 /* Events handling */
 int			ft_hook_close_mlx(t_player *player);
